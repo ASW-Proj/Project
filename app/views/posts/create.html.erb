@@ -1,0 +1,23 @@
+<!-- Create Post -->
+
+<div class="form-page">
+    <!-- Title -->
+    <%= render "shared/main_header" do %>
+        <%= @pageTitle %>
+    <% end %>
+
+    <!-- Post creation form -->
+    <form>
+        <!-- Url -->
+        <%= render "shared/form/text_field", label: @urlLabel %>
+
+        <!-- Title -->
+        <%= render "shared/form/text_field", label: @titleLabel %>
+
+        <!-- Body -->
+        <%= render "shared/form/text_area", label: @bodyLabel %>
+    </form>
+
+    <!-- Create button -->
+    <button>Create</button>
+</div>

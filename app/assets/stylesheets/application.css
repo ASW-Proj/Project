@@ -13,3 +13,13 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+   font-family: "Droid Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+h1 {
+   font-weight: 400;
+   font-size: 24px;
+   margin: 16px 0 16px 0;
+}
