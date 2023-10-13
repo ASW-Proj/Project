@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :test_posts
   # Define your application routes per the DSL in
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
