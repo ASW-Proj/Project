@@ -2,7 +2,7 @@
     <!-- Label -->
     <% if label.present? %>
         <%= render "shared/form/label" do %>
-            <%= label %>
+            <%= render "shared/form/text_field", label: @urlLabel %> <%= label %>
         <% end %>
     <% end %>
 
