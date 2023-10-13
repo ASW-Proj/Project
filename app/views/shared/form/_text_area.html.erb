@@ -1,0 +1,15 @@
+<div class="form-text-input">
+    <!-- Label -->
+    <% if label.present? %>
+        <%= render "shared/form/label" do %>
+            <%= label %>
+        <% end %>
+    <% end %>
+
+    <!-- Text Area -->
+    <div class="form-text-input__outer">
+        <textarea
+            class="form-text-input__inner form-text-area__inner" 
+        ></textarea>
+    </div>
+</div>

@@ -7,4 +7,10 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+
+  # ...................................................................... #
+  # To create a post, we call the create function from the posts controller.
+  get "/create_post", to: "posts#create", as: :post
+
 end

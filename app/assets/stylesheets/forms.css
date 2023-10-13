@@ -1,0 +1,42 @@
+.form-page {
+    display: block;
+    margin: 0 auto; /* Center horizontally */
+    max-width: 610px;
+    font-size: 15px;
+    line-height: 22px;
+    box-sizing: border-box;
+}
+
+.form-page > * {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.form-label {
+    color: #495057;
+    padding: 8px 8px 8px 0;
+}
+
+.form-text-input {
+    color: #495057;
+    padding: 0 0 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-text-input__inner {
+    width: 100%;
+    min-height: 30px;
+    padding: 0 8px;
+    box-sizing: border-box;
+}
+
+.form-text-input__outer {
+    width: 100%;
+    padding: 8px 0;
+}
+
+.form-text-area__inner {
+    max-width: 100%;
+    box-sizing: border-box;
+}
