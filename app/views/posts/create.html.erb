@@ -19,5 +19,8 @@
     </form>
 
     <!-- Create button -->
-    <button>Create</button>
+    <%= render "/shared/button" do %>
+        <%= @submitButton %>
+    <% end %>
+
 </div>
