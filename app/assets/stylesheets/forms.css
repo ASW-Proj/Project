@@ -27,8 +27,12 @@
 .form-text-input__inner {
     width: 100%;
     min-height: 30px;
-    padding: 0 8px;
+    padding-left: 8px;
+    padding-right: 8px;
     box-sizing: border-box;
+    font-size: 15px;
+    font-family: "Droid Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 22px;
 }
 
 .form-text-input__outer {
@@ -39,4 +43,7 @@
 .form-text-area__inner {
     max-width: 100%;
     box-sizing: border-box;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    min-height: 76px;
 }
