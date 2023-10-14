@@ -1,34 +1,49 @@
 .form-page {
     display: block;
-    margin: 0 auto; /* Center horizontally */
+    box-sizing: border-box;
     max-width: 610px;
+    margin: 0 auto; /* Center horizontally */
     font-size: 15px;
     line-height: 22px;
-    box-sizing: border-box;
 }
 
 .form-page > * {
-    max-width: 100%;
     box-sizing: border-box;
+    max-width: 100%;
 }
 
 .form-label {
-    color: #495057;
     padding: 8px 8px 8px 0;
+    color: #495057;
 }
 
 .form-text-input {
-    color: #495057;
-    padding: 0 0 12px;
-    width: 100%;
     box-sizing: border-box;
+    width: 100%;
+    padding: 0 0 12px;
+    color: #495057;
 }
 
 .form-text-input__inner {
+    box-sizing: border-box;
     width: 100%;
     min-height: 30px;
-    padding: 0 8px;
-    box-sizing: border-box;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 15px;
+    font-family: "Droid Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 22px;
+    border-radius: 7.5px;
+    outline: 1px solid rgba(73, 80, 87, 0.25);
+    border: none;
+}
+
+.form-text-input__inner:focus {
+    box-shadow: rgba(241, 100, 30, 0.25) 0 0 0 3.75px;
+}
+
+.form-text-input__inner:focus-visible {
+    outline: 1px solid rgb(248, 178, 143);
 }
 
 .form-text-input__outer {
@@ -37,6 +52,9 @@
 }
 
 .form-text-area__inner {
-    max-width: 100%;
     box-sizing: border-box;
+    max-width: 100%;
+    min-height: 76px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
