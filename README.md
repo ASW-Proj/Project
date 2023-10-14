@@ -83,7 +83,23 @@ Tot el contingut que el component pare ha passat es renderitza al lloc on es tro
 Allà emmagatzegarem les pàgines relacionades amb el controller corresponent (sense "\_" inicial).
 
 # Models
-Pendent d'explicar.
+Els models s'encarreguen de tot el que està relacionat amb la base de dades (consultes, insercions, **validacions**, relacions amb altres taules...).
+
+Per crear un model, al terminal escriurem, per exemple:
+> rails generate model Post title:string url:text body:text
+
+En aquest cas el nom del model és "Post". Els noms de model han de ser **sempre en singular**.
+
+Després del nom del model trobem els atributs, separats per espais. Els atributs estan formats per nomatribut:tipus. En aquest cas hem utilitzat text en comptes de string perquè string permet un màxim de 255 caràcters.
+
+La comanda anterior crea una migració. Una migració declara els canvis que es faran a la base de dades.
+
+També crea una classe "Post", situada a "/app/models/post.rb", que hereta de AplicationRecord.
+
+Per executar la migració fem:
+> rails db:migrate
+
+Això crea la taula del model que hem creat a la base de dades.
 
 
 
