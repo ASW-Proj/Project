@@ -3,10 +3,10 @@
 # Routes
 Cada pàgina està situada en una ruta. Les rutes les trobem a /config/routes.rb
 
-Exemple de ruta: 
+Exemple de ruta:
 > get "/create_post", to: "posts#create", as: :post
 
-Podem observar: 
+Podem observar:
 * "/create_post" és la url del navegador.
 * "to: "posts#create" redirigeix al controller "app/controllers/posts_controller.rb", en concret al mètode create.
 * "as: :post" indica nom del model, en concret "app/model/post.rb"
@@ -139,4 +139,4 @@ Things you may want to cover:
 
 * ...
 
-Test del primer commit
+Test del primer commit en branch
