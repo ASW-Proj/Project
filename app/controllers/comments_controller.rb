@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: %i[ show edit update destroy ]
+  before_action :set_post, only: [:create]
 
   # GET /comments or /comments.json
   def index
@@ -21,18 +21,23 @@ class CommentsController < ApplicationController
 
   # POST /comments or /comments.json
   def create
-    @comment = Comment.new(comment_params)
+    @comment = @post.comments.build(comment_params)
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to comment_url(@comment), notice: "Comment was successfully created." }
+        format.html { redirect_to show_post_path(@post), notice: "Comentario creado exitosamente." }
         format.json { render :show, status: :created, location: @comment }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render "posts/show" }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
   end
+
+  private
+  def set_post
+    @post = Post.find(params[:post_id])
+  end 
 
   # PATCH/PUT /comments/1 or /comments/1.json
   def update

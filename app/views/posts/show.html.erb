@@ -1,17 +1,32 @@
+<%= stylesheet_link_tag "buttons", "forms" %>
+
 <div class="post-container">
-<h1 class="post-title"><%= @post.title %></h1>
-<p class="post-meta">Publicado el <%= @post.created_at.strftime('%d %B, %Y') %></p>
-<div class="post-content">
-  <%= @post.body %>
+  <h1 class="post-title"><%= @post.title %></h1>
+  <p class="post-meta"><%= "Publicat el " + @post.created_at.strftime('%d %B, %Y') %></p>
+  <div class="post-content">
+    <%= @post.body %>
+  </div>
 
-  <h2>Comments</h2>
-  <ul class="comments-list">
-    <% @comments.each do |comment| %>
-      <li class="comment">
-        <div class="comment-body"><%= comment.body %></div>
-      </li>
+  <div class="comments-section">
+    <h2><%= "Comentaris" %></h2>
+    <ul class="comments-list">
+      <% @comments.each do |comment| %>
+        <li class="comment">
+          <div class="comment-body"><%= comment.body %></div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="comment-form">
+    <h2><%= "Deixa un comentari" %></h2>
+    <%= form_for([@post, @post.comments.build], html: { class: "comment-form" }) do |f| %>
+      <div class="field">
+        <%= f.text_area :body, placeholder: "Escriu el teu comentari aquí", class: "form-text-input__inner" %>
+      </div>
+      <div class="actions">
+        <%= f.submit "Comenta", class: "generic-button" %>
+      </div>
     <% end %>
-  </ul>
+  </div>
 </div>
-
-
