@@ -13,4 +13,7 @@ Rails.application.routes.draw do
   # To create a post, we call the create function from the posts controller.
   get "/create_post", to: "posts#create", as: :post
 
+
+  get "/", to: "posts#viewAll", as: :all
+
 end

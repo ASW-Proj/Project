@@ -6,4 +6,19 @@ class PostsController < ApplicationController
         @bodyLabel          = "Body"
         @submitButton       = "Create"
     end
+
+    def viewPost
+        @pageTitle = "View Post"
+        @pageTitle          = "Create Post"
+        @urlLabel           = "URL"
+        @titleLabel         = "Title"
+        @bodyLabel          = "Body"
+    end
+
+    def viewAll
+        @pageTitle = "All Posts"
+        @urlLabel           = "URL"
+        @titleLabel         = "Title"
+        @bodyLabel          = "Body"
+    end
 end
