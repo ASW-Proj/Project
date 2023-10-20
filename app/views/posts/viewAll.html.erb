@@ -1,0 +1,20 @@
+<div class="view-all-page">
+    <!-- Title -->
+    <%= render "shared/main_header" do %>
+        <%= @pageTitle %>
+    <% end %>
+
+    <!-- Post creation form -->
+
+
+        if(posts.first.nil?)
+            render html: "test"
+        else
+            for i in posts.size() do
+                render html:(posts.get(i).gettext())
+
+
+
+    <!-- Create button -->
+
+</div>
