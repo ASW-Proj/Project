@@ -1,0 +1,17 @@
+<div class="post-container">
+<h1 class="post-title"><%= @post.title %></h1>
+<p class="post-meta">Publicado el <%= @post.created_at.strftime('%d %B, %Y') %></p>
+<div class="post-content">
+  <%= @post.body %>
+
+  <h2>Comments</h2>
+  <ul class="comments-list">
+    <% @comments.each do |comment| %>
+      <li class="comment">
+        <div class="comment-body"><%= comment.body %></div>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+
