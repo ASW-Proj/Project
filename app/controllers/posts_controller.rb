@@ -6,4 +6,8 @@ class PostsController < ApplicationController
         @bodyLabel          = "Body"
         @submitButton       = "Create"
     end
+    def show
+        @post= Post.find(params[:id])
+        @comments= @post.comments
+    end
 end
