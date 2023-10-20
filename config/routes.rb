@@ -6,14 +6,12 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "posts#view_all"
 
 
   # ...................................................................... #
   # To create a post, we call the create function from the posts controller.
   get "/create_post", to: "posts#create", as: :post
 
-
-  get "/", to: "posts#viewAll", as: :all
 
 end

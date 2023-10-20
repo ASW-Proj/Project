@@ -15,7 +15,8 @@ class PostsController < ApplicationController
         @bodyLabel          = "Body"
     end
 
-    def viewAll
+    def view_all
         @pageTitle = "All Posts"
+        @posts = Post.all
     end
 end
