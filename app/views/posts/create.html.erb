@@ -9,6 +9,8 @@
     <!-- Post creation form -->
     <form>
         <!-- Url -->
+        <!-- TODO!!!  render pot escriure's render("shared/form/text_field") i possiblememt accepti més paràmetres -->
+        <!-- TODO!!!  scafold -->
         <%= render "shared/form/text_field", label: @urlLabel %>
 
         <!-- Title -->
@@ -22,5 +24,7 @@
     <%= render "/shared/button" do %>
         <%= @submitButton %>
     <% end %>
+
+    <%= render "form", post: @post %>
 
 </div>
