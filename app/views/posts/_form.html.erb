@@ -1,8 +1,9 @@
 <!-- Create post form -->
 <%= form_with(model: post, class: "form-text") do |form| %>
   <% if post.errors.any? %>
+    <!-- Error message -->
     <div class="error-container">
-      There are <%= pluralize(post.errors.count, "error") %> in this post and it couldn't be saved:
+      The post couldn't be saved. Found <%= pluralize(post.errors.count, "error") %>:
       <ul style="margin: 0;">
         <% post.errors.each do |error| %>
           <li><%= error.full_message %>.</li>
@@ -31,7 +32,6 @@
 
   <!-- Submit button -->
   <div style="padding-top: 16px">
-    <!-- TODO: disabled -->
     <%= form.submit(class: "generic-button") %>
   </div>
 <% end %>
