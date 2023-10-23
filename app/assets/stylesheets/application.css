@@ -25,6 +25,14 @@ h1 {
    color: #495057;
 }
 
+/* Estilo para el contenedor del error */
+.error-container {
+  color: rgb(255, 82, 82);
+  background-color: rgb(255, 234, 234);
+  padding: 16px;
+  border-radius: 7.5px;
+}
+
 /* Estilo para el contenedor del post */
 .post-container {
    max-width: 800px;

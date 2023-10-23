@@ -13,20 +13,22 @@
 }
 
 .form-label {
-    padding: 8px 8px 8px 0;
+    display: block;
+    padding: 16px 8px 8px 0;
     color: #495057;
 }
 
-.form-text-input {
+.form-text {
     box-sizing: border-box;
     width: 100%;
     padding: 0 0 8px;
     color: #495057;
 }
 
-.form-text-input__inner {
-    box-sizing: border-box;
+.form-text-field-input {
     width: 100%;
+    padding: 8px 0;
+    box-sizing: border-box;
     min-height: 30px;
     padding-left: 8px;
     padding-right: 8px;
@@ -36,25 +38,32 @@
     border-radius: 7.5px;
     outline: 1px solid rgba(73, 80, 87, 0.25);
     border: none;
+    color: #495057;
 }
 
-.form-text-input__inner:focus {
-    box-shadow: rgba(241, 100, 30, 0.25) 0 0 0 3.75px;
-}
-
-.form-text-input__inner:focus-visible {
-    outline: 1px solid rgb(248, 178, 143);
-}
-
-.form-text-input__outer {
+.form-text-area-input {
     width: 100%;
     padding: 8px 0;
-}
-
-.form-text-area__inner {
     box-sizing: border-box;
+    padding-left: 8px;
+    padding-right: 8px;
+    font-size: 15px;
+    font-family: "Droid Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 22px;
+    border-radius: 7.5px;
+    outline: 1px solid rgba(73, 80, 87, 0.25);
+    border: none;
     max-width: 100%;
     min-height: 76px;
     padding-top: 4px;
     padding-bottom: 4px;
+    color: #495057;
+}
+
+.form-text-field-input:focus, .form-text-area-input:focus {
+    box-shadow: rgba(241, 100, 30, 0.25) 0 0 0 3.75px;
+}
+
+.form-text-field-input:focus-visible, .form-text-area-input:focus-visible {
+    outline: 1px solid rgb(248, 178, 143);
 }
