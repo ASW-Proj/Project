@@ -1,0 +1,37 @@
+<!-- Create post form -->
+<%= form_with(model: post, class: "form-text") do |form| %>
+  <% if post.errors.any? %>
+    <!-- Error message -->
+    <div class="error-container">
+      The post couldn't be saved. Found <%= pluralize(post.errors.count, "error") %>:
+      <ul style="margin: 0;">
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %>.</li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Title -->
+  <div>
+    <%= form.label(:title, class: "form-label") %>
+    <%= form.text_field(:title, class: "form-text-field-input") %>
+  </div>
+
+  <!-- Url -->
+  <div>
+    <%= form.label(:url, class: "form-label") %>
+    <%= form.text_field(:url, class: "form-text-field-input") %>
+  </div>
+
+  <!-- Body -->
+  <div>
+    <%= form.label(:body, class: "form-label") %>
+    <%= form.text_area(:body, class: "form-text-area-input") %>
+  </div>
+
+  <!-- Submit button -->
+  <div style="padding-top: 16px">
+    <%= form.submit(class: "generic-button") %>
+  </div>
+<% end %>
