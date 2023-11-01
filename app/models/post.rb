@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
-    validates :title, presence: true, :length => { 
+    validates :title, presence: true, :length => {
         :minimum => 4,
         :maximum => 255,
         :too_short => "must have at least %{count} characters",
