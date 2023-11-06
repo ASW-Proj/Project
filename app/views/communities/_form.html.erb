@@ -1,0 +1,45 @@
+<!-- Create community form -->
+<%= form_with(model: community, class: "form-text") do |form| %>
+  <% if community.errors.any? %>
+    <!-- Error message -->
+    <div class="error-container">
+      The community couldn't be saved. Found <%= pluralize(community.errors.count, "error") %>:
+      <ul style="margin: 0;">
+        <% community.errors.each do |error| %>
+          <li><%= error.full_message %>.</li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Community ID -->
+  <div>
+    <%= form.label(:c_id, "ID", class: "form-label") %>
+    <%= form.text_field(:c_id, class: "form-text-field-input") %>
+  </div>
+
+  <!-- Name -->
+  <div>
+    <%= form.label(:name, class: "form-label") %>
+    <%= form.text_field(:name, class: "form-text-field-input") %>
+  </div>
+
+  <!-- Avatar -->
+  <div>
+    <%= form.label(:avatar, class: "form-label") %>
+    <%= form.file_field(:avatar, class: "form-file-field-input") %>
+  </div>
+
+  <!-- Banner -->
+  <div>
+    <%= form.label(:banner, class: "form-label") %>
+    <%= form.file_field(:banner, class: "form-file-field-input") %>
+  </div>
+
+  <!-- Submit button -->
+  <div style="padding-top: 16px">
+    <%= form.submit(class: "generic-button") %>
+  </div>
+<% end %>
+
+

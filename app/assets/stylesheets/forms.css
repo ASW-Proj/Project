@@ -60,10 +60,27 @@
     color: #495057;
 }
 
-.form-text-field-input:focus, .form-text-area-input:focus {
+.form-file-field-input {
+    width: 100%;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    min-height: 30px;
+    font-size: 15px;
+    font-family: "Droid Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 22px;
+    border-radius: 7.5px;
+    outline: 1px solid rgba(73, 80, 87, 0.25);
+    border: none;
+    max-width: 100%;
+    color: #495057;
+    cursor: pointer;
+}
+
+.form-text-field-input:focus, .form-text-area-input:focus, .form-file-field-input:focus {
     box-shadow: rgba(241, 100, 30, 0.25) 0 0 0 3.75px;
 }
 
-.form-text-field-input:focus-visible, .form-text-area-input:focus-visible {
+.form-text-field-input:focus-visible, .form-text-area-input:focus-visible, .form-file-field-input:focus-visible {
     outline: 1px solid rgb(248, 178, 143);
 }
+
