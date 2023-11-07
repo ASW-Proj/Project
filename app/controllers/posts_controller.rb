@@ -59,8 +59,16 @@ class PostsController < ApplicationController
     end
   end
 
+  def buscar
+    if params[:busqueda].present?
+      @posts = Post.where("title LIKE ?", "%#{params[:busqueda]}%")
+    else
+      @posts = []
+    end
+  end
+
   private
-    # Use callbacks to share common setup or constraints between actions.
+     #Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
     end
@@ -69,4 +77,6 @@ class PostsController < ApplicationController
     def post_params
       params.fetch(:post, {}).permit(:title, :url, :body)
     end
+
+
 end
