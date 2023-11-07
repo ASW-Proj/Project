@@ -62,7 +62,6 @@
 
 .form-file-field-input {
     width: 100%;
-    padding: 8px 12px;
     box-sizing: border-box;
     min-height: 30px;
     font-size: 15px;
@@ -74,6 +73,7 @@
     max-width: 100%;
     color: #495057;
     cursor: pointer;
+    padding-right: 12px;
 }
 
 .form-text-field-input:focus, .form-text-area-input:focus, .form-file-field-input:focus {
@@ -84,3 +84,22 @@
     outline: 1px solid rgb(248, 178, 143);
 }
 
+.form-file-field-input::file-selector-button {
+    background-color: rgb(248, 249, 250);
+    color: #495057;
+    font-family: "Droid Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 15px;
+    min-height: 30px;
+    padding: 8px 12px;
+    line-height: 22px;
+    outline: 1px solid rgba(73, 80, 87, 0.25);
+    border: none;
+    border-top-left-radius: 7.5px;
+    border-bottom-left-radius: 7.5px;
+    cursor: pointer;
+    margin-right: 12px;
+}
+
+.form-file-field-input:hover::file-selector-button {
+    background-color: rgb(233, 236, 239);
+}

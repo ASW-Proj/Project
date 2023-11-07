@@ -6,7 +6,13 @@
       The community couldn't be saved. Found <%= pluralize(community.errors.count, "error") %>:
       <ul style="margin: 0;">
         <% community.errors.each do |error| %>
-          <li><%= error.full_message %>.</li>
+          <li>
+            <% if error.full_message == "C can't be blank" %>
+              ID can't be blank.
+            <% else %>
+              <%= error.full_message %>.
+            <% end %>
+          </li>
         <% end %>
       </ul>
     </div>
