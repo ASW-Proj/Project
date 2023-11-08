@@ -8,9 +8,8 @@
     <strong>Name:</strong>
     <%= community.name %>
   </p>
-
-  <%= image_tag(@community.avatar) %>
-  <%= image_tag(@community.banner) %>
-
+  
+  <%= image_tag community.avatar rescue "No avatar" %>
+  <%= image_tag community.banner rescue "No banner" %>
 
 </div>

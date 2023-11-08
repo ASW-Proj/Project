@@ -4,11 +4,10 @@
 
 <div id="communities">
   <% @communities.each do |community| %>
-    <%= render community %>
-    <p>
-      <%= link_to "Show this community", community %>
-    </p>
+    <%= community.c_id %>
   <% end %>
+  
+ 
 </div>
 
 <%= link_to "New community", new_community_path %>
