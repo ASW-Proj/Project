@@ -23,10 +23,12 @@ Rails.application.routes.draw do
     resources :comments, only: [:create]
   end
 
+  get 'search/index'
+
   # Route to view a single post
   get "/posts/:id" => "posts#show", as: :show_post
 
   get '/buscar', to: 'posts#buscar'
 
-  root 'posts#index'
+  root 'search#index'
 end
