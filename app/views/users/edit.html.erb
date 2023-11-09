@@ -1,0 +1,46 @@
+<!-- Editing profile -->
+<div class="form-page">
+
+<h1>Editing profile</h1>
+
+<%= form_with(model: @user, local: true) do |form| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibieron que este usuario fuera guardado:</h2>
+
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.email_field :email, required: true %>
+  </div>
+
+   <!-- Avatar -->
+  <div>
+    <%= form.label(:avatar, class: "form-label") %>
+    <%= form.file_field(:avatar, class: "form-file-field-input") %>
+  </div>
+
+  <!-- Banner -->
+  <div>
+    <%= form.label(:banner, class: "form-label") %>
+    <%= form.file_field(:banner, class: "form-file-field-input") %>
+  </div>
+
+   <!-- Save Changes -->
+  <div style="padding-top: 16px">
+    <%= form.submit(class: "generic-button") %>
+  </div>
+
+  <div style="padding-top: 16px">
+  <%= link_to "Cancel", @user , class: "cancel-button" %>
+</div>
+
+
+<% end %>

@@ -1,0 +1,36 @@
+<!-- Create user form -->
+<%= form_with(model: @user, class: "form-text") do |form| %>
+   <% if @user.errors.any? %>
+    <!-- Error message -->
+    <div class="error-container">
+      The user couldn't be saved. Found <%= pluralize(@user.errors.count, "error") %>:
+      <ul style="margin: 0;">
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %>.</li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <!-- Email -->
+  <div>
+    <%= form.label(:email, class: "form-label") %>
+    <%= form.text_field(:email, class: "form-text-field-input") %>
+  </div>
+
+<!-- Password -->
+  <div>
+    <%= form.label(:password, class: "form-label") %>
+    <%= form.password_field(:password, class: "form-text-field-input") %>
+  </div>
+
+
+
+
+   <!-- Submit button -->
+  <div style="padding-top: 16px">
+    <%= form.submit(class: "generic-button") %>
+  </div>
+<% end %>
+

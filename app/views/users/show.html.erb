@@ -1,0 +1,18 @@
+<%= stylesheet_link_tag "buttons", "forms" %>
+
+<div class="images-container">
+  <div class="banner-container">
+    <%= image_tag @user.banner, class: "banner-image" rescue "No banner" %>
+  </div>
+  <div class="avatar-container">
+    <%= image_tag @user.avatar, class: "avatar-image" rescue "No avatar" %>
+  </div>
+</div>
+
+<div class="post-container">
+  <div class="post-content">
+    <h1 class="post-title"><%= @user.email %></h1>
+    <p class="post-meta"><%= "Created at " + @user.created_at.strftime('%d %B, %Y') %></p>
+    <%= link_to "Edit profile", edit_user_path(@user) %> |
+  </div>
+</div>
