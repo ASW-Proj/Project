@@ -1,0 +1,33 @@
+
+
+<%= form_tag(search_index_path, method: "get") do %>
+  <!-- Buscar en -->
+  <div>
+    <%= label_tag(:search_type, "Buscar en:", class: "form-label") %>
+    <%= select_tag(:search_type, options_for_select([ "Comments","Posts"]), class: "form-select-large") %>
+  </div>
+
+  <!-- Título -->
+  <div>
+    <%= label_tag(:query, "Título:", class: "form-label") %>
+    <%= text_field_tag(:query, nil, class: "form-text-field-input") %>
+  </div>
+
+
+
+  <!-- Botón de envío -->
+  <div style="padding-top: 16px">
+    <%= submit_tag "Buscar", class: "generic-button" %>
+  </div>
+<% end %>
+
+<% if @results.present? %>
+  <h2>Resultados:</h2>
+  <ul>
+    <% @results.each do |result| %>
+      <li><%= result.title %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No se encontraron resultados.</p>
+<% end %>
