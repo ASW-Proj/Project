@@ -1,13 +1,34 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Communities</h1>
+<h1>List of communities</h1>
 
 <div id="communities">
-  <% @communities.each do |community| %>
-    <%= community.c_id %>
-  <% end %>
-  
- 
+
+  <table>
+
+    <thead>
+      <th>Name</th>
+      <th>Subscribers</th>
+      <th>Posts</th>
+      <th>Comments</th>
+      <th></th>
+    </thead>
+
+    <tbody>
+      <% @communities.each do |community| %>
+        <tr>
+          <td><%= community.name %></td>
+          <td><%= community.users.count %></td>
+          <td><%= community.posts.count %></td>
+          <td><%= community.comments.count %></td>
+          <td>Subscribe</td>
+        </tr>
+      <% end %>
+    </tbody>
+
+  </table>
+<!-- TODO: communities with no names should not be rendered -->
+<!-- TODO: names should be unique? -->
 </div>
 
 <%= link_to "New community", new_community_path %>

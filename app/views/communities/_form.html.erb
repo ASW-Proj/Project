@@ -6,13 +6,7 @@
       The community couldn't be saved. Found <%= pluralize(community.errors.count, "error") %>:
       <ul style="margin: 0;">
         <% community.errors.each do |error| %>
-          <li>
-            <% if error.full_message == "C can't be blank" %>
-              ID can't be blank.
-            <% else %>
-              <%= error.full_message %>.
-            <% end %>
-          </li>
+          <li><%= error.full_message %>.</li>
         <% end %>
       </ul>
     </div>
@@ -20,8 +14,8 @@
 
   <!-- Community ID -->
   <div>
-    <%= form.label(:c_id, "ID", class: "form-label") %>
-    <%= form.text_field(:c_id, class: "form-text-field-input") %>
+    <%= form.label(:identifier, class: "form-label") %>
+    <%= form.text_field(:identifier, class: "form-text-field-input") %>
   </div>
 
   <!-- Name -->
