@@ -3,6 +3,9 @@
 <div class="post-container">
   <h1 class="post-title"><%= @post.title %></h1>
   <p class="post-meta"><%= "Publicat el " + @post.created_at.strftime('%d %B, %Y') %></p>
+  <p class="post-meta"><%= "Publicat per " + @post.user.email %></p>
+
+
   <div class="post-content">
     <%= @post.body %>
   </div>

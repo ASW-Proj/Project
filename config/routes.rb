@@ -37,5 +37,5 @@ Rails.application.routes.draw do
 
   get '/buscar', to: 'posts#buscar'
 
-  root 'search#index'
+  root 'posts#index'
 end
