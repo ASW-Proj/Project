@@ -1,0 +1,26 @@
+<h1>Cerca</h1>
+
+<%= form_tag('/buscar', method: 'get') do %>
+  <%= text_field_tag :busqueda, params[:busqueda], placeholder: 'Buscar por título' %>
+
+  <!-- Agrega un desplegable para seleccionar qué buscar -->
+  <%= select_tag :tipo_busqueda, options_for_select(["Publicaciones", "Comentarios"], params[:tipo_busqueda]), include_blank: true %>
+
+  <%= submit_tag 'Buscar' %>
+<% end %>
+
+<% if @posts.any? %>
+  <ul>
+    <% @posts.each do |resultado| %>
+      <li>
+        <% if resultado.is_a?(Post) %>
+          <%= link_to resultado.title, resultado %>
+        <% elsif resultado.is_a?(Comment) %>
+          <%= link_to "Comentario en #{resultado.post.title}", resultado %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No se encontraron resultados que coincidan con la búsqueda.</p>
+<% end %>

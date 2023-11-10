@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
   resources :communities
-  devise_for :users, controllers: {
-    omniauth_callbacks: 'users/omniauth_callbacks',
-    sessions: 'users/sessions',
-    registrations: 'users/registrations'
-  }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -24,6 +19,8 @@ Rails.application.routes.draw do
   end
 
   get 'search/index'
+
+  resources :users
 
   # Route to view a single post
   get "/posts/:id" => "posts#show", as: :show_post
