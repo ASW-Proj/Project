@@ -3,7 +3,9 @@
 <h1>List of communities</h1>
 
 <div id="communities">
+
   <table>
+
     <thead>
       <th>Name</th>
       <th>Subscribers</th>
@@ -11,19 +13,22 @@
       <th>Comments</th>
       <th></th>
     </thead>
-  </table>
+
     <tbody>
-    <!-- TODO: communities with no names should not be rendered -->
       <% @communities.each do |community| %>
-        <tr><%= community.name %></tr>
-        <tr></tr>
-        <tr></tr>
-        <tr></tr>
-        <tr></tr>
+        <tr>
+          <td><%= community.name %></td>
+          <td><%= community.users.count %></td>
+          <td><%= community.posts.count %></td>
+          <td><%= community.comments.count %></td>
+          <td>Subscribe</td>
+        </tr>
       <% end %>
     </tbody>
+
   </table>
- 
+<!-- TODO: communities with no names should not be rendered -->
+<!-- TODO: names should be unique? -->
 </div>
 
 <%= link_to "New community", new_community_path %>
