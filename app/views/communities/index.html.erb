@@ -17,7 +17,7 @@
     <tbody>
       <% @communities.each do |community| %>
         <tr>
-          <td><%= community.name %></td>
+          <td><%= link_to(community.name, community) %></td>
           <td><%= community.users.count %></td>
           <td><%= community.posts.count %></td>
           <td><%= community.comments.count %></td>
