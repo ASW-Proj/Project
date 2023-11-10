@@ -5,12 +5,6 @@
 <div class="view_apage">
 
 
-    <!-- Body -->
-
-    <!--%= link_to "sortByVotes", homeVoted(sort: "votes", direction: params[:direction] == "asc" ? "desc" : "desc") %-->
-    <%= link_to "sortByOldest", homeOlder(sort: "createdAt", direction: params[:direction] == "asc" ? "desc" : "asc") %>
-    <!--%= link_to "sortByComments", issues_path(sort: "id", direction: params[:direction] == "asc" ? "desc" : "desc") %-->
-
 
 
     <h2><%= "Todos los posts" %></h2>
@@ -25,6 +19,9 @@
         </li>
       <% end %>
     <% end %>
+
+    <h2><%= "Comunitats" %></h2>
+    <ul class="community-list"></u1>
 
 
   </div>
