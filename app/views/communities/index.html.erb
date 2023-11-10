@@ -1,12 +1,28 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Communities</h1>
+<h1>List of communities</h1>
 
 <div id="communities">
-  <% @communities.each do |community| %>
-    <%= community.identifier %>
-  <% end %>
-  
+  <table>
+    <thead>
+      <th>Name</th>
+      <th>Subscribers</th>
+      <th>Posts</th>
+      <th>Comments</th>
+      <th></th>
+    </thead>
+  </table>
+    <tbody>
+    <!-- TODO: communities with no names should not be rendered -->
+      <% @communities.each do |community| %>
+        <tr><%= community.name %></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+      <% end %>
+    </tbody>
+  </table>
  
 </div>
 
