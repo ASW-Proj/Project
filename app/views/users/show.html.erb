@@ -2,24 +2,43 @@
 
 <div class="images-container">
   <div class="banner-container">
-    <%= image_tag current_user.banner, class: "banner-image" rescue "No banner" %>
+    <%= image_tag @user.banner, class: "banner-image" rescue "No banner" %>
   </div>
   <div class="avatar-container">
-    <%= image_tag current_user.avatar, class: "avatar-image" rescue "No avatar" %>
+    <%= image_tag @user.avatar, class: "avatar-image" rescue "No avatar" %>
   </div>
 </div>
 
 <div class="post-container">
   <div class="post-content">
-    <h1 class="post-title"><%= current_user.email %></h1>
-    <p class="post-meta"><%= "Created at " + current_user.created_at.strftime('%d %B, %Y') %></p>
+    <h1 class="post-title"><%= @user.email %></h1>
+    <p class="post-meta"><%= "Created at " + @user.created_at.strftime('%d %B, %Y') %></p>
 
     <!-- Número de publicaciones -->
-    <p><strong>Publicaciones:</strong> <%= current_user.posts.count %></p>
+    <p><strong>Publicaciones:</strong> <%= @user.posts.count %></p>
 
     <!-- Número de comentarios -->
-    <p><strong>Comentarios:</strong> <%= current_user.comments.count %></p>
+    <p><strong>Comentarios:</strong> <%= @user.comments.count %></p>
 
-    <%= link_to "Edit profile", edit_user_path(current_user) %> |
+    <%= link_to "Edit profile", edit_user_path(@user) %> |
+
+
+  </div>
+
+  </div>
+    <!-- Lista de posts del usuario -->
+    <h2>Posts del Usuario</h2>
+    <% if @user.posts.any? %>
+      <ul>
+        <% @user.posts.each do |post| %>
+          <li>
+            <%= link_to post.title, post_path(post) %>
+            <!-- Agrega cualquier información adicional del post que desees mostrar -->
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No hay posts disponibles.</p>
+    <% end %>
   </div>
 </div>

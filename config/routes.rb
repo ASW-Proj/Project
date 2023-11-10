@@ -28,6 +28,13 @@ Rails.application.routes.draw do
     resources :comments, only: [:create]
   end
 
+  resources :users, only: [:show] do
+    member do
+      get 'posts', to: 'users#posts', as: 'user_posts'
+      get 'comments', to: 'users#comments', as: 'user_comments'
+    end
+  end
+
   get 'search/index'
 
   resources :users

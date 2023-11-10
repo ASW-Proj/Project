@@ -60,4 +60,19 @@ class UsersController < ApplicationController
   def user_params
     params.fetch(:user, {}).permit( :email, :password , :avatar, :banner)
   end
+
+
+  def posts
+    @user = User.find(params[:id])
+    @posts = @user.posts
+    render 'posts/index'
+  end
+
+  def comments
+    @user = User.find(params[:id])
+    @comments = @user.comments
+    render 'comments/index'
+  end
+
+
 end
