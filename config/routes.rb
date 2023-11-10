@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  resources :communities
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     resources :comments, only: [:create]
   end
 
+  get 'search/index'
+
   resources :users
 
   # Route to view a single post
@@ -25,5 +27,5 @@ Rails.application.routes.draw do
 
   get '/buscar', to: 'posts#buscar'
 
-  root 'users#new'
+  root 'search#index'
 end

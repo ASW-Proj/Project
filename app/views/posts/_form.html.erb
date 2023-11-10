@@ -30,6 +30,12 @@
     <%= form.text_area(:body, class: "form-text-area-input") %>
   </div>
 
+  <!-- Category -->
+  <div>
+    <%= form.label(:community_id, class: "form-label") %>
+    <%= form.collection_select :community_id, Community.all.order(name: :asc), :id, :name, { prompt: "Select a community" } %>
+  </div>
+
   <!-- Submit button -->
   <div style="padding-top: 16px">
     <%= form.submit(class: "generic-button") %>

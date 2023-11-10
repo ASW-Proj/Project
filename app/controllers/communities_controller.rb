@@ -3,7 +3,7 @@ class CommunitiesController < ApplicationController
 
   # GET /communities or /communities.json
   def index
-    @communities = Community.all
+    @communities = Community.all.order(name: :asc)
   end
 
   # GET /communities/1 or /communities/1.json

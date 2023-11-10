@@ -6,4 +6,5 @@ class Post < ApplicationRecord
         :too_long  => "must have at most %{count} characters",
     }
     has_many :comments
+    belongs_to :community
 end
