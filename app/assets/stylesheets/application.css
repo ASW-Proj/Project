@@ -33,6 +33,14 @@ h1 {
   border-radius: 7.5px;
 }
 
+/* Estilo para el contenedor de éxito */
+.success-container {
+  color: rgb(0, 128, 0);
+  background-color: rgb(234, 255, 234);
+  padding: 16px;
+  border-radius: 7.5px;
+}
+
 /* Estilo para el contenedor del post */
 .post-container {
    max-width: 800px;

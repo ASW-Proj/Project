@@ -1,10 +1,17 @@
-<p style="color: green"><%= notice %></p>
+<div class="profile-page">
+  <% if notice %>
+    <div class="success-container">
+      <%= notice %>
+    </div>
+  <% end %>
+  <%= render @community %>
 
-<%= render @community %>
+  <div>
+    <%= link_to "Edit this community", edit_community_path(@community), class: "generic-button" %>
 
-<div>
-  <%= link_to "Edit this community", edit_community_path(@community) %> |
-  <%= link_to "Back to communities", communities_path %>
+    <%= link_to "Back to communities", communities_path, class: "generic-button" %>
 
-  <%= button_to "Destroy this community", @community, method: :delete %>
+    <%= button_to "Destroy this community", @community, method: :delete, class: "cancel-button" %>
+  </div>
+
 </div>

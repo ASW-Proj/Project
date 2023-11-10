@@ -1,15 +1,11 @@
 <div id="<%= dom_id community %>">
-  <p>
-    <strong>Identifier:</strong>
-    <%= community.identifier %>
-  </p>
-
-  <p>
-    <strong>Name:</strong>
-    <%= community.name %>
-  </p>
-  
-  <%= image_tag community.avatar rescue "No avatar" %>
-  <%= image_tag community.banner rescue "No banner" %>
+  <div class="banner-container">
+    <%= image_tag community.banner, class: "banner-image" rescue "No banner" %>
+  </div>
+  <div class="avatar-container">
+    <%= image_tag community.avatar, class: "avatar-image" rescue "No avatar" %>
+  </div>
+  <h1><%= community.name %></h1>
+  <span><%= community.identifier %></span>
 
 </div>
