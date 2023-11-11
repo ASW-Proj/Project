@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  get 'pages/home'
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    sessions: 'users/sessions',
+    registrations: 'users/registrations'
+  }
+  devise_scope :user do
+    get '/users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
+  end
+
   resources :communities
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -18,6 +28,13 @@ Rails.application.routes.draw do
     resources :comments, only: [:create]
   end
 
+  resources :users, only: [:show] do
+    member do
+      get 'posts', to: 'users#posts', as: 'user_posts'
+      get 'comments', to: 'users#comments', as: 'user_comments'
+    end
+  end
+
   get 'search/index'
 
   resources :users
@@ -27,5 +44,5 @@ Rails.application.routes.draw do
 
   get '/buscar', to: 'posts#buscar'
 
-  root 'search#index'
+  root 'posts#index'
 end

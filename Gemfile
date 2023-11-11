@@ -67,11 +67,9 @@ group :test do
   gem "selenium-webdriver"
 end
 
-
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem "omniauth-rails_csrf_protection", "~> 1.0"
-
 # Amazon S3 storage
 gem "aws-sdk-s3"

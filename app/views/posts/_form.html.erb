@@ -32,14 +32,10 @@
 
   <!-- Category -->
   <div>
-    <%= form.label(:community_id, class: "form-label") %>
-    <%= form.collection_select :community_id, Community.all.order(name: :asc), :id, :name, { prompt: "Select a community" } %>
+    <%= form.label(:community_id, "Community:", class: "form-label") %>
+    <%= form.select(:community_id, Community.all.order(name: :asc).map { |c| [c.name, c.id] }, { prompt: "Select a community" }, class: "form-select-large") %>
   </div>
 
-  <div>
-    <%= form.label(:user_id, class: "form-label") %>
-    <%= form.collection_select :user_id, User.all.order(email: :asc), :id, :email, { prompt: "Select a user" } %>
-  </div>
 
   <!-- Submit button -->
   <div style="padding-top: 16px">
