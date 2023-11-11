@@ -8,37 +8,56 @@
     <%= image_tag @user.avatar, class: "avatar-image" rescue "No avatar" %>
   </div>
 </div>
-
-<div class="post-container">
-  <div class="post-content">
+<div class="post-content">
     <h1 class="post-title"><%= @user.email %></h1>
     <p class="post-meta"><%= "Created at " + @user.created_at.strftime('%d %B, %Y') %></p>
 
     <!-- Número de publicaciones -->
-    <p><strong>Publicaciones:</strong> <%= @user.posts.count %></p>
+    <p><strong>Posts:</strong> <%= @user.posts.count %></p>
 
     <!-- Número de comentarios -->
-    <p><strong>Comentarios:</strong> <%= @user.comments.count %></p>
+    <p><strong>Comments:</strong> <%= @user.comments.count %></p>
 
     <%= link_to "Edit profile", edit_user_path(@user) %> |
 
+    <!-- Botones para seleccionar entre Posts y Comments -->
+    <%= form_tag(user_path(@user), method: :get, class: "select-form") do %>
+      <%= submit_tag("Show Posts", name: "content_type", value: "Posts", class: "generic-button") %>
+      <%= submit_tag("Show Comments", name: "content_type", value: "Comments", class: "generic-button") %>
+    <% end %>
 
-  </div>
-
-  </div>
-    <!-- Lista de posts del usuario -->
-    <h2>Posts del Usuario</h2>
-    <% if @user.posts.any? %>
-      <ul>
-        <% @user.posts.each do |post| %>
-          <li>
-            <%= link_to post.title, post_path(post) %>
-            <!-- Agrega cualquier información adicional del post que desees mostrar -->
-          </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p>No hay posts disponibles.</p>
+    <!-- Información del perfil -->
+    <% if params[:content_type] == "Posts" %>
+      <!-- Lista de posts del usuario -->
+      <h2>User's Posts</h2>
+      <% if @user.posts.any? %>
+        <ul>
+          <% @user.posts.each do |post| %>
+            <li>
+              <%= link_to post.title, post_path(post) %>
+              <!-- Agrega cualquier información adicional del post que desees mostrar -->
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>There are no posts.</p>
+      <% end %>
+    <% elsif params[:content_type] == "Comments" %>
+      <!-- Lista de comentarios del usuario -->
+      <h2>User's Comments</h2>
+      <% if @user.comments.any? %>
+        <ul>
+          <% @user.comments.each do |comment| %>
+            <li>
+              <%= comment.body %>
+              <!-- Agrega cualquier información adicional del comentario que desees mostrar -->
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>There are no comments.</p>
+      <% end %>
     <% end %>
   </div>
 </div>
+
