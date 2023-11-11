@@ -58,20 +58,26 @@ class UsersController < ApplicationController
 
   # Método para permitir los parámetros seguros al crear o actualizar un usuario
   def user_params
-    params.fetch(:user, {}).permit( :email, :password , :avatar, :banner)
+    params.fetch(:user, {}).permit( :email, :password , :avatar, :banner, :biography)
   end
 
 
   def posts
     @user = User.find(params[:id])
-    @posts = @user.posts
-    render 'posts/index'
+    @content_type = 'Posts'
+    @content = @user.posts
+    render 'show_content'
   end
 
   def comments
     @user = User.find(params[:id])
-    @comments = @user.comments
-    render 'comments/index'
+    @content_type = 'Comments'
+    @content = @user.comments
+    render 'show_content'
+  end
+
+  def show_content_params
+    params.permit(:content_type)
   end
 
 

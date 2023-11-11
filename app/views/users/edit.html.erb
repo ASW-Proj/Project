@@ -21,6 +21,12 @@
     <%= form.email_field :email, required: true %>
   </div>
 
+   <!-- Biography -->
+  <div>
+    <%= form.label(:biography, class: "form-label") %>
+    <%= form.text_area(:biography, class: "form-text-area-input") %>
+  </div>
+
    <!-- Avatar -->
   <div>
     <%= form.label(:avatar, class: "form-label") %>
