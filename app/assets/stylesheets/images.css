@@ -1,18 +1,21 @@
 .avatar-image {
-  max-width: 100px; /* Ajusta según tus necesidades */
-  max-height: 100px; /* Ajusta según tus necesidades */
+  max-width: 100px;
+  max-height: 100px;
   position: absolute;
   top: 0;
   left: 0;
 }
 
 .banner-image {
-  max-width: 100%; /* Se extiende al ancho del contenedor */
-  height: auto; /* Mantiene la proporción original de la imagen */
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  z-index: 1; /* Banner aparece detrás del avatar */
+ max-width: 100%;
+    height: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+     border-radius: 0 0 20px 20px;
+
 }
 
 .images-container {

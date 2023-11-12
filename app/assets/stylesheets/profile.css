@@ -9,10 +9,12 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    background: linear-gradient(#66ff66, transparent); /* Cambiado a verde claro */
+    background: linear-gradient(#66ff66, transparent);
     margin-bottom: 1.25rem;
     flex-direction: column;
     align-items: center;
+    background-size: cover;
+     background-position: center;
 }
 
 .seccion-perfil-usuario .perfil-usuario-portada {
@@ -20,8 +22,9 @@
     position: relative;
     width: 90%;
     height: 17rem;
-    background-image: linear-gradient(45deg, #00cc00, #33cc33); /* Cambiado a gradientes verdes */
+    background-image: linear-gradient(45deg, #00cc00, #33cc33);
     border-radius: 0 0 20px 20px;
+
 }
 
 .seccion-perfil-usuario .perfil-usuario-portada .boton-portada {
@@ -63,17 +66,26 @@
 }
 
 .seccion-perfil-usuario .perfil-usuario-avatar .boton-avatar {
-    position: absolute;
-    left: -2px;
-    top: -2px;
-    border: 0;
-    background-color: #fff;
-    box-shadow: 0 0 12px rgba(0, 0, 0, .2);
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    cursor: pointer;
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  border: none;
+  background-color: #fff;
+  box-shadow: 0 0 12px rgba(0, 0, 0, .2);
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
 }
+
+.seccion-perfil-usuario .perfil-usuario-avatar .boton-avatar i {
+  font-size: 20px; /* Ajusta el tamaño del icono según tus necesidades */
+}
+
 
 .seccion-perfil-usuario .perfil-usuario-body {
     width: 70%;
@@ -86,6 +98,14 @@
     display: block;
     width: 100%;
     font-size: 1.75em;
+    margin-bottom: 0.5rem;
+}
+
+
+.seccion-perfil-usuario .perfil-usuario-body .titulo2 {
+    display: block;
+    width: 100%;
+    font-size: 1.2em;
     margin-bottom: 0.5rem;
 }
 

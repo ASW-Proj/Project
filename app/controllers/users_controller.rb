@@ -58,7 +58,7 @@ class UsersController < ApplicationController
 
   # Método para permitir los parámetros seguros al crear o actualizar un usuario
   def user_params
-    params.fetch(:user, {}).permit( :email, :password , :avatar, :banner, :biography)
+    params.fetch(:user, {}).permit( :email, :password , :avatar, :banner, :biography, :full_name , :birthday, :full_name)
   end
 
 

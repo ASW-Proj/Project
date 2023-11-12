@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   }
   devise_scope :user do
     get '/users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
+    get '/logout', to: 'users/sessions#destroy', as: :logout
   end
+
+
+
 
   resources :communities
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
