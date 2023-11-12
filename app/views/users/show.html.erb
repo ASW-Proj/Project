@@ -1,63 +1,96 @@
-<%= stylesheet_link_tag "buttons", "forms" %>
+<%= stylesheet_link_tag "buttons", "forms", "pages" %>
+<!-- Agrega esto en el encabezado del HTML -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 
-<div class="images-container">
-  <div class="banner-container">
-    <%= image_tag @user.banner, class: "banner-image" rescue "No banner" %>
-  </div>
-  <div class="avatar-container">
-    <%= image_tag @user.avatar, class: "avatar-image" rescue "No avatar" %>
-  </div>
-</div>
-<div class="post-content">
-    <h1 class="post-title"><%= @user.email %></h1>
-    <p class="post-meta"><%= "Created at " + @user.created_at.strftime('%d %B, %Y') %></p>
 
-    <!-- Número de publicaciones -->
-    <p><strong>Posts:</strong> <%= @user.posts.count %></p>
+<section class="seccion-perfil-usuario">
+        <div class="perfil-usuario-header">
+          <div class="perfil-usuario-portada">
+            <div class="perfil-usuario-avatar">
+                <%= image_tag @user.avatar, alt: "img-avatar", class: "avatar-image" %>
+                <% if @usuario_actual == @usuario_visto %>
+                  <%= link_to edit_user_path(@user), class: "boton-avatar" do %>
+                    <i class="fas fa-pen"></i>
+                  <% end %>
+                <% end %>
 
-    <!-- Número de comentarios -->
-    <p><strong>Comments:</strong> <%= @user.comments.count %></p>
+            </div>
+            <%= image_tag @user.banner, alt: "img-portada", class: "banner-image" %>
+        </div>
 
-    <%= link_to "Edit profile", edit_user_path(@user) %> |
 
-    <!-- Botones para seleccionar entre Posts y Comments -->
-    <%= form_tag(user_path(@user), method: :get, class: "select-form") do %>
-      <%= submit_tag("Show Posts", name: "content_type", value: "Posts", class: "generic-button") %>
-      <%= submit_tag("Show Comments", name: "content_type", value: "Comments", class: "generic-button") %>
-    <% end %>
+          <div class="perfil-usuario-body">
 
-    <!-- Información del perfil -->
-    <% if params[:content_type] == "Posts" %>
-      <!-- Lista de posts del usuario -->
-      <h2>User's Posts</h2>
-      <% if @user.posts.any? %>
-        <ul>
-          <% @user.posts.each do |post| %>
-            <li>
-              <%= link_to post.title, post_path(post) %>
-              <!-- Agrega cualquier información adicional del post que desees mostrar -->
-            </li>
+            <div class="perfil-usuario-bio">
+                <h3 class="titulo"><%= @user.full_name %></h3>
+                <h4 class="titulo2"><%= @user.email %></h4>
+                <p class="texto"><%= @user.biography %></p>
+
+            </div>
+            <div class="perfil-usuario-footer">
+                <ul class="lista-datos">
+                    <li>
+                      <% if @user.birthday.present? %>
+                        <i class="icono fas fa-calendar-alt"></i> <%= @user.birthday.strftime('%d %B, %Y') %>
+                      <% else %>
+                        <i class="icono fas fa-calendar-alt"></i> Birthday
+                      <% end %>
+                    </li>
+
+                    <li><i class="icono fas fa-user-check"></i>  <%= @user.created_at.strftime('%d %B, %Y') %></li>
+                    <li><i class="icono fas fa-newspaper"></i> <%=  @user.posts.count.to_s + " posts" %></li>
+                    <li><i class="icono fas fa-comments"></i> <%= @user.comments.count.to_s + " comments"  %></li>
+                </ul>
+            </div>
+          </div>
+
+          <div class="menu-perfil">
+            <%= form_tag(user_path(@user), method: :get, class: "select-form") do %>
+              <%= button_tag(type: 'submit', name: 'content_type', value: 'Posts', class: 'generic-button') do %>
+                <i class="fas fa-newspaper"></i> Show Posts
+              <% end %>
+
+              <%= button_tag(type: 'submit', name: 'content_type', value: 'Comments', class: 'generic-button') do %>
+                <i class="fas fa-comments"></i> Show Comments
+              <% end %>
+            <% end %>
+
+
+            </ul>
+          </div>
+          <% if params[:content_type] == "Posts" %>
+            <!-- Lista de posts del usuario -->
+            <h2>User's Posts</h2>
+            <% if @user.posts.any? %>
+              <ul>
+                <% @user.posts.each do |post| %>
+                  <li>
+                    <%= link_to post.title, post_path(post) %>
+                    <!-- Agrega cualquier información adicional del post que desees mostrar -->
+                  </li>
+                <% end %>
+              </ul>
+            <% else %>
+              <p>There are no posts.</p>
+            <% end %>
+          <% elsif params[:content_type] == "Comments" %>
+            <!-- Lista de comentarios del usuario -->
+            <h2>User's Comments</h2>
+            <% if @user.comments.any? %>
+              <ul>
+                <% @user.comments.each do |comment| %>
+                  <li>
+                    <%= comment.body %>
+                    <!-- Agrega cualquier información adicional del comentario que desees mostrar -->
+                  </li>
+                <% end %>
+              </ul>
+            <% else %>
+              <p>There are no comments.</p>
+            <% end %>
           <% end %>
-        </ul>
-      <% else %>
-        <p>There are no posts.</p>
-      <% end %>
-    <% elsif params[:content_type] == "Comments" %>
-      <!-- Lista de comentarios del usuario -->
-      <h2>User's Comments</h2>
-      <% if @user.comments.any? %>
-        <ul>
-          <% @user.comments.each do |comment| %>
-            <li>
-              <%= comment.body %>
-              <!-- Agrega cualquier información adicional del comentario que desees mostrar -->
-            </li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p>There are no comments.</p>
-      <% end %>
-    <% end %>
-  </div>
-</div>
+      </div>
+</section>
 
+<hr/>
+</div>

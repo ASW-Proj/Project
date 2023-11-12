@@ -1,46 +1,62 @@
-<!-- Editing profile -->
-<div class="form-page">
+<section class="seccion-perfil-usuario">
+  <div class="perfil-usuario-header">
+    <!-- ... Código de la sección del perfil del usuario ... -->
 
-<h1>Editing profile</h1>
 
-<%= form_with(model: @user, local: true) do |form| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibieron que este usuario fuera guardado:</h2>
+  <div class="perfil-usuario-body">
+    <!-- Tu formulario de edición de perfil aquí -->
+    <div class="form-page">
+      <h1>Editing profile</h1>
 
-      <ul>
-        <% @user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+      <%= form_with(model: @user, local: true) do |form| %>
+        <% if @user.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+            <ul>
+              <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-      </ul>
+
+        <p class="texto"><%= @user.email %></p>
+
+        <!-- Biography -->
+        <div>
+          <%= form.label(:biography, class: "form-label") %>
+          <%= form.text_area(:biography, class: "form-text-area-input") %>
+        </div>
+
+        <!-- Avatar -->
+        <div>
+          <%= form.label(:avatar, class: "form-label") %>
+          <%= form.file_field(:avatar, class: "form-file-field-input") %>
+        </div>
+
+        <!-- Banner -->
+        <div>
+          <%= form.label(:banner, class: "form-label") %>
+          <%= form.file_field(:banner, class: "form-file-field-input") %>
+        </div>
+
+        <!-- Birthday -->
+        <div>
+          <%= form.label(:birthday, class: "form-label") %>
+          <%= form.date_field :birthday, class: 'datepicker' %>
+        </div>
+
+        <!-- Save Changes -->
+        <div style="padding-top: 16px">
+          <%= form.submit(class: "generic-button") %>
+        </div>
+
+        <div style="padding-top: 16px">
+          <%= link_to "Cancel", @user, class: "cancel-button" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.email_field :email, required: true %>
-  </div>
-
-   <!-- Avatar -->
-  <div>
-    <%= form.label(:avatar, class: "form-label") %>
-    <%= form.file_field(:avatar, class: "form-file-field-input") %>
-  </div>
-
-  <!-- Banner -->
-  <div>
-    <%= form.label(:banner, class: "form-label") %>
-    <%= form.file_field(:banner, class: "form-file-field-input") %>
-  </div>
-
-   <!-- Save Changes -->
-  <div style="padding-top: 16px">
-    <%= form.submit(class: "generic-button") %>
-  </div>
-
-  <div style="padding-top: 16px">
-  <%= link_to "Cancel", @user , class: "cancel-button" %>
-</div>
 
 
-<% end %>
+  <!-- ... Resto de la sección del perfil del usuario ... -->
+</section>
