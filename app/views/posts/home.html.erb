@@ -1,6 +1,34 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apock web design</title>
+    <link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+</head>
+
+
+
 <%= stylesheet_link_tag "buttons", "forms" %>
 
-<h1>Programmer.dev</h1>
+
+<body>
+  <header class ="header" >
+    <picture><source srcset="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png?format=webp&amp;thumbnail=96" type="image/webp"><source srcset="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png"><source srcset="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png?format=jpg&amp;thumbnail=96" type="image/jpeg"><img class="overflow-hidden pictrs-image object-fit-cover img-icon me-1" src="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png" alt="" title="" loading="lazy"></picture>
+    <h1>Programmer.dev</h1>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="communities#index">Communities</a></li>
+        <li><a href="posts#new">New Post</a></li>
+      </ul>
+    </nav>
+    <a href="search#index" class="icono fas fa-search"></a>
+  </header>
+</body>
+
+
+<hr>
+
+
 
 <div class="view_apage">
 
@@ -33,7 +61,7 @@
           </div>
           <p class="post-meta"></p>
           <!--% if current_user.email.eql?(post.user.email) then %-->
-            <%= link_to "Delete this post", +post.id.to_s+"/delete" %> <br> <!--falta el link-->
+            <%= link_to "Delete this post", +post.id.to_s+"/destroy" %> <br> <!--falta el link-->
             <%= link_to "Edit this post", +post.id.to_s+"/edit" %> <br><!--falta el link-->
             <!--% end %-->
            <%= link_to "Created by " + post.user.email, user_path(post.user) %>
