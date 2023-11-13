@@ -11,11 +11,9 @@
     <!--%= link_to "sortByOldest", homeOlder(sort: "createdAt", direction: params[:direction] == "asc" ? "desc" : "asc") %-->
     <!--%= link_to "sortByComments", issues_path(sort: "id", direction: params[:direction] == "asc" ? "desc" : "desc") %-->
 
-    <%= link_to "CreatePost", "posts/new" %><br>
-    <%= link_to "LlistaComunitats", "communities#index" %>
-    <%= link_to "CreateComunitat", "communities/new" %><br>
+    <%= link_to "Go back", "posts#home" %>
 
-    <%= link_to "Sort", "posts#homeNewt" %>
+
 
     <h2><%= "Todos los posts" %></h2>
     <% if @posts.empty? then %>
@@ -27,18 +25,17 @@
           <h1 class="post-title"><%= link_to post.title, post %>
           <div class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></div></h1>
           <p class="post-url"><%= post.url %></p>
-          <p class="post-url"><%= link_to "View Community", "communities/1" %></p>
           <div class="post-content">
             <%= post.body %>
           </div>
           <p class="post-meta"></p>
-          <!--% if current_user.email.eql?(post.user.email) then %-->
-            <%= link_to "Delete this post", +post.id.to_s+"/delete" %> <br> <!--falta el link-->
-            <%= link_to "Edit this post", +post.id.to_s+"/edit" %> <br><!--falta el link-->
-            <!--% end %-->
+
            <%= link_to "Created by " + post.user.email, user_path(post.user) %>
           </div>
-    <% end %>
+
+
+
+      <% end %>
     <% end %>
 
 
@@ -47,7 +44,6 @@
     <h2><%= current_user.email %></h2>
 
     <%= link_to "Edit Account", edit_user_registration_path %>
-    <%= link_to "View profile", current_user %>
     <%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete %>
   <% else %>
     <%= link_to "Login", new_user_session_path %>

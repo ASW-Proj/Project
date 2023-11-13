@@ -48,5 +48,5 @@ Rails.application.routes.draw do
 
   get '/buscar', to: 'posts#buscar'
 
-  root 'posts#index'
+  root 'posts#home'
 end
