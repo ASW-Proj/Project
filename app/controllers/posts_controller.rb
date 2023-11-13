@@ -8,6 +8,7 @@ class PostsController < ApplicationController
 
   def home
     @posts = Post.all
+    @users = User.all
   end
 
   def homeNewest
