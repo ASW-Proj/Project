@@ -14,14 +14,20 @@
 <body>
   <header class ="header" >
     <picture><source srcset="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png?format=webp&amp;thumbnail=96" type="image/webp"><source srcset="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png"><source srcset="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png?format=jpg&amp;thumbnail=96" type="image/jpeg"><img class="overflow-hidden pictrs-image object-fit-cover img-icon me-1" src="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png" alt="" title="" loading="lazy"></picture>
-    <h1>Programmer.dev</h1>
+
     <nav>
       <ul class="nav-links">
+        <li><a href="posts#home">programming.dev</a></li>
         <li><a href="communities#index">Communities</a></li>
-        <li><a href="posts#new">New Post</a></li>
+        <li><a href="posts/new">New Post</a></li>
+        <a href="search#index" class="icono fas fa-search"></a>
+        <% if current_user %>
+          <%= link_to "View profile", current_user %>
+        <% else %>
+          <%= link_to "Login", new_user_session_path %>
+        <% end %>
       </ul>
     </nav>
-    <a href="search#index" class="icono fas fa-search"></a>
   </header>
 </body>
 
