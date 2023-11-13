@@ -1,0 +1,112 @@
+/* Estilos generales */
+.shadow-sm {
+  /* Define estilos para sombra */
+  box-shadow: /* ... */;
+}
+
+.navbar {
+  /* Estilos para la barra de navegación */
+  /* ... */
+}
+
+.navbar-expand-md {
+  /* Estilos para la expansión en pantallas medianas */
+  /* ... */
+}
+
+.navbar-light {
+  /* Estilos para el esquema de color claro de la barra de navegación */
+  /* ... */
+}
+
+.p-0 {
+  /* Estilos para padding cero */
+  padding: 0 !important;
+}
+
+.px-3 {
+  /* Estilos para padding horizontal 3 */
+  padding-left: 0.75rem !important;
+  padding-right: 0.75rem !important;
+}
+
+.container-lg {
+  /* Estilos para contenedor grande */
+  max-width: 1140px;
+  /* ... */
+}
+
+/* Estilos para la marca en la barra de navegación */
+.navbar-brand {
+  /* ... */
+}
+
+/* Estilos para el botón de la barra de navegación */
+.navbar-toggler {
+  /* ... */
+}
+
+/* Estilos para el menú desplegable */
+.navbar-collapse {
+  /* ... */
+}
+
+.my-2 {
+  /* Estilos para margin-y 2 */
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Estilos para los elementos del menú izquierdo */
+.me-auto.navbar-nav,
+#navbarLinks .nav-item,
+#navbarLinks .nav-link {
+  /* ... */
+}
+
+/* Estilos para los elementos del menú a la derecha */
+#navbarIcons.navbar-nav,
+#navbarIcons .nav-item,
+#navbarIcons .nav-link {
+  /* ... */
+}
+
+/* Estilos para el elemento de búsqueda */
+#navSearch.nav-item,
+#navSearch.nav-link {
+  /* ... */
+}
+
+/* Estilos para el icono de corazón */
+.icon.small {
+  /* ... */
+}
+
+/* Estilos para el elemento con id "navTitle" */
+#navTitle.d-flex,
+#navTitle.align-items-center,
+#navTitle.navbar-brand,
+#navTitle.me-md-3,
+#navTitle.active {
+  /* ... */
+}
+
+/* Estilos para la imagen dentro del título */
+#navTitle .pictrs-image {
+  /* ... */
+}
+
+/* Estilos específicos para la clase "pictrs-image" */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+.img-icon {
+  /* ... */
+}
+
+/* Puedes seguir añadiendo estilos según tus necesidades para las otras clases y elementos */
