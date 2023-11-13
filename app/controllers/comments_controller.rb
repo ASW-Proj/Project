@@ -22,28 +22,27 @@ class CommentsController < ApplicationController
   # POST /comments or /comments.json
   def create
     @comment = @post.comments.build(comment_params)
-
+    #@comment.user = current_user.comments.build(comment_params)
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to show_post_path(@post), notice: "Comentario creado exitosamente." }
+        format.html { redirect_to post_path(@post), notice: "Comment was successfully created." }
         format.json { render :show, status: :created, location: @comment }
       else
-        format.html { render "posts/show" }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  private
   def set_post
     @post = Post.find(params[:post_id])
-  end 
+  end
 
   # PATCH/PUT /comments/1 or /comments/1.json
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to comment_url(@comment), notice: "Comment was successfully updated." }
+        format.html { redirect_to show_post_path(@post), notice: "Comment was successfully updated." }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -70,6 +69,6 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:body, :post_id)
+      params.require(:comment).permit(:body, :user_id, :post_id, :community_id)
     end
 end

@@ -14,7 +14,7 @@
   <div class="comments-section">
     <h2><%= "Comments" %></h2>
     <ul class="comments-list">
-      <% @comments.each do |comment| %>
+      <% @post.comments.each do |comment| %>
         <li class="comment">
           <div class="comment-body"><%= comment.body %></div>
         </li>
@@ -22,15 +22,21 @@
     </ul>
   </div>
 
-  <div class="comment-form">
-    <h2><%= "Add a comment" %></h2>
-    <%= form_for([@post, @post.comments.build], html: { class: "comment-form" }) do |f| %>
-      <div class="field">
-        <%= f.text_area :body, placeholder: "Write your comment here", class: "form-text-input__inner" %>
-      </div>
-      <div class="actions">
-        <%= f.submit "Comment", class: "generic-button" %>
-      </div>
-    <% end %>
-  </div>
+  <h2><%= "Add a comment" %></h2>
+  <%= form_with(model: [@post, Comment.new], local: true, html: { class: "comment-form" } ) do |form| %>
+    <div class="field">
+      <%= form.text_area :body, placeholder: "Write your comment here", class: "form-text-input__inner" %>
+    </div>
+    <%= form.hidden_field :post_id, value: @post.id %>
+    <div class="field">
+      <%= form.collection_select :community_id, Community.all, :id, :name %>
+    </div>
+    <div class="field">
+      <%= form.collection_select :user_id, User.all, :id, :id %>
+    </div>
+    <div class="actions">
+      <%= form.submit "Comenta", class: "generic-button" %>
+    </div>
+  <% end %>
+</div>
 </div>
