@@ -6,6 +6,13 @@ class PostsController < ApplicationController
     @posts = Post.all
   end
 
+  def home
+    @posts = Post.all
+  end
+
+  def homeNewest
+    @posts = Post.all
+  end
   # GET /posts/1 or /posts/1.json
   def show
     @post = Post.find(params[:id])
