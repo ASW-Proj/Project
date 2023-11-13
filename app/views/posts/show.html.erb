@@ -10,6 +10,14 @@
   <div class="post-content">
     <%= @post.body %>
   </div>
+  </div>
+    <form class="vote-form" data-voted="false">
+        <div>
+            <button type="button" class="vote-up">+</button>
+            <span class="vote-count">0</span>
+            <button type="button" class="vote-down">-</button>
+        </div>
+    </form>
 
   <div class="comments-section">
     <h2><%= "Comments" %></h2>
@@ -28,11 +36,9 @@
       <%= form.text_area :body, placeholder: "Write your comment here", class: "form-text-input__inner" %>
     </div>
     <%= form.hidden_field :post_id, value: @post.id %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
     <div class="field">
       <%= form.collection_select :community_id, Community.all, :id, :name %>
-    </div>
-    <div class="field">
-      <%= form.collection_select :user_id, User.all, :id, :id %>
     </div>
     <div class="actions">
       <%= form.submit "Comenta", class: "generic-button" %>
@@ -40,3 +46,30 @@
   <% end %>
 </div>
 </div>
+<script>
+    document.querySelectorAll('.vote-form').forEach(form => {
+        form.addEventListener('click', event => {
+            const button = event.target;
+            if (button.matches('.vote-up') || button.matches('.vote-down')) {
+                vote(button);
+            }
+        });
+    });
+
+    function vote(button) {
+        const form = button.closest('.vote-form');
+        const voteCount = form.querySelector('.vote-count');
+
+        const alreadyVoted = form.dataset.voted === 'true';
+        const voteValue = button.classList.contains('vote-up') ? 1 : -1;
+
+        // Cambiar el voto o deshacerlo
+        if (alreadyVoted && voteValue === parseInt(voteCount.textContent)) {
+            voteCount.textContent = 0;
+            form.dataset.voted = 'false';
+        } else {
+            voteCount.textContent = voteValue;
+            form.dataset.voted = 'true';
+        }
+    }
+</script>

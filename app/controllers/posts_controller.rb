@@ -75,6 +75,18 @@ class PostsController < ApplicationController
     end
   end
 
+  def vote_up
+    @posts = Post.find(params[:id])
+    @vote = @posts.votes.create(vote_type: 1)
+    redirect_to @tweet
+  end
+
+  def vote_down
+    @posts = Post.find(params[:id])
+    @vote = @posts.votes.create(vote_type: -1)
+    redirect_to @posts
+  end
+  
   private
      #Use callbacks to share common setup or constraints between actions.
     def set_post
