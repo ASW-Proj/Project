@@ -10,15 +10,21 @@
         <div class="perfil-usuario-header">
           <div class="perfil-usuario-portada">
             <div class="perfil-usuario-avatar">
-                <%= image_tag @user.avatar, alt: "img-avatar", class: "avatar-image" %>
-                <% if @usuario_actual == @usuario_visto %>
+                <% if @user.avatar.present? %>
+                  <%= image_tag @user.avatar, alt: "img-avatar", class: "avatar-image" %>
+                <% else %>
+                  <i class = 'fa_icon circle-user', class: "avatar-image" %>
+                <% end %>
+                <% if current_user == @user %>
                   <%= link_to edit_user_path(@user), class: "boton-avatar" do %>
                     <i class="fas fa-pen"></i>
                   <% end %>
                 <% end %>
 
             </div>
-            <%= image_tag @user.banner, alt: "img-portada", class: "banner-image" %>
+            <% if @user.banner.present?%>
+              <%= image_tag @user.banner, alt: "img-portada", class: "banner-image" %>
+            <% end %>
         </div>
 
 
