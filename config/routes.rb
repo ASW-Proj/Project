@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   # To create a post, we call the create function from the posts controller.
   #get "/create_post", to: "posts#create", as: :post
   resources :posts do
-    resources :comments, only: [:create]
+    resources :comments, only: [:create, :destroy]
     
     member do
       post 'vote_up'
@@ -37,7 +37,10 @@ Rails.application.routes.draw do
     end
   end
   resources :posts do
-    resources :comments, only: [:create, :new] do
+    resources :comments 
+  end
+  resources :posts do
+    resources :comments, only: [:create, :new, :destroy] do
       post '/reply/:parent_id', to: 'comments#reply', on: :collection, as: :reply
     end
   end

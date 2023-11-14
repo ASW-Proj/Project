@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_post, only: [:create]
+  before_action :set_post, only: [:create, :destroy]
 
   # GET /comments or /comments.json
   def index
@@ -25,7 +25,6 @@ class CommentsController < ApplicationController
 
   # POST /comments or /comments.json
   def create
-    @comment = @post.comments.build(comment_params)
     @parent_comment = Comment.find_by(id: params[:parent_id])
     
     if @parent_comment.present?
@@ -73,10 +72,10 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1 or /comments/1.json
   def destroy
-    @comment.destroy!
-
+    @comment = Comment.find(params[:id])
+      @comment.destroy
     respond_to do |format|
-      format.html { redirect_to comments_url, notice: "Comment was successfully destroyed." }
+      format.html { redirect_to show_post_path(@comment.post), notice: "Comment was successfully destroyed." }
       format.json { head :no_content }
     end
   end
