@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   # Search route
   get 'search', to: 'search#index'
   get 'search/index'
-
+resources :users
   # User routes
   resources :users, only: [:show] do
     member do
@@ -29,7 +29,9 @@ Rails.application.routes.draw do
     end
   end
   get '/home_newt_posts', to: 'posts#home_newt', as: :home_newt_posts
-
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
   # Root route
   root 'posts#home'
 end
