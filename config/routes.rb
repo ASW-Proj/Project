@@ -36,6 +36,11 @@ Rails.application.routes.draw do
       post 'vote_down'
     end
   end
+  resources :posts do
+    resources :comments, only: [:create, :new] do
+      post '/reply/:parent_id', to: 'comments#reply', on: :collection, as: :reply
+    end
+  end
   resources :users, only: [:show] do
     member do
       get 'posts', to: 'users#show', content_type: 'Publicaciones', as: 'user_posts'

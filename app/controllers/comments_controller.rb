@@ -13,6 +13,9 @@ class CommentsController < ApplicationController
 
   # GET /comments/new
   def new
+    @post = Post.find(params[:post_id])
+    @community = @post.community
+    @user=current_user 
     @comment = Comment.new
   end
 
@@ -23,7 +26,14 @@ class CommentsController < ApplicationController
   # POST /comments or /comments.json
   def create
     @comment = @post.comments.build(comment_params)
-    #@comment.user = current_user.comments.build(comment_params)
+    @parent_comment = Comment.find_by(id: params[:parent_id])
+    
+    if @parent_comment.present?
+      @comment = @parent_comment.replies.build(comment_params)
+    else
+      @comment = @post.comments.build(comment_params)
+    end
+
     respond_to do |format|
       if @comment.save
         format.html { redirect_to post_path(@post), notice: "Comment was successfully created." }
@@ -33,6 +43,15 @@ class CommentsController < ApplicationController
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+
+  def reply
+    @post = Post.find(params[:post_id])
+    @parent_comment = Comment.find(params[:parent_id])
+    @comment = @post.comments.build(parent_id: @parent_comment.id)
+
+    render 'new' 
   end
 
   def set_post
@@ -70,6 +89,6 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:body, :user_id, :post_id, :community_id)
+      params.require(:comment).permit(:body, :user_id, :post_id, :community_id, :parent_id)
     end
 end

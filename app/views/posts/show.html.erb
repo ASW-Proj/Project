@@ -21,34 +21,18 @@
   <button type="button" class="vote-down">-</button>
 </form>
 
-  <div class="comments-section">
-    <h2><%= "Comments" %></h2>
-    <ul class="comments-list">
-      <% @post.comments.each do |comment| %>
-        <li class="comment">
-          <div class="comment-body"><%= comment.body %></div>
-          <p class="post-meta"><%= "Created at " + comment.created_at.strftime('%d %B, %Y') %></p>
-          <div class="post-meta">
-           <%= link_to "Created by " + comment.user.email, user_path(comment.user) %>
-          </div>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+<div class="comments-section">
+  <h2><%= "Comments" %></h2>
+  <ul class="comments-list">
+    <% @post.comments.where(parent_id: nil).each do |comment| %>
+      <%= render partial: 'comments/comment', locals: { comment: comment } %>
+    <% end %>
+  </ul>
+</div>
 
   <% if user_signed_in? %>
-  <h2><%= "Add a comment" %></h2>
-  <%= form_with(model: [@post, Comment.new], local: true, html: { class: "comment-form" } ) do |form| %>
-    <div class="field">
-      <%= form.text_area :body, placeholder: "Write your comment here", class: "form-text-input__inner" %>
-    </div>
-    <%= form.hidden_field :post_id, value: @post.id %>
-    <%= form.hidden_field :user_id, value: current_user.id %>
-    <%= form.hidden_field :community_id, value: @post.community_id %>
-    <div class="actions">
-      <%= form.submit "Comenta", class: "generic-button" %>
-    </div>
-  <% end %>
+  <%= render partial: 'comments/form', locals: { post: @post, community: @community } %>
+  
   <% else %>
   <p>Debes iniciar sesión para dejar un comentario.</p>
   <% end %>
