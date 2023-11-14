@@ -1,89 +1,107 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apock web design</title>
-    <link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-</head>
-
-
-
-<%= stylesheet_link_tag "buttons", "forms" %>
-
-
-<body>
-  <header class ="header" >
-    <picture><source srcset="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png?format=webp&amp;thumbnail=96" type="image/webp"><source srcset="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png"><source srcset="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png?format=jpg&amp;thumbnail=96" type="image/jpeg"><img class="overflow-hidden pictrs-image object-fit-cover img-icon me-1" src="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png" alt="" title="" loading="lazy"></picture>
-
-    <nav>
-      <ul class="nav-links">
-        <li><a href="posts#home">programming.dev</a></li>
-        <li><a href="communities#index">Communities</a></li>
-        <li><a href="posts/new">New Post</a></li>
-        <a href="search#index" class="icono fas fa-search"></a>
-        <% if current_user %>
-          <%= link_to "View profile", current_user %>
-        <% else %>
-          <%= link_to "Login", new_user_session_path %>
-        <% end %>
-      </ul>
-    </nav>
-  </header>
-</body>
-
-
-<hr>
-
-
-
 <div class="view_apage">
+  <!-- Body -->
+  <%= link_to "Create Post", new_post_path %><br>
+  <%= link_to "List Communities", communities_path %>
+  <%= link_to "Create Community", new_community_path %><br>
+
+   <%= link_to "Sort", "posts#homeNewt" %>
+
+  <h2>Todos los posts</h2>
 
 
-    <!-- Body -->
+   <div class="menu-perfil">
+   <%= link_to "Ver posts", { filter: 'posts' }.merge(request.query_parameters), class: "generic-button" %>
 
-    <!--%= link_to "sortByVotes", homeVoted(sort: "votes", direction: params[:direction] == "asc" ? "desc" : "desc") %-->
-    <!--%= link_to "sortByOldest", homeOlder(sort: "createdAt", direction: params[:direction] == "asc" ? "desc" : "asc") %-->
-    <!--%= link_to "sortByComments", issues_path(sort: "id", direction: params[:direction] == "asc" ? "desc" : "desc") %-->
-
-    <%= link_to "CreatePost", "posts/new" %><br>
-    <%= link_to "LlistaComunitats", "communities#index" %>
-    <%= link_to "CreateComunitat", "communities/new" %><br>
-
-    <%= link_to "Sort", "posts#homeNewt" %>
-
-    <h2><%= "Todos los posts" %></h2>
-    <% if @posts.empty? then %>
-        there seems to be no posts
-    <% else %>
-      <% @posts.each do |post| %>
-
-          <div class="post-container">
-          <h1 class="post-title"><%= link_to post.title, post %>
-          <div class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></div></h1>
-          <p class="post-url"><%= post.url %></p>
-          <p class="post-url"><%= link_to "View Community", "communities/1" %></p>
-          <div class="post-content">
-            <%= post.body %>
-          </div>
-          <p class="post-meta"></p>
-          <!--% if current_user.email.eql?(post.user.email) then %-->
-            <%= link_to "Delete this post", +post.id.to_s+"/destroy" %> <br> <!--falta el link-->
-            <%= link_to "Edit this post", +post.id.to_s+"/edit" %> <br><!--falta el link-->
-            <!--% end %-->
-           <%= link_to "Created by " + post.user.email, user_path(post.user) %>
-          </div>
-    <% end %>
-    <% end %>
-
+   <%= link_to "Ver comentarios", { filter: 'comments' }.merge(request.query_parameters), class: "generic-button" %>
 
   </div>
-  <% if current_user %>
-    <h2><%= current_user.email %></h2>
 
-    <%= link_to "Edit Account", edit_user_registration_path %>
-    <%= link_to "View profile", current_user %>
-    <%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete %>
+<% if params[:filter] == 'comments'%>
+
+<% else %>
+<% if params[:filter] == 'posts'%>
+  <% if @posts.empty? %>
+    No hay posts.
   <% else %>
-    <%= link_to "Login", new_user_session_path %>
-    <%= link_to "Create Account", new_user_registration_path %>
+    <% @posts.each do |post| %>
+      <div class="post-listing mt-2">
+        <div class="d-block d-sm-none">
+          <article class="row post-container">
+            <div class="col-12">
+              <h1 class="post-title"><%= link_to post.title, post %></h1>
+            </div>
+          </article>
+        </div>
+        <article class="row post-container">
+          <div class="col flex-grow-0">
+            <div class="vote-bar small text-center">
+              <!-- Vote buttons go here -->
+            </div>
+          </div>
+          <div class="col flex-grow-1">
+            <div class="row">
+              <div class="col flex-grow-0 px-0">
+                <!-- External link icon goes here -->
+              </div>
+              <div class="col flex-grow-1">
+                <% if !post.url.nil? %>
+                  <p class="post-url"><%= post.url %></p>
+                <% end %>
+
+                <div class="post-content">
+                  <div class="avatar-thumbnail">
+
+                    <%= link_to user_path(post.user), class: "avatar-thumbnail" do %>
+                      <% if post.user.avatar.present? %>
+                        <%= image_tag post.user.avatar, alt: "User Avatar" %>
+                      <% else %>
+                        <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default User Avatar" %>
+                      <% end %>
+                    <% end %>
+                  </div>
+
+                  <%= link_to post.user.full_name, user_path(post.user) %>
+
+                  <div class="avatar-thumbnail">
+                    <%= link_to community_path(post.community), class: "avatar-thumbnail" do %>
+                      <% if post.community.avatar.present? %>
+                        <%= image_tag post.community.avatar, alt: "Community Avatar" %>
+                      <% else %>
+                        <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default Community Avatar" %>
+                      <% end %>
+                    <% end %>
+
+                    <%= link_to post.community.name, community_path(post.community) %>
+
+                    <div class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></div>
+
+                    <br>
+                  </div>
+
+                   <li><i class="icono fas fa-comments"></i> <%= post.comments.count.to_s + " comments"  %></li>
+                </div>
+                </div class="post-meta"></p>
+                  <%= link_to "Delete this post", post, method: :delete %><br>
+                  <%= link_to "Edit this post", edit_post_path(post) %><br>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <div class="d-none d-sm-block"></div>
+      </div>
+    <% end %>
   <% end %>
+  <% end %>
+<% end %>
+</div>
+
+<% if current_user %>
+  <h2><%= current_user.email %></h2>
+  <%= link_to "Edit Account", edit_user_registration_path %>
+  <%= link_to "View profile", current_user %>
+  <%= button_to "Logout", destroy_user_session_path, data: { turbo: "false" }, method: :delete %>
+<% else %>
+  <%= link_to "Login", new_user_session_path %>
+  <%= link_to "Create Account", new_user_registration_path %>
+<% end %>

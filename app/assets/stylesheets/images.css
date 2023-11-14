@@ -39,3 +39,17 @@
   left: 0;
   width: 100%;
 }
+
+
+.avatar-thumbnail {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+
+.avatar-thumbnail img {
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+}
