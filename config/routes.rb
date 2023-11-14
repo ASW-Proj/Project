@@ -32,6 +32,10 @@ resources :users
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
+
+  post '/save_post/:post_id', to: 'saved_items#save_post', as: 'save_post'
+  post '/save_comment/:comment_id', to: 'saved_items#save_comment', as: 'save_comment'
+  get '/list_saved_items', to: 'saved_items#list_saved_items', as: 'list_saved_items'
   # Root route
   root 'posts#home'
 end
