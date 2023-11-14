@@ -45,10 +45,8 @@
     <!--%= link_to "sortByOldest", homeOlder(sort: "createdAt", direction: params[:direction] == "asc" ? "desc" : "asc") %-->
     <!--%= link_to "sortByComments", issues_path(sort: "id", direction: params[:direction] == "asc" ? "desc" : "desc") %-->
 
-    <%= link_to "CreatePost", "posts/new" %><br>
-    <%= link_to "LlistaComunitats", "communities#index" %>
     <%= link_to "CreateComunitat", "communities/new" %><br>
-
+    <%= link_to "ListaComments", "comments/all" %><br>
     <%= link_to "Sort", "posts#homeNewt" %>
 
     <h2><%= "Todos los posts" %></h2>

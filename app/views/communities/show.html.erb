@@ -12,6 +12,31 @@
     <%= link_to "Back to communities", communities_path, class: "generic-button" %>
 
     <%= button_to "Destroy this community", @community, method: :delete, class: "cancel-button" %>
-  </div>
+
+
+    <h2><%= "Todos los posts" %></h2>
+    <% if @posts.empty? then %>
+        there seems to be no posts
+    <% else %>
+      <% @posts.each do |post| %>
+
+          <div class="post-container">
+          <h1 class="post-title"><%= link_to post.title, post %>
+          <div class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></div></h1>
+          <p class="post-url"><%= post.url %></p>
+          <div class="post-content">
+            <%= post.body %>
+          </div>
+          <p class="post-meta"></p>
+          <!--% if current_user.email.eql?(post.user.email) then %-->
+            <%= link_to "Delete this post", +post.id.to_s+"/destroy" %> <br> <!--falta el link-->
+            <%= link_to "Edit this post", +post.id.to_s+"/edit" %> <br><!--falta el link-->
+            <!--% end %-->
+           <%= link_to "Created by " + post.user.email, user_path(post.user) %>
+          </div>
+    <% end %>
+    <% end %>
+
+    </div>
 
 </div>

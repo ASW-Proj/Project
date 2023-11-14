@@ -49,6 +49,8 @@ Rails.application.routes.draw do
   # Route to view a single post
   get "/posts/:id" => "posts#show", as: :show_post
 
+  get "/comments/all" => "comments#index", as: :list_comments
+
   get '/buscar', to: 'posts#buscar'
 
   root 'posts#home'
