@@ -44,7 +44,7 @@
 .header .nav-links a{
   font-size: 750;
   color: #495057;
-  text_decoration: none;
+  text-decoration: none;
 }
 
 .header .nav-links li a:hover{
@@ -54,8 +54,8 @@
 .header .btn button{
   font-weight: 700;
   color: #1b3039;
-  padding 9px 25px;
-  background:#eceff1
+  padding: 9px 25px;
+  background: #eceff1;
   border: none;
   border-radius:50px;
   cursor: pointer;
