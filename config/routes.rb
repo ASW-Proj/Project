@@ -28,15 +28,12 @@ Rails.application.routes.draw do
   # ...................................................................... #
   # To create a post, we call the create function from the posts controller.
   #get "/create_post", to: "posts#create", as: :post
-  resources :posts
   resources :posts do
     resources :comments, only: [:create]
-  end
-  resources :posts do
+    
     member do
       post 'vote_up'
       post 'vote_down'
-
     end
   end
   resources :users, only: [:show] do

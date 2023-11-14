@@ -9,4 +9,9 @@ class Post < ApplicationRecord
     belongs_to :community
     belongs_to :user
     has_many :votes, as: :votable
+
+    def total_votes
+        self.votes.count
+      end
+      
 end
