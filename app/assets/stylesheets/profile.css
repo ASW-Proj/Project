@@ -14,7 +14,7 @@
     flex-direction: column;
     align-items: center;
     background-size: cover;
-     background-position: center;
+    background-position: center;
 }
 
 .seccion-perfil-usuario .perfil-usuario-portada {
@@ -161,6 +161,6 @@
 }
 
 .seccion-perfil-usuario .menu-perfil ul li {
-     margin-bottom: 1.25rem;
+    margin-bottom: 1.25rem;
     text-align: center;
 }

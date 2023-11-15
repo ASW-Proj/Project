@@ -8,10 +8,15 @@ class Post < ApplicationRecord
     has_many :comments
     belongs_to :community
     belongs_to :user
+
     has_many :votes, as: :votable
 
     def total_votes
         self.votes.count
       end
       
+
+    has_many :saved_posts, dependent: :destroy
+  has_many :savers, through: :saved_posts, source: :user
+
 end

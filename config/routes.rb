@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+
   resources :comments
   get 'pages/home'
+
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks',
     sessions: 'users/sessions',
@@ -11,23 +13,12 @@ Rails.application.routes.draw do
     get '/logout', to: 'users/sessions#destroy', as: :logout
   end
 
-
-
-
   resources :communities
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
-  # root "posts#index"
 
+  # Resources for posts and comments
 
-  # ...................................................................... #
-  # To create a post, we call the create function from the posts controller.
-  #get "/create_post", to: "posts#create", as: :post
   resources :posts do
     resources :comments, only: [:create, :destroy]
     
@@ -44,21 +35,28 @@ Rails.application.routes.draw do
       post '/reply/:parent_id', to: 'comments#reply', on: :collection, as: :reply
     end
   end
+
+
+  # Search route
+  get 'search', to: 'search#index'
+  get 'search/index'
+resources :users
+  # User routes
+
   resources :users, only: [:show] do
     member do
       get 'posts', to: 'users#show', content_type: 'Publicaciones', as: 'user_posts'
       get 'comments', to: 'users#comments', as: 'user_comments'
     end
   end
+  get '/home_newt_posts', to: 'posts#home_newt', as: :home_newt_posts
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
+  delete 'logout', to: 'sessions#destroy'
 
-  get 'search/index'
-
-  resources :users
-
-  # Route to view a single post
-  get "/posts/:id" => "posts#show", as: :show_post
-
-  get '/buscar', to: 'posts#buscar'
-
+  post '/save_post/:post_id', to: 'saved_items#save_post', as: 'save_post'
+  post '/save_comment/:comment_id', to: 'saved_items#save_comment', as: 'save_comment'
+  get '/list_saved_items', to: 'saved_items#list_saved_items', as: 'list_saved_items'
+  # Root route
   root 'posts#home'
 end
