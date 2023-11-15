@@ -5,11 +5,8 @@ class User < ApplicationRecord
   has_many :comments
   has_and_belongs_to_many :communities
 
-  has_many :saved_posts, dependent: :destroy
-  has_many :saved_comments, dependent: :destroy
-  has_many :saved_posts, through: :saved_posts, source: :post
-  has_many :saved_comments, through: :saved_comments, source: :comment
-
+  has_and_belongs_to_many :saved_posts, class_name: 'Post', join_table: :saved_posts
+  has_and_belongs_to_many :saved_comments, class_name: 'Comment', join_table: :saved_comments
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

@@ -32,5 +32,8 @@
         <%= f.submit "Comment", class: "generic-button" %>
       </div>
     <% end %>
+    <%= link_to 'Save Post', posts_path(post_id: @post.id), method: :post, class: 'btn btn-primary' %>
+
+
   </div>
 </div>
