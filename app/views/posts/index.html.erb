@@ -8,7 +8,16 @@
     <p>
       <%= link_to "Show this post", post %>
     </p>
-  <% end %>
+    <% if current_user %>
+      <% if current_user && current_user.saved_posts.include?( post.id) %>
+        <%= link_to "Unsave", unsave_post_path(post), method: :post %>
+      <% else %>
+        <%= link_to "Save", save_post_path(post), method: :post %>
+      <% end %>
+      <% else %>
+        Subscribe disabled
+      <% end %>
+    <% end %>
 </div>
 
 <%= link_to 'Buscar Publicaciones', '/search/index' %>

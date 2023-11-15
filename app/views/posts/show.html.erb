@@ -21,7 +21,17 @@
       <% end %>
     </ul>
   </div>
-
+  </div>
+  <% if current_user %>
+      <% if current_user.saved_posts.include?(@post) %>
+        <%= link_to "Unsave", unsave_post_path(current_user, @post), method: :delete %>
+      <% else %>
+        <%= link_to "Save", save_post_path(current_user, @post), method: :post %>
+      <% end %>
+  <% else %>
+    Subscribe disabled
+  <% end %>
+</div>
   <div class="comment-form">
     <h2><%= "Add a comment" %></h2>
     <%= form_for([@post, @post.comments.build], html: { class: "comment-form" }) do |f| %>

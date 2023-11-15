@@ -26,6 +26,7 @@ resources :users
     member do
       get 'posts', to: 'users#show', content_type: 'Publicaciones', as: 'user_posts'
       get 'comments', to: 'users#comments', as: 'user_comments'
+
     end
   end
   get '/home_newt_posts', to: 'posts#home_newt', as: :home_newt_posts
@@ -33,9 +34,9 @@ resources :users
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
 
-  post '/save_post/:post_id', to: 'saved_items#save_post', as: 'save_post'
-  post '/save_comment/:comment_id', to: 'saved_items#save_comment', as: 'save_comment'
-  get '/list_saved_items', to: 'saved_items#list_saved_items', as: 'list_saved_items'
-  # Root route
+  post 'save_post/:post_id', to: 'users#save_post', as: 'save_post'
+  delete 'unsave_post/:post_id', to: 'users#unsave_post', as: 'unsave_post'
+  # Resources for saved posts and comments
+
   root 'posts#home'
 end
