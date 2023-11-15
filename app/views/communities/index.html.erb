@@ -1,51 +1,53 @@
-<% if notice %>
-    <div class="success-container">
-      <%= notice %>
-    </div>
-<% end %>
-
-<h1>List of communities</h1>
-<div class="subheader-bar">
-<!-- TODO: filter subscrit i local -->
-  <% if current_user %>
-    <%= link_to "Create community", new_community_path, class: "generic-button" %>
+<div class="full-page">
+  <% if notice %>
+      <div class="success-container">
+        <%= notice %>
+      </div>
   <% end %>
-</div>
 
-<div id="communities">
-  <table class="communities-table">
-    <thead class="communities-table-head">
-      <tr class="communities-table-row">
-        <th>Name</th>
-        <th>Subscribers</th>
-        <th>Posts</th>
-        <th>Comments</th>
-        <th></th>
-      </tr>
-    </thead>
+  <h1>List of communities</h1>
+  <div class="subheader-bar">
+  <!-- TODO: filter subscrit i local -->
+    <% if current_user %>
+      <%= link_to "Create community", new_community_path, class: "generic-button" %>
+    <% end %>
+  </div>
 
-    <tbody>
-      <% @communities.each do |community| %>
-        <% if !community.name.empty? %>
-          <tr class="communities-table-row communities-table-hover-highlight">
-            <td><%= link_to(community.name, community, class: "secondary-button") %></td>
-            <td><%= community.subscriptions.count %></td>
-            <td><%= community.posts.count %></td>
-            <td><%= community.comments.count %></td>
-            <td>
-              <% if current_user %>
-                <% if current_user.subscriptions.exists?(community: community) %>
-                  <%= link_to "Unsubscribe", unsubscribe_path(community), method: :delete, class: "secondary-button" %>
+  <div id="communities">
+    <table class="communities-table">
+      <thead class="communities-table-head">
+        <tr class="communities-table-row">
+          <th>Name</th>
+          <th>Subscribers</th>
+          <th>Posts</th>
+          <th>Comments</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @communities.each do |community| %>
+          <% if !community.name.empty? %>
+            <tr class="communities-table-row communities-table-hover-highlight">
+              <td><%= link_to(community.name, community, class: "secondary-button") %></td>
+              <td><%= community.subscriptions.count %></td>
+              <td><%= community.posts.count %></td>
+              <td><%= community.comments.count %></td>
+              <td>
+                <% if current_user %>
+                  <% if current_user.subscriptions.exists?(community: community) %>
+                    <%= link_to "Unsubscribe", unsubscribe_path(community), method: :delete, class: "secondary-button" %>
+                  <% else %>
+                    <%= link_to "Subscribe", subscribe_path(community), method: :post, class: "secondary-button" %>
+                  <% end %>
                 <% else %>
-                  <%= link_to "Subscribe", subscribe_path(community), method: :post, class: "secondary-button" %>
+                  <span class="secondary-button-disabled">Subscribe</span>
                 <% end %>
-              <% else %>
-                <span class="secondary-button-disabled">Subscribe</span>
-              <% end %>
-            </td>
-          </tr>
+              </td>
+            </tr>
+          <% end %>
         <% end %>
-      <% end %>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 </div>

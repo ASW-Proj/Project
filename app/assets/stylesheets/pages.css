@@ -25,3 +25,7 @@
     box-sizing: border-box;
     max-width: 100%;
 }
+
+.full-page {
+    padding: 0 8px;
+}

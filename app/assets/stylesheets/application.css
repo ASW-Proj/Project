@@ -42,9 +42,14 @@ h1 {
 }
 
 .subheader-bar {
-  padding: 8px 0;
+  padding: 4px 0;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.subheader-bar > * {
+  margin: 4px 8px 4px 0;
 }
 
 /* Estilo para el contenedor del post */
