@@ -5,13 +5,18 @@
   <div class="comment-body<%= comment.parent_id.nil? ? ' parent-comment' : ' child-comment' %>">
     <%= comment.body %>
   </div>
+  <div class="comment-score">
+    Total score: <%= comment.points %>
+    <%= link_to '▲','/comments/like/'+ comment.id.to_s, method: :post%>
+    <%= link_to '▼','/comments/dislike/'+ comment.id.to_s, method: :post%>
+  </div>
   
   <div class="post-meta">
     Created at <%= comment.created_at.strftime('%d %B, %Y') %>
     Created by <%= link_to comment.user.email, user_path(comment.user) %>
     <%= link_to "Reply", new_post_comment_path(comment.post, parent_id: comment.id), class: "reply-button" %>
     <% if current_user == comment.user %>
-      <%= link_to "Delete", post_comment_path(comment.post, comment), method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-button" %>
+    <%= link_to 'Destroy', method: :delete, data: { confirm: 'Are you sure?' } %>
     <% end %>  </div>
 
   <% if comment.replies.any? %>

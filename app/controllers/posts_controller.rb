@@ -30,6 +30,7 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @comments = @post.comments
+    @post.points
   end
 
   # GET /posts/new
@@ -45,6 +46,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post = current_user.posts.build(post_params)
+    @post.update_column(:points, 0)
     respond_to do |format|
       if @post.save
         format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
@@ -87,27 +89,37 @@ class PostsController < ApplicationController
     end
   end
 
-  def vote_up
+  def like
     @post = Post.find(params[:id])
-    @vote = @post.votes.build(vote_type: 1, user_id: current_user.id)
-    if @vote.save
-      update_vote_count
-    redirect_to @post
-    else
-      render json: { error: 'Error al votar' }, status: :unprocessable_entity
-
+    @like = Like.where(post_id: @post.id, user_id: current_user.id).first
+    if @like.nil?
+      @like = Like.new
+      @like.post_id = params[:id]
+      @like.user_id = current_user.id
+      @post.increment!(:points)
+      @post.save
+      @like.save
+    end
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: root_path) }
+      format.html { notice 'Contribution was successfully liked' }
+      format.json { head :no_content }
     end
   end
-
-  def vote_down
+  
+  def dislike
     @post = Post.find(params[:id])
-    @vote = @post.votes.build(vote_type: -1, user_id: current_user.id)
-    if @vote.save
-      update_vote_count
-    redirect_to @post
-    else
-      render json: { error: 'Error al votar' }, status: :unprocessable_entity
-
+    @like = Like.where(comment_id: @post.id, user_id: current_user.id).first
+    if !@like.nil?
+      @like.delete
+      @post.update_column(:points, @post.points - 1)
+      @post.save
+      @like.save
+    end
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: root_path) }
+      format.html { notice 'Contribution was successfully disliked' }
+      format.json { head :no_content }
     end
   end
   

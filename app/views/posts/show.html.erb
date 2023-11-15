@@ -7,19 +7,15 @@
    <%= link_to "Created by " + @post.user.email, user_path(@post.user) %>
   </div>
 
+  <div class="post-score">
+    Total score: <%= @post.points %>
+    <%= link_to '▲','/post/like/'+ @post.id.to_s, method: :post%>
+    <%= link_to '▼','/post/dislike/'+ @post.id.to_s, method: :post%>
+  </div>
+  
   <div class="post-content">
     <%= @post.body %>
 
-  </div>
-  <div class="post-votes">
-    <%="Votos del post: #{@post.total_votes}" %>
-
-  </div>
-  </div>
-  <form class="vote-form" data-post-id="<%= @post.id %>">
-  <button type="button" class="vote-up">+</button>
-  <button type="button" class="vote-down">-</button>
-</form>
 
 <div class="comments-section">
   <h2><%= "Comments" %></h2>
@@ -39,24 +35,3 @@
 
 </div>
 </div>
-
-<script>
-  $(document).ready(function() {
-    $('.vote-form').on('click', '.vote-up, .vote-down', function() {
-      const postId = $(this).closest('.vote-form').data('post-id');
-      const voteType = $(this).hasClass('vote-up') ? 'vote_up' : 'vote_down';
-      
-      $.ajax({
-        type: 'POST',
-        url: `/posts/${postId}/${voteType}`,
-        dataType: 'json',
-        success: function(data) {
-          $('.vote-count').text(data.votes); // Actualiza el contador de votos
-        },
-        error: function(xhr, status, error) {
-          // Manejar errores de la solicitud Ajax
-        }
-      });
-    });
-  });
-</script>
