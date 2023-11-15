@@ -76,3 +76,11 @@ gem "aws-sdk-s3"
 
 
 
+
+gem "dockerfile-rails", ">= 1.5", :group => :development
+
+gem "pg", "~> 1.5"
+
+gem "sentry-ruby", "~> 5.13"
+
+gem "sentry-rails", "~> 5.13"
