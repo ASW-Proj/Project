@@ -1,8 +1,13 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %>
+    <div class="success-container">
+      <%= notice %>
+    </div>
+<% end %>
 
 <h1>List of communities</h1>
 
 <div id="communities">
+
 
   <table>
 
@@ -18,10 +23,20 @@
       <% @communities.each do |community| %>
         <tr>
           <td><%= link_to(community.name, community) %></td>
-          <td><%= community.users.count %></td>
+          <td><%= community.subscriptions.count %></td>
           <td><%= community.posts.count %></td>
           <td><%= community.comments.count %></td>
-          <td>Subscribe</td>
+          <td>
+            <% if current_user %>
+              <% if current_user.subscriptions.exists?(community: community) %>
+                <%= link_to "Unsubscribe", unsubscribe_path(community), method: :delete %>
+              <% else %>
+                <%= link_to "Subscribe", subscribe_path(community), method: :post %>
+              <% end %>
+            <% else %>
+              Subscribe disabled
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
@@ -30,5 +45,6 @@
 <!-- TODO: communities with no names should not be rendered -->
 <!-- TODO: names should be unique? -->
 </div>
+
 
 <%= link_to "New community", new_community_path %>
