@@ -10,15 +10,21 @@
         <div class="perfil-usuario-header">
           <div class="perfil-usuario-portada">
             <div class="perfil-usuario-avatar">
-                <%= image_tag @user.avatar, alt: "img-avatar", class: "avatar-image" %>
-                <% if @usuario_actual == @usuario_visto %>
+                <% if @user.avatar.present? %>
+                  <%= image_tag @user.avatar, alt: "img-avatar", class: "avatar-image" %>
+                <% else %>
+                  <i class = 'fa_icon circle-user', class: "avatar-image" %>
+                <% end %>
+                <% if current_user == @user %>
                   <%= link_to edit_user_path(@user), class: "boton-avatar" do %>
                     <i class="fas fa-pen"></i>
                   <% end %>
                 <% end %>
 
             </div>
-            <%= image_tag @user.banner, alt: "img-portada", class: "banner-image" %>
+            <% if @user.banner.present?%>
+              <%= image_tag @user.banner, alt: "img-portada", class: "banner-image" %>
+            <% end %>
         </div>
 
 
@@ -47,20 +53,26 @@
             </div>
           </div>
 
-          <div class="menu-perfil">
-            <%= form_tag(user_path(@user), method: :get, class: "select-form") do %>
-              <%= button_tag(type: 'submit', name: 'content_type', value: 'Posts', class: 'generic-button') do %>
-                <i class="fas fa-newspaper"></i> Show Posts
-              <% end %>
-
-              <%= button_tag(type: 'submit', name: 'content_type', value: 'Comments', class: 'generic-button') do %>
-                <i class="fas fa-comments"></i> Show Comments
-              <% end %>
+          <!-- app/views/users/show.html.erb -->
+        <div class="menu-perfil">
+          <%= form_tag(user_path(@user), method: :get, class: "select-form") do %>
+            <%= button_tag(type: 'submit', name: 'content_type', value: 'Posts', class: 'generic-button') do %>
+              <i class="fas fa-newspaper"></i> Show Posts
             <% end %>
 
+            <%= button_tag(type: 'submit', name: 'content_type', value: 'Comments', class: 'generic-button') do %>
+              <i class="fas fa-comments"></i> Show Comments
+            <% end %>
 
-            </ul>
-          </div>
+            <%= button_tag(type: 'submit', name: 'content_type', value: 'SavedPosts', class: 'generic-button') do %>
+              <i class="fas fa-bookmark"></i> Show Saved Posts
+            <% end %>
+
+            <%= button_tag(type: 'submit', name: 'content_type', value: 'SavedComments', class: 'generic-button') do %>
+              <i class="fas fa-bookmark"></i> Show Saved Comments
+            <% end %>
+          <% end %>
+
           <% if params[:content_type] == "Posts" %>
             <!-- Lista de posts del usuario -->
             <h2>User's Posts</h2>
@@ -68,7 +80,7 @@
               <ul>
                 <% @user.posts.each do |post| %>
                   <li>
-                    <%= link_to post.title, post_path(post) %>
+                    <%= link_to post.title, post_path(post) %><br>
                     <!-- Agrega cualquier información adicional del post que desees mostrar -->
                   </li>
                 <% end %>
@@ -91,8 +103,39 @@
             <% else %>
               <p>There are no comments.</p>
             <% end %>
+          <% elsif params[:content_type] == "SavedPosts" %>
+            <!-- Lista de SavedPosts del usuario -->
+            <h2>User's Saved Posts</h2>
+            <% if @user.saved_posts.any? %>
+              <ul>
+                <% @user.saved_posts.each do |saved_post| %>
+                  <li>
+                    <%= link_to saved_post.post.title, post_path(saved_post.post) %>
+                    <!-- Agrega cualquier información adicional del saved_post que desees mostrar -->
+                  </li>
+                <% end %>
+              </ul>
+            <% else %>
+              <p>There are no saved posts.</p>
+            <% end %>
+          <% elsif params[:content_type] == "SavedComments" %>
+            <!-- Lista de SavedComments del usuario -->
+            <h2>User's Saved Comments</h2>
+            <% if @user.saved_comments.any? %>
+              <ul>
+                <% @user.saved_comments.each do |saved_comment| %>
+                  <li>
+                    <%= saved_comment.comment.body %>
+                    <!-- Agrega cualquier información adicional del saved_comment que desees mostrar -->
+                  </li>
+                <% end %>
+              </ul>
+            <% else %>
+              <p>There are no saved comments.</p>
+            <% end %>
           <% end %>
-      </div>
+        </div>
+
 </section>
 
 <hr/>

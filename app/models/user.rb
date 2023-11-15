@@ -3,7 +3,14 @@ class User < ApplicationRecord
   has_one_attached :banner
   has_many :posts
   has_many :comments
+
   has_many :subscriptions, dependent: :destroy
+  has_many :votes
+
+  has_many :saved_posts, dependent: :destroy
+  has_many :saved_comments, dependent: :destroy
+  has_many :saved_posts, through: :saved_posts, source: :post
+  has_many :saved_comments, through: :saved_comments, source: :comment
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
