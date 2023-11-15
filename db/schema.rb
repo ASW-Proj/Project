@@ -47,7 +47,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_213421) do
     t.datetime "updated_at", null: false
     t.integer "community_id", null: false
     t.integer "parent_id"
-    t.integer "points"
+    t.integer "points", default: 0
     t.index ["community_id"], name: "index_comments_on_community_id"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
@@ -74,7 +74,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_213421) do
     t.integer "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "like_type", default: 0, null: false
+    t.integer "like_type"
     t.index ["comment_id"], name: "index_likes_on_comment_id"
     t.index ["post_id"], name: "index_likes_on_post_id"
     t.index ["user_id"], name: "index_likes_on_user_id"
@@ -88,7 +88,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_213421) do
     t.datetime "updated_at", null: false
     t.integer "community_id", null: false
     t.integer "user_id", null: false
-    t.integer "points"
+    t.integer "points", default: 0
     t.index ["community_id"], name: "index_posts_on_community_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
