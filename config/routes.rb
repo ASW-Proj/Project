@@ -1,21 +1,19 @@
 Rails.application.routes.draw do
   get 'comments/like/:id', to: 'comments#like'
   post 'comments/like/:id', to: 'comments#like'
+  get 'posts/like/:id', to: 'posts#like'
+  post 'posts/like/:id', to: 'posts#like'
+
   get 'comments/dislike/:id', to: 'comments#dislike'
   post 'comments/dislike/:id', to: 'comments#dislike'
-  get 'post/like/:id', to: 'post#like'
-  post 'post/like/:id', to: 'post#like'
-  get 'post/dislike/:id', to: 'post#dislike'
-  post 'post/dislike/:id', to: 'post#dislike'
-  resources :comments do
-    member do
-      post 'like'
-      post 'dislike'
-    end
-  end
+  get 'posts/dislike/:id', to: 'posts#dislike'
+  post 'posts/dislike/:id', to: 'posts#dislike'
+  
+  
+  
 
-  post 'comments/:id/likes', to: 'comments#like', as: 'comment_like'
-  delete 'comments/:id/likes', to: 'comments#dislike', as: 'comment_dislike'
+
+ 
   resources :comments
   get 'pages/home'
 

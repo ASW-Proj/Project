@@ -6,7 +6,7 @@
     <%= comment.body %>
   </div>
   <div class="comment-score">
-    Total score: <%= comment.points %>
+    Total score:  <%= comment.points %>
     <%= link_to '▲','/comments/like/'+ comment.id.to_s, method: :post%>
     <%= link_to '▼','/comments/dislike/'+ comment.id.to_s, method: :post%>
   </div>

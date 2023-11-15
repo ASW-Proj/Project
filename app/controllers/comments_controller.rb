@@ -82,14 +82,19 @@ class CommentsController < ApplicationController
 
   def like
     @comment = Comment.find(params[:id])
-    @like = Like.where(comment_id: @comment.id, user_id: current_user.id).first
+    @like = Like.where(comment_id: @comment.id, user_id: current_user.id, like_type:1).first
     if @like.nil?
       @like = Like.new
       @like.comment_id = params[:id]
       @like.user_id = current_user.id
+      @like.like_type=1
       @comment.increment!(:points)
       @comment.save
       @like.save
+    else
+      @like.delete
+      @comment.update_column(:points, @comment.points - 1)
+      @comment.save
     end
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_path) }
@@ -100,12 +105,19 @@ class CommentsController < ApplicationController
   
   def dislike
     @comment = Comment.find(params[:id])
-    @like = Like.where(comment_id: @comment.id, user_id: current_user.id).first
-    if !@like.nil?
-      @like.delete
+    @like = Like.where(comment_id: @comment.id, user_id: current_user.id, like_type:0).first
+    if @like.nil?
+      @like = Like.new
+      @like.comment_id = params[:id]
+      @like.user_id = current_user.id
+      @like.like_type=0
       @comment.update_column(:points, @comment.points - 1)
       @comment.save
       @like.save
+    else
+      @like.delete
+      @comment.increment!(:points)
+      @comment.save
     end
     respond_to do |format|
       format.html { redirect_back(fallback_location: root_path) }
