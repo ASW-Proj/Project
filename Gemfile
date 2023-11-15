@@ -59,6 +59,9 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 
+  #https://code.jquery.com/jquery-3.6.0.min.js
+  gem 'jquery-rails'
+
 end
 
 group :test do

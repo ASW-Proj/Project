@@ -1,21 +1,49 @@
 Rails.application.routes.draw do
+
+  resources :comments
+  get 'pages/home'
+
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks',
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
-  devise_scope :user do
+
+  devise_scope :postuser do
     get '/users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
     get '/logout', to: 'users/sessions#destroy', as: :logout
   end
 
+  # Resources for subscriptions
+  # resources :subscriptions, only: :create
+  get "/subscribe/:community_id", to: "subscriptions#create", as: "subscribe"
+  get "/unsubscribe/:community_id", to: "subscriptions#destroy", as: "unsubscribe"
+  
+  # Resources for communities
   resources :communities
+
   get "up" => "rails/health#show", as: :rails_health_check
 
+
   # Resources for posts and comments
+
   resources :posts do
-    resources :comments, only: [:create]
+    resources :comments, only: [:create, :destroy]
+    
+    member do
+      post 'vote_up'
+      post 'vote_down'
+    end
   end
+  resources :posts do
+    resources :comments 
+  end
+  resources :posts do
+    resources :comments, only: [:create, :new, :destroy] do
+      post '/reply/:parent_id', to: 'comments#reply', on: :collection, as: :reply
+    end
+  end
+
 
   # Search route
   get 'search', to: 'search#index'
@@ -23,6 +51,7 @@ Rails.application.routes.draw do
 
 resources :users
   # User routes
+
   resources :users, only: [:show] do
     member do
       get 'posts', to: 'users#show', content_type: 'Publicaciones', as: 'user_posts'

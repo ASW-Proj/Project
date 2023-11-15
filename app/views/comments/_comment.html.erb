@@ -1,12 +1,25 @@
-<div id="<%= dom_id comment %>">
-  <p>
-    <strong>Body:</strong>
+
+<%= stylesheet_link_tag "application" %>
+
+<div class="comment">
+  <div class="comment-body<%= comment.parent_id.nil? ? ' parent-comment' : ' child-comment' %>">
     <%= comment.body %>
-  </p>
+  </div>
+  
+  <div class="post-meta">
+    Created at <%= comment.created_at.strftime('%d %B, %Y') %>
+    Created by <%= link_to comment.user.email, user_path(comment.user) %>
+    <%= link_to "Reply", new_post_comment_path(comment.post, parent_id: comment.id), class: "reply-button" %>
+    <% if current_user == comment.user %>
+      <%= link_to "Delete", post_comment_path(comment.post, comment), method: :delete, data: { confirm: 'Are you sure?' }, class: "delete-button" %>
+    <% end %>  </div>
 
-  <p>
-    <strong>Post:</strong>
-    <%= comment.post_id %>
-  </p>
-
+  <% if comment.replies.any? %>
+    <div class="comment-separator"></div>
+    <ul class="nested-comments">
+      <% comment.replies.each do |nested_comment| %>
+        <%= render partial: 'comments/comment', locals: { comment: nested_comment } %>
+      <% end %>
+    </ul>
+  <% end %>
 </div>

@@ -3,7 +3,9 @@ class User < ApplicationRecord
   has_one_attached :banner
   has_many :posts
   has_many :comments
-  has_and_belongs_to_many :communities
+
+  has_many :subscriptions, dependent: :destroy
+  has_many :votes
 
   has_and_belongs_to_many :saved_posts, class_name: 'Post', join_table: :saved_posts
   has_and_belongs_to_many :saved_comments, class_name: 'Comment', join_table: :saved_comments

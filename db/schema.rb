@@ -11,6 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2023_11_15_191347) do
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -41,12 +42,14 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_191347) do
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
+    t.integer "user_id", null: false
     t.integer "post_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id", null: false
     t.integer "community_id", null: false
+    t.integer "parent_id"
     t.index ["community_id"], name: "index_comments_on_community_id"
+    t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -58,13 +61,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_191347) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "communities_users", id: false, force: :cascade do |t|
-    t.integer "community_id", null: false
-    t.integer "user_id", null: false
-    t.index ["community_id", "user_id"], name: "index_communities_users_on_community_id_and_user_id"
-    t.index ["user_id", "community_id"], name: "index_communities_users_on_user_id_and_community_id"
-  end
-
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "url"
@@ -73,9 +69,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_191347) do
     t.datetime "updated_at", null: false
     t.integer "community_id", null: false
     t.integer "user_id", null: false
+    t.integer "votes_count"
     t.index ["community_id"], name: "index_posts_on_community_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
+
 
   create_table "saved_comments", id: false, force: :cascade do |t|
     t.integer "user_id", null: false
@@ -89,6 +87,15 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_191347) do
     t.integer "post_id", null: false
     t.index ["post_id"], name: "index_saved_posts_on_post_id"
     t.index ["user_id"], name: "index_saved_posts_on_user_id"
+  end
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "community_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["community_id"], name: "index_subscriptions_on_community_id"
+    t.index ["user_id", "community_id"], name: "index_subscriptions_on_user_id_and_community_id", unique: true
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -109,6 +116,17 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_191347) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.string "votable_type", null: false
+    t.integer "votable_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "vote_type"
+    t.index ["user_id"], name: "index_votes_on_user_id"
+    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "communities"
@@ -116,4 +134,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_191347) do
   add_foreign_key "comments", "users"
   add_foreign_key "posts", "communities"
   add_foreign_key "posts", "users"
+  add_foreign_key "subscriptions", "communities"
+  add_foreign_key "subscriptions", "users"
+  add_foreign_key "votes", "users"
 end

@@ -7,8 +7,20 @@ class PostsController < ApplicationController
   end
 
   def home
-    @posts = Post.all
+    @posts = Post.all.order(created_at: :desc)
+    #@postsControversial = Post.all.order() // me falta comments y votos
     @users = User.all
+    if params[:sort] == 'newest'
+      @posts = Post.all.order(created_at: :desc)
+    elsif params[:sort] == 'oldest'
+      @posts = Post.all.order(created_at: :asc)
+    elsif params[:sort] == 'top'
+      @posts = Post.all.order(created_at: :asc) #falta cambiar este
+    elsif params[:sort] == 'controversial'
+      @posts = Post.all.order(created_at: :asc) #falta cambiar este
+    end
+
+    @comments = Comment.all.order(created_at: :desc)
   end
 
   def homeNewest
@@ -75,10 +87,38 @@ class PostsController < ApplicationController
     end
   end
 
+  def vote_up
+    @post = Post.find(params[:id])
+    @vote = @post.votes.build(vote_type: 1, user_id: current_user.id)
+    if @vote.save
+      update_vote_count
+    redirect_to @post
+    else
+      render json: { error: 'Error al votar' }, status: :unprocessable_entity
+
+    end
+  end
+
+  def vote_down
+    @post = Post.find(params[:id])
+    @vote = @post.votes.build(vote_type: -1, user_id: current_user.id)
+    if @vote.save
+      update_vote_count
+    redirect_to @post
+    else
+      render json: { error: 'Error al votar' }, status: :unprocessable_entity
+
+    end
+  end
+  
   private
      #Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
+    end
+    
+    def update_vote_count
+      @post.update(votes_count: @post.votes.count)
     end
 
     # Only allow a list of trusted parameters through.
