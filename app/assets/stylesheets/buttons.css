@@ -124,3 +124,7 @@
     cursor: default;
     box-sizing: border-box;
 }
+
+.listing-type-select {
+    border-radius: 6px;
+}
