@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_15_172206) do
+
+ActiveRecord::Schema[7.1].define(version: 2023_11_15_213421) do
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -47,6 +49,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_172206) do
     t.datetime "updated_at", null: false
     t.integer "community_id", null: false
     t.integer "parent_id"
+    t.integer "points", default: 0
     t.index ["community_id"], name: "index_comments_on_community_id"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
@@ -60,6 +63,18 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_172206) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "comment_id"
+    t.integer "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "like_type"
+    t.index ["comment_id"], name: "index_likes_on_comment_id"
+    t.index ["post_id"], name: "index_likes_on_post_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "url"
@@ -68,11 +83,25 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_172206) do
     t.datetime "updated_at", null: false
     t.integer "community_id", null: false
     t.integer "user_id", null: false
-    t.integer "votes_count"
+    t.integer "points", default: 0
     t.index ["community_id"], name: "index_posts_on_community_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
+
+  create_table "saved_comments", id: false, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "comment_id", null: false
+    t.index ["comment_id"], name: "index_saved_comments_on_comment_id"
+    t.index ["user_id"], name: "index_saved_comments_on_user_id"
+  end
+
+  create_table "saved_posts", id: false, force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "post_id", null: false
+    t.index ["post_id"], name: "index_saved_posts_on_post_id"
+    t.index ["user_id"], name: "index_saved_posts_on_user_id"
+  end
   create_table "subscriptions", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "community_id", null: false
@@ -101,25 +130,19 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_172206) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "votes", force: :cascade do |t|
-    t.string "votable_type", null: false
-    t.integer "votable_id", null: false
-    t.integer "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "vote_type"
-    t.index ["user_id"], name: "index_votes_on_user_id"
-    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable"
-  end
-
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "communities"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "likes", "comments"
+  add_foreign_key "likes", "posts"
+  add_foreign_key "likes", "users"
   add_foreign_key "posts", "communities"
   add_foreign_key "posts", "users"
+
   add_foreign_key "subscriptions", "communities"
   add_foreign_key "subscriptions", "users"
   add_foreign_key "votes", "users"
+
 end

@@ -13,7 +13,7 @@
                 <% if @user.avatar.present? %>
                   <%= image_tag @user.avatar, alt: "img-avatar", class: "avatar-image" %>
                 <% else %>
-                  <i class = 'fa_icon circle-user', class: "avatar-image" %>
+                  <%= image_tag "user_default.png", alt: "img-avatar", class: "avatar-image" %>
                 <% end %>
                 <% if current_user == @user %>
                   <%= link_to edit_user_path(@user), class: "boton-avatar" do %>
@@ -24,6 +24,8 @@
             </div>
             <% if @user.banner.present?%>
               <%= image_tag @user.banner, alt: "img-portada", class: "banner-image" %>
+            <% else %>
+               <%= image_tag "banner_dafault.jpeg", alt: "img-portada", class: "banner-image" %>
             <% end %>
         </div>
 
@@ -75,7 +77,7 @@
 
           <% if params[:content_type] == "Posts" %>
             <!-- Lista de posts del usuario -->
-            <h2>User's Posts</h2>
+            <h2 style="color: white;">User's Posts</h2>
             <% if @user.posts.any? %>
               <ul>
                 <% @user.posts.each do |post| %>
