@@ -13,5 +13,5 @@ class Community < ApplicationRecord
     }
     has_many :posts, dependent: :restrict_with_exception
     has_many :comments, dependent: :restrict_with_exception
-    has_and_belongs_to_many :users
+    has_many :subscriptions, dependent: :destroy
 end

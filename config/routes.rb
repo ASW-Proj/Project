@@ -8,12 +8,20 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations'
   }
-  devise_scope :user do
+
+  devise_scope :postuser do
     get '/users/auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google_oauth2'
     get '/logout', to: 'users/sessions#destroy', as: :logout
   end
 
+  # Resources for subscriptions
+  # resources :subscriptions, only: :create
+  get "/subscribe/:community_id", to: "subscriptions#create", as: "subscribe"
+  get "/unsubscribe/:community_id", to: "subscriptions#destroy", as: "unsubscribe"
+  
+  # Resources for communities
   resources :communities
+
   get "up" => "rails/health#show", as: :rails_health_check
 
 
