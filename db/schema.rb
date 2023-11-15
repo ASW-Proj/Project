@@ -143,6 +143,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_213421) do
 
   add_foreign_key "subscriptions", "communities"
   add_foreign_key "subscriptions", "users"
-  add_foreign_key "votes", "users"
 
 end
