@@ -7,36 +7,38 @@
 <h1>List of communities</h1>
 
 <div id="communities">
-
-  <table>
-
-    <thead>
-      <th>Name</th>
-      <th>Subscribers</th>
-      <th>Posts</th>
-      <th>Comments</th>
-      <th></th>
+  <table class="communities-table">
+    <thead class="communities-table-head">
+      <tr class="communities-table-row">
+        <th>Name</th>
+        <th>Subscribers</th>
+        <th>Posts</th>
+        <th>Comments</th>
+        <th></th>
+      </tr>
     </thead>
 
     <tbody>
       <% @communities.each do |community| %>
-        <tr>
-          <td><%= link_to(community.name, community) %></td>
-          <td><%= community.subscriptions.count %></td>
-          <td><%= community.posts.count %></td>
-          <td><%= community.comments.count %></td>
-          <td>
-            <% if current_user %>
-              <% if current_user.subscriptions.exists?(community: community) %>
-                <%= link_to "Unsubscribe", unsubscribe_path(community), method: :delete %>
+        <% if !community.name.empty? %>
+          <tr class="communities-table-row communities-table-hover-highlight">
+            <td><%= link_to(community.name, community) %></td>
+            <td><%= community.subscriptions.count %></td>
+            <td><%= community.posts.count %></td>
+            <td><%= community.comments.count %></td>
+            <td>
+              <% if current_user %>
+                <% if current_user.subscriptions.exists?(community: community) %>
+                  <%= link_to "Unsubscribe", unsubscribe_path(community), method: :delete %>
+                <% else %>
+                  <%= link_to "Subscribe", subscribe_path(community), method: :post %>
+                <% end %>
               <% else %>
-                <%= link_to "Subscribe", subscribe_path(community), method: :post %>
+                Subscribe disabled
               <% end %>
-            <% else %>
-              Subscribe disabled
-            <% end %>
-          </td>
-        </tr>
+            </td>
+          </tr>
+        <% end %>
       <% end %>
     </tbody>
 
