@@ -48,6 +48,7 @@ Rails.application.routes.draw do
   # Search route
   get 'search', to: 'search#index'
   get 'search/index'
+
 resources :users
   # User routes
 
