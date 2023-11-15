@@ -8,6 +8,3 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-User.create(email: 'giselaboza17@gmail.com', full_name: 'Gisela Borràs Zaplana')
-
-
