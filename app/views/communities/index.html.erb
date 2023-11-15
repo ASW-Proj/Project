@@ -5,6 +5,12 @@
 <% end %>
 
 <h1>List of communities</h1>
+<div class="subheader-bar">
+<!-- TODO: filter subscrit i local -->
+  <% if current_user %>
+    <%= link_to "Create community", new_community_path, class: "generic-button" %>
+  <% end %>
+</div>
 
 <div id="communities">
   <table class="communities-table">
@@ -41,10 +47,5 @@
         <% end %>
       <% end %>
     </tbody>
-
   </table>
-<!-- TODO: communities with no names should not be rendered -->
-<!-- TODO: names should be unique? -->
 </div>
-
-<%= link_to "New community", new_community_path %>
