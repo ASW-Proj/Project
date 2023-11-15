@@ -28,3 +28,7 @@
     padding: 4px;
 }
 
+.communities-table-row > td {
+    height: 36px;
+}
+

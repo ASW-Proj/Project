@@ -22,19 +22,19 @@
       <% @communities.each do |community| %>
         <% if !community.name.empty? %>
           <tr class="communities-table-row communities-table-hover-highlight">
-            <td><%= link_to(community.name, community) %></td>
+            <td><%= link_to(community.name, community, class: "secondary-button") %></td>
             <td><%= community.subscriptions.count %></td>
             <td><%= community.posts.count %></td>
             <td><%= community.comments.count %></td>
             <td>
               <% if current_user %>
                 <% if current_user.subscriptions.exists?(community: community) %>
-                  <%= link_to "Unsubscribe", unsubscribe_path(community), method: :delete %>
+                  <%= link_to "Unsubscribe", unsubscribe_path(community), method: :delete, class: "secondary-button" %>
                 <% else %>
-                  <%= link_to "Subscribe", subscribe_path(community), method: :post %>
+                  <%= link_to "Subscribe", subscribe_path(community), method: :post, class: "secondary-button" %>
                 <% end %>
               <% else %>
-                Subscribe disabled
+                <span class="secondary-button-disabled">Subscribe</span>
               <% end %>
             </td>
           </tr>
