@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_post, only: [:create]
+  before_action :set_post, only: [:create, :destroy]
 
   # GET /comments or /comments.json
   def index
@@ -8,10 +8,14 @@ class CommentsController < ApplicationController
 
   # GET /comments/1 or /comments/1.json
   def show
+    @comment= Comment.find(params[:id])
   end
 
   # GET /comments/new
   def new
+    @post = Post.find(params[:post_id])
+    @community = @post.community
+    @user=current_user 
     @comment = Comment.new
   end
 
@@ -21,29 +25,43 @@ class CommentsController < ApplicationController
 
   # POST /comments or /comments.json
   def create
-    @comment = @post.comments.build(comment_params)
+    @parent_comment = Comment.find_by(id: params[:parent_id])
+    
+    if @parent_comment.present?
+      @comment = @parent_comment.replies.build(comment_params)
+    else
+      @comment = @post.comments.build(comment_params)
+    end
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to show_post_path(@post), notice: "Comentario creado exitosamente." }
+        format.html { redirect_to post_path(@post), notice: "Comment was successfully created." }
         format.json { render :show, status: :created, location: @comment }
       else
-        format.html { render "posts/show" }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  private
+
+  def reply
+    @post = Post.find(params[:post_id])
+    @parent_comment = Comment.find(params[:parent_id])
+    @comment = @post.comments.build(parent_id: @parent_comment.id)
+
+    render 'new' 
+  end
+
   def set_post
     @post = Post.find(params[:post_id])
-  end 
+  end
 
   # PATCH/PUT /comments/1 or /comments/1.json
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to comment_url(@comment), notice: "Comment was successfully updated." }
+        format.html { redirect_to show_post_path(@post), notice: "Comment was successfully updated." }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -54,10 +72,10 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1 or /comments/1.json
   def destroy
-    @comment.destroy!
-
+    @comment = Comment.find(params[:id])
+      @comment.destroy
     respond_to do |format|
-      format.html { redirect_to comments_url, notice: "Comment was successfully destroyed." }
+      format.html { redirect_to show_post_path(@comment.post), notice: "Comment was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -70,6 +88,6 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:body, :post_id)
+      params.require(:comment).permit(:body, :user_id, :post_id, :community_id, :parent_id)
     end
 end

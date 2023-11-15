@@ -87,10 +87,38 @@ class PostsController < ApplicationController
     end
   end
 
+  def vote_up
+    @post = Post.find(params[:id])
+    @vote = @post.votes.build(vote_type: 1, user_id: current_user.id)
+    if @vote.save
+      update_vote_count
+    redirect_to @post
+    else
+      render json: { error: 'Error al votar' }, status: :unprocessable_entity
+
+    end
+  end
+
+  def vote_down
+    @post = Post.find(params[:id])
+    @vote = @post.votes.build(vote_type: -1, user_id: current_user.id)
+    if @vote.save
+      update_vote_count
+    redirect_to @post
+    else
+      render json: { error: 'Error al votar' }, status: :unprocessable_entity
+
+    end
+  end
+  
   private
      #Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
+    end
+    
+    def update_vote_count
+      @post.update(votes_count: @post.votes.count)
     end
 
     # Only allow a list of trusted parameters through.

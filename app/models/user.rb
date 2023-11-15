@@ -4,6 +4,7 @@ class User < ApplicationRecord
   has_many :posts
   has_many :comments
   has_and_belongs_to_many :communities
+  has_many :votes
 
   has_many :saved_posts, dependent: :destroy
   has_many :saved_comments, dependent: :destroy
