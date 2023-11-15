@@ -4,31 +4,44 @@
 
 <div id="communities">
 
-  <table>
+<table class="table table-sm table-hover" id="community_table" style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+  <thead class="pointer" style="background-color: #f8f9fa;">
+    <tr>
+      <th style="padding: 8px;">Nom</th>
+      <th class="text-right" style="padding: 8px;">Usuaris / Mes</th>
+      <th class="text-right d-none d-lg-table-cell" style="padding: 8px;">Publicacions</th>
+      <th class="text-right d-none d-lg-table-cell" style="padding: 8px;">Comentaris</th>
+      <th style="padding: 8px;"></th>
+    </tr>
+  </thead>
+  <tbody>
+   <% @communities.each do |community| %>
+       <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #dee2e6;">
+          <a class="community-link" title="!programming" href="/c/programming" style="text-decoration: none; color: #007bff;">
+            <picture>
+              <source srcset="https://programming.dev/pictrs/image/8140dda6-9512-4297-ac17-d303638c90a6.png?format=webp&amp;thumbnail=96" type="image/webp">
+              <source srcset="https://programming.dev/pictrs/image/8140dda6-9512-4297-ac17-d303638c90a6.png">
+              <source srcset="https://programming.dev/pictrs/image/8140dda6-9512-4297-ac17-d303638c90a6.png?format=jpg&amp;thumbnail=96" type="image/jpeg">
+              <img class="overflow-hidden pictrs-image object-fit-cover img-icon me-1" src="https://programming.dev/pictrs/image/8140dda6-9512-4297-ac17-d303638c90a6.png" alt="" title="" loading="lazy" style="max-width: 40px; border-radius: 50%;">
+            </picture>
+            <span class="overflow-wrap-anywhere">Programming</span>
+          </a>
+        </td>
 
-    <thead>
-      <th>Name</th>
-      <th>Subscribers</th>
-      <th>Posts</th>
-      <th>Comments</th>
-      <th></th>
-    </thead>
 
-    <tbody>
-      <% @communities.each do |community| %>
-        <tr>
-          <td><%= link_to(community.name, community) %></td>
-          <td><%= community.users.count %></td>
-          <td><%= community.posts.count %></td>
-          <td><%= community.comments.count %></td>
-          <td>Subscribe</td>
-        </tr>
-      <% end %>
-    </tbody>
+        <td class="text-right" style="padding: 8px; border-bottom: 1px solid #dee2e6;"><%= community.users.count %></td>
+        <td class="text-right d-none d-lg-table-cell" style="padding: 8px; border-bottom: 1px solid #dee2e6;"><%= community.users.count %></td>
+        <td class="text-right d-none d-lg-table-cell" style="padding: 8px; border-bottom: 1px solid #dee2e6;"><%= community.comments.count %></td>
+        <td class="text-right" style="padding: 8px; border-bottom: 1px solid #dee2e6;">
+          <button class="btn btn-link d-inline-block" style="text-decoration: none; color: #007bff; cursor: pointer;">Subscriu-t’hi</button>
+        </td>
+      </tr>
+    <% end %>
+    <!-- Add more rows as needed -->
+  </tbody>
+</table>
 
-  </table>
-<!-- TODO: communities with no names should not be rendered -->
-<!-- TODO: names should be unique? -->
-</div>
+
 
 <%= link_to "New community", new_community_path %>
