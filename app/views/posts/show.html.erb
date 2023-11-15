@@ -1,4 +1,4 @@
-<%= stylesheet_link_tag "buttons", "forms" %>
+<%= stylesheet_link_tag "buttons", "forms", "application" %>
 
 <div class="post-container">
   <h1 class="post-title"><%= @post.title %></h1>
@@ -9,38 +9,55 @@
 
   <div class="post-content">
     <%= @post.body %>
-  </div>
 
-  <div class="comments-section">
-    <h2><%= "Comments" %></h2>
-    <ul class="comments-list">
-      <% @comments.each do |comment| %>
-        <li class="comment">
-          <div class="comment-body"><%= comment.body %></div>
-        </li>
-      <% end %>
-    </ul>
+  </div>
+  <div class="post-votes">
+    <%="Votos del post: #{@post.total_votes}" %>
+
   </div>
   </div>
-  <% if current_user %>
-      <% if current_user.saved_posts.include?(@post) %>
-        <%= link_to "Unsave", unsave_post_path(current_user, @post), method: :delete %>
-      <% else %>
-        <%= link_to "Save", save_post_path(current_user, @post), method: :post %>
-      <% end %>
-  <% else %>
-    Subscribe disabled
-  <% end %>
-</div>
-  <div class="comment-form">
-    <h2><%= "Add a comment" %></h2>
-    <%= form_for([@post, @post.comments.build], html: { class: "comment-form" }) do |f| %>
-      <div class="field">
-        <%= f.text_area :body, placeholder: "Write your comment here", class: "form-text-input__inner" %>
-      </div>
-      <div class="actions">
-        <%= f.submit "Comment", class: "generic-button" %>
-      </div>
+  <form class="vote-form" data-post-id="<%= @post.id %>">
+  <button type="button" class="vote-up">+</button>
+  <button type="button" class="vote-down">-</button>
+</form>
+
+<div class="comments-section">
+  <h2><%= "Comments" %></h2>
+  <ul class="comments-list">
+    <% @post.comments.where(parent_id: nil).each do |comment| %>
+      <%= render partial: 'comments/comment', locals: { comment: comment } %>
     <% end %>
-  </div>
+
+  </ul>
 </div>
+
+  <% if user_signed_in? %>
+  <%= render partial: 'comments/form', locals: { post: @post, community: @community } %>
+
+  <% else %>
+  <p>Debes iniciar sesión para dejar un comentario.</p>
+  <% end %>
+
+</div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('.vote-form').on('click', '.vote-up, .vote-down', function() {
+      const postId = $(this).closest('.vote-form').data('post-id');
+      const voteType = $(this).hasClass('vote-up') ? 'vote_up' : 'vote_down';
+
+      $.ajax({
+        type: 'POST',
+        url: `/posts/${postId}/${voteType}`,
+        dataType: 'json',
+        success: function(data) {
+          $('.vote-count').text(data.votes); // Actualiza el contador de votos
+        },
+        error: function(xhr, status, error) {
+          // Manejar errores de la solicitud Ajax
+        }
+      });
+    });
+  });
+</script>

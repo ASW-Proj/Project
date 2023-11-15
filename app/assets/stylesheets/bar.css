@@ -6,8 +6,9 @@
   justify-content:
   space-between;
   align-items: center;
-  height: 65px;
+  height: 50px;
   padding: 5px 10%;
+  vertical-align: middle;
 }
 
 .header .logo{
@@ -33,7 +34,6 @@
 .header .nav-links li{
   display: inline-block;
   padding: 20px;
-  text-decoration: none;
 
 }
 
@@ -67,3 +67,9 @@
   color: #ffbc0e;
   transform: scale(1.1);
 }
+
+ .nav-links button {
+    display: inline-block;
+    vertical-align: middle; /* Alinea verticalmente con el contenido dentro del enlace o botón */
+    margin-right: 10px; /* Ajusta el espacio entre los elementos según tus preferencias */
+  }
