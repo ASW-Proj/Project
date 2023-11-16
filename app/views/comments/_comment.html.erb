@@ -6,11 +6,12 @@
     <%= comment.body %>
   </div>
   <div class="comment-score">
-    Total score:  <%= comment.points %>
+    Total score:  <%= comment.points %><br>
+    <%= link_to comment.post.title, post_path(comment.post.id) %>, from <%= link_to comment.post.community.name, community_path(comment.post.community.id) %>
     <%= link_to '▲','/comments/like/'+ comment.id.to_s, method: :post%>
     <%= link_to '▼','/comments/dislike/'+ comment.id.to_s, method: :post%>
   </div>
-  
+
   <div class="post-meta">
     Created at <%= comment.created_at.strftime('%d %B, %Y') %>
     Created by <%= link_to comment.user.email, user_path(comment.user) %>

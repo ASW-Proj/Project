@@ -122,11 +122,9 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-
     dockerfile-rails (1.5.12)
       rails (>= 3.0.0)
     drb (2.1.1)
-
       ruby2_keywords
     erubi (1.12.0)
     faraday (2.7.11)
@@ -217,7 +215,6 @@ GEM
     pg (1.5.4)
     pg (1.5.4-x64-mingw-ucrt)
     psych (5.1.0)
-
       stringio
     public_suffix (5.0.3)
     puma (6.4.0)
