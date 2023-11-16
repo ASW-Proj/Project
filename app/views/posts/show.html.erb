@@ -6,6 +6,9 @@
   <div class="post-meta">
    <%= link_to "Created by " + @post.user.email, user_path(@post.user) %>
   </div>
+  <% if current_user == @post.user %>
+    <%= link_to 'Delete','/posts/delete/'+ @post.id.to_s, method: :delete%>
+    <% end %>  </div>
 
   
   

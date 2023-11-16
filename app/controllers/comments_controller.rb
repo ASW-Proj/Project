@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_post, only: [:create, :destroy]
+  before_action :set_post, only: [:create]
 
   # GET /comments or /comments.json
   def index

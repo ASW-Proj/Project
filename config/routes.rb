@@ -8,8 +8,12 @@ Rails.application.routes.draw do
   post 'comments/dislike/:id', to: 'comments#dislike'
   get 'posts/dislike/:id', to: 'posts#dislike'
   post 'posts/dislike/:id', to: 'posts#dislike'
+
+  get 'posts/comments/delete/:id', to: 'comments#destroy'
+  delete 'posts/comments/delete/:id', to: 'comments#destroy'
   
-  
+  get 'posts/delete/:id', to: 'posts#destroy'
+  delete 'posts/delete/:id', to: 'posts#destroy'
   
 
 
