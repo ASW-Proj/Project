@@ -2,21 +2,27 @@
 
 <div class="post-container">
   <h1 class="post-title"><%= @post.title %></h1>
-  <p class="post-meta"><%= "Created at " + @post.created_at.strftime('%d %B, %Y') %></p>
-  <div class="post-meta">
+  <div class="post-meta"><%= "Created at " + @post.created_at.strftime('%d %B, %Y') %>
    <%= link_to "Created by " + @post.user.email, user_path(@post.user) %>
+
+    <% if current_user == @post.user %>
+      <%= link_to 'Delete','/posts/delete/'+ @post.id.to_s, method: :delete%>
+      <%= link_to "Edit",edit_post_path(@post), method: :get%>
+    <% end %>  
+
   </div>
-
-
-
-  <div class="post-content">
-    <%= @post.body %>
-  </div>
+ 
   <div class="post-score">
     Total score:    <%= @post.points %>
     <%= link_to '▲','/posts/like/'+ @post.id.to_s, method: :post%>
     <%= link_to '▼','/posts/dislike/'+ @post.id.to_s, method: :post%>
   </div>
+  
+  <div class="post-body">
+  <p></p>
+    <h4><%= @post.body %> </h4>
+  </div>
+
   <div class="comments-section">
     <h2><%= "Comments" %></h2>
   <center>

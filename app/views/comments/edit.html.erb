@@ -1,6 +1,21 @@
 <h1>Editing comment</h1>
 
-<%= render "form", comment: @comment %>
+<%= form_with(model: @comment,  local: true, html: { class: "comment-form" } ) do |form| %>
+  <div class="field">
+    <%= form.text_area :body, value: @comment.body, class: "form-text-input__inner" %>
+  </div>
+  <%= form.hidden_field :user_id, value: @comment.user_id %>
+  <%= form.hidden_field :post_id, value: @comment.post_id %>
+  <%= form.hidden_field :community_id, value: @comment.community_id %>
+
+  <% if params[:parent_id].present? %>
+    <%= form.hidden_field :parent_id, value: params[:parent_id] %>
+  <% end %>
+  
+  <div class="actions">
+    <%= form.submit "Edit", class: "generic-button" %>
+  </div>
+<% end %>
 
 <br>
 

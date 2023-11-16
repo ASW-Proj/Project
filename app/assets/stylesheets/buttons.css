@@ -113,3 +113,22 @@
 }
 
 
+.secondary-button {
+    color: rgb(241, 100, 30);
+    text-decoration: none;
+}
+
+.secondary-button:hover {
+    color: rgb(193, 80, 24);
+}
+
+.secondary-button-disabled {
+    color: rgb(78, 85, 91);
+    cursor: default;
+    box-sizing: border-box;
+}
+
+.listing-type-select {
+    border-radius: 6px;
+}
+

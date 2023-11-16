@@ -17,7 +17,8 @@
     Created by <%= link_to comment.user.email, user_path(comment.user) %>
     <%= link_to "Reply", new_post_comment_path(comment.post, parent_id: comment.id), class: "reply-button" %>
     <% if current_user == comment.user %>
-    <%= link_to 'Destroy', method: :delete, data: { confirm: 'Are you sure?' } %>
+    <%= link_to 'Delete','comments/delete/'+ comment.id.to_s, method: :delete%>
+    <%= link_to "Edit",edit_comment_path(comment), method: :get%>
     <% end %>  </div>
 
   <% if comment.replies.any? %>
