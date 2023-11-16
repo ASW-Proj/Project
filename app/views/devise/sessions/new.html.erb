@@ -1,26 +1,48 @@
-<h2>Log in</h2>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login with Google</title>
+    <style>
+      body {
+        font-family: "Droid Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+        background-color: #f1f1f1;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        color: #495057;
+        font-size: 24px;
+      }
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+      .container {
+        max-width: 600px;
+        margin: 300px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        border-radius: 7.5px;
+      }
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+      h2 {
+        color: #333;
+      }
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
+      button {
+        background-color: #4285f4;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 20px;
+        cursor: pointer;
+        border-radius: 3px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Login with Google</h2>
+      <p>Please, login with your Google account.</p>
+      <!-- Reemplaza 'TU_URL_DE_REDIRECT' con la URL de redirección proporcionada en tu configuración de OAuth en Google -->
 <%= render "devise/shared/links" %>

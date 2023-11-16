@@ -1,4 +1,4 @@
-<div class="view_apage">
+/div class="view_apage">
 
 
 <% sub = false %>
@@ -7,6 +7,61 @@
   <option value="1">Local<%  sub = false %></option>
   <option value="2">Suscritos<% sub = true %></option>
 </select>
+
+<% if @filtro == "Posts" %>
+
+  <%= form_tag(show_content_params_path, method: :get, class: "select-form") do %>
+    <%= form.hidden_field :type, value: params[:type] %>
+    <%= button_tag(type: 'submit', value: 'Local', class: 'reverse-button', onclick: "document.getElementById('content_type').value='Local';") do %>
+      <i class="fas fa-location-dot"></i> Local
+    <% end %>
+    <%= button_tag(type: 'submit', value: 'Subscribed', class: 'generic-button', onclick: "document.getElementById('content_type').value='Subscribed';") do %>
+      <i class="fas fa-location-dot"></i> Subscribed
+    <% end %>
+  <% end %>
+<% else %>
+  <%= form_tag(root_path, method: :get, class: "select-form") do %>
+    <%= button_tag(type: 'submit', value: 'Local', class: 'generic-button', onclick: "document.getElementById('content_type').value='Local';") do %>
+      <i class="fas fa-location-dot"></i> Local
+    <% end %>
+    <%= button_tag(type: 'submit', value: 'Subscribed', class: 'reverse-button', onclick: "document.getElementById('content_type').value='Subscribed';") do %>
+      <i class="fas fa-location-dot"></i> Subscribed
+    <% end %>
+  <% end %>
+<% end %>
+<h1>Valor del Filtro: <%= @filtro %></h1>
+
+
+<%= form_with url: root_path, method: :get, local: true, class: 'filter-form' do |form| %>
+
+    <%= form.hidden_field :type, value: params[:type] %>
+
+    <label>Seleccionar:</label>
+
+    <label>
+      <%= form.radio_button :filter_type, 'local' %>
+      Local
+    </label>
+
+    <label>
+      <%= form.radio_button :filter_type, 'subscribed' %>
+      Subscrito
+    </label>
+
+    <%= form.submit "Filtrar" %>
+  <% end %>
+
+
+<% if params[:filter_type] == "local" %>
+    <h2><center>Posts</h2></center>
+<%else%>   <h2><center>No hay comentarios.</h2></center>
+<%end%>
+
+
+
+
+
+
 
 <% if sub %> elPepe <% end %>
    <div class="menu-perfil">
@@ -38,6 +93,9 @@
   <% end %>
   <% end %>
 <% else %>
+
+
+
 <% if params[:filter] == 'posts'%>
 
   <% if @posts.empty? %>

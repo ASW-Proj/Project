@@ -52,6 +52,16 @@
 }
 
 
+.generic-button button:nth-child(1) {
+  background-color: #3498db; /* Color para el primer botón */
+}
+
+/* Estilo específico para el segundo botón */
+.select-form button:nth-child(2) {
+  background-color: #e74c3c; /* Color para el segundo botón */
+}
+
+
 
 
 
@@ -131,4 +141,59 @@
 .listing-type-select {
     border-radius: 6px;
 }
+
+
+
+
+
+/* Estilos para el nuevo tipo de botón */
+.reverse-button {
+    appearance: none;
+    background-color: #fff;
+    border: 1px solid rgb(0, 168, 70); /* Borde verde */
+    border-radius: 6px;
+    box-shadow: rgba(27, 31, 35, 0.1) 0px 1px 0px 0px;
+    box-sizing: border-box;
+    color: rgb(0, 168, 70); /* Texto verde */
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Droid Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    padding: 6px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.reverse-button:hover {
+    background-color: rgb(0, 168, 70); /* Cambio de fondo al verde */
+    color: #fff; /* Cambio de texto a blanco */
+}
+
+.reverse-button:focus {
+    box-shadow: rgba(0, 168, 70, .4) 0 0 0 3px; /* Sombra verde al enfocar */
+    outline: none;
+}
+
+.reverse-button:disabled,
+.reverse-button:disabled:active,
+.reverse-button:disabled:focus {
+    background-color: #fff;
+    border-color: rgb(89, 198, 135);
+    color: rgb(89, 198, 135);
+    cursor: default;
+}
+
+.reverse-button:active {
+    background-color: rgb(0, 143, 60); /* Cambio de fondo al verde oscuro */
+    box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
+
 
