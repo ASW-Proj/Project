@@ -85,6 +85,7 @@ class CommentsController < ApplicationController
   def like
     @comment = Comment.find(params[:id])
     @like = Like.where(comment_id: @comment.id, user_id: current_user.id, like_type:1).first
+    @like2= Like.where(comment_id: @comment.id, user_id: current_user.id, like_type:0).first
     if @like.nil?
       @like = Like.new
       @like.comment_id = params[:id]
@@ -93,6 +94,11 @@ class CommentsController < ApplicationController
       @comment.increment!(:points)
       @comment.save
       @like.save
+      if !@like2.nil?
+        @like2.destroy
+        @post.increment!(:points)
+        @post.save
+      end
     else
       @like.delete
       @comment.update_column(:points, @comment.points - 1)
@@ -108,6 +114,7 @@ class CommentsController < ApplicationController
   def dislike
     @comment = Comment.find(params[:id])
     @like = Like.where(comment_id: @comment.id, user_id: current_user.id, like_type:0).first
+    @like2 = Like.where(comment_id: @comment.id, user_id: current_user.id, like_type:1).first
     if @like.nil?
       @like = Like.new
       @like.comment_id = params[:id]
@@ -116,6 +123,11 @@ class CommentsController < ApplicationController
       @comment.update_column(:points, @comment.points - 1)
       @comment.save
       @like.save
+      if !@like2.nil?
+        @like2.destroy
+        @comment.update_column(:points, @comment.points-1)
+        @comment.save
+      end
     else
       @like.delete
       @comment.increment!(:points)
