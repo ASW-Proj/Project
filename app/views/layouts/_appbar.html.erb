@@ -13,9 +13,9 @@
 
     <!-- User -->
     <div>
+        <%= link_to "", search_path, class: 'icono fas fa-search appbar-button' %>
         <% if current_user %>
             <!-- Current user profile link -->
-            <%= link_to "", search_path, class: 'icono fas fa-search appbar-button' %>
             <%= link_to current_user, class: "appbar-button appbar-email" do %>
                 <!-- Avatar -->
                 <% if current_user.avatar.present? %>
