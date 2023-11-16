@@ -3,8 +3,7 @@
   font-family: "Droid Sans", "Segoe UI", Helvetica, Arial, sans-serif;
   background-color: #ffffff;
   display: flex;
-  justify-content:
-  space-between;
+  justify-content: space-between;
   align-items: center;
   height: 50px;
   padding: 5px 10%;
@@ -73,3 +72,50 @@
     vertical-align: middle; /* Alinea verticalmente con el contenido dentro del enlace o botón */
     margin-right: 10px; /* Ajusta el espacio entre los elementos según tus preferencias */
   }
+
+  
+
+.appbar {
+  display: flex;
+  font-family: "Droid Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+  box-shadow: rgba(34, 34, 34, 0.075) 0px 1.875px 3.75px 0px;
+  padding: 0 8px;
+  justify-content: space-between;
+}
+
+.appbar > * {
+  height: 53px;
+}
+
+.appbar > div {
+  display: flex;
+  align-items: center;
+  padding-right: 8px;
+}
+
+.appbar-logo {
+  min-height: 29px;
+  min-width: 29px;
+  max-height: 29px;
+  max-width: 29px;
+  margin-right: 4px;
+}
+
+.appbar-home-link {
+  text-decoration: none;
+  font-size: 19px;
+  line-height: 29px;
+  color: rgb(33, 37, 41);
+  margin-right: 12px;
+}
+
+.appbar-button {
+  color: rgb(108, 117, 125);
+  text-decoration: none;
+  font-size: 15px;
+  margin-right: 8px;
+}
+
+.appbar-button:hover {
+  color: rgb(33, 37, 41);
+}

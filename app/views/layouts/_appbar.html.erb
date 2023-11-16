@@ -1,0 +1,34 @@
+<nav class="appbar">
+    <!-- Web logo, home link and buttons -->
+    <div>
+        <%= image_tag("programming_dev.png", class: "appbar-logo") %>
+        <%= link_to "programming.dev", '/home', class: "appbar-home-link" %>
+        <%= link_to "Communities", communities_path, class: "appbar-button" %>
+        <%= link_to "Create Post", new_post_path, class: "appbar-button" %>
+    </div>
+
+    <!-- User -->
+    <div>
+        <% if current_user %>
+            <!-- Current user profile link -->
+            <%= link_to current_user, class: "avatar-image2" do %>
+                <!-- Avatar -->
+                <% if current_user.avatar.present? %>
+                    <%= image_tag current_user.avatar, class: "avatar-image2" %>
+                <% else %>
+                    <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default User Avatar" %>
+                <% end %>
+                <!-- Email -->
+                <%= current_user.email %>
+            <% end %>
+            <!-- Logout -->
+            <!--<%= form_for(current_user, url: destroy_user_session_path, method: :delete) do |f| %>
+                <div type="submit" class="appbar-button">Log out</div>
+            <% end %>-->
+
+        <!-- Login -->
+        <% else %>
+            <%= link_to "Login", new_user_session_path, class: "appbar-button" %>
+        <% end %>
+    </div>
+</nav>
