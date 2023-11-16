@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema[7.1].define(version: 2023_11_15_213421) do
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -140,4 +142,5 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_213421) do
   add_foreign_key "posts", "users"
   add_foreign_key "subscriptions", "communities"
   add_foreign_key "subscriptions", "users"
+
 end
