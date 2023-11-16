@@ -33,7 +33,7 @@
   <!-- Category -->
   <div>
     <%= form.label(:community_id, "Community:", class: "form-label") %>
-    <%= form.select(:community_id, Community.all.order(name: :asc).map { |c| [c.name, c.id] }, { prompt: "Select a community" }, class: "form-select-large") %>
+    <%= form.select(:community_id, Community.where.not(name: '').order(name: :asc).map { |c| [c.name, c.id] }, { prompt: "Select a community" }, class: "form-select-large") %>
   </div>
 
 
