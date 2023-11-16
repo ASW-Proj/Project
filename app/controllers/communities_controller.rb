@@ -17,7 +17,7 @@ class CommunitiesController < ApplicationController
     elsif params[:sort] == 'top'
       @posts = @community.posts.order(points: :desc)
     elsif params[:sort] == 'controversial'
-      @posts = Comment.all.order("comments.size ASC") #falta cambiar este
+      @posts = @community.posts.order(comments_count: :desc) #falta cambiar este
     end
   end
 
