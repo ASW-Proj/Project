@@ -17,6 +17,7 @@
     <%= link_to "Reply", new_post_comment_path(comment.post, parent_id: comment.id), class: "reply-button" %>
     <% if current_user == comment.user %>
     <%= link_to 'Delete','comments/delete/'+ comment.id.to_s, method: :delete%>
+    <%= link_to "Edit",edit_comment_path(comment), method: :get%>
     <% end %>  </div>
 
   <% if comment.replies.any? %>

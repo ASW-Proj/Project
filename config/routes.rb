@@ -11,9 +11,13 @@ Rails.application.routes.draw do
 
   get 'posts/comments/delete/:id', to: 'comments#destroy'
   delete 'posts/comments/delete/:id', to: 'comments#destroy'
-  
+  get 'comments/:id/edit', to: 'comments#edit'
+  put 'comments/:id/edit', to: 'comments#update'
+
   get 'posts/delete/:id', to: 'posts#destroy'
   delete 'posts/delete/:id', to: 'posts#destroy'
+  get 'posts/:id/edit', to: 'posts#edit'
+  put 'posts/:id/edit', to: 'posts#update'
   
 
 
