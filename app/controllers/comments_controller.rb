@@ -31,10 +31,8 @@ class CommentsController < ApplicationController
     @parent_comment = Comment.find_by(id: params[:parent_id])
     
     if @parent_comment.present?
-      @comment_parent.increment!(:replies_count)
       @comment = @parent_comment.replies.build(comment_params)
     else
-      @post.increment!(:comments_count)
       @comment = @post.comments.build(comment_params)
     end
 
@@ -78,14 +76,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1 or /comments/1.json
   def destroy
     @comment = Comment.find(params[:id])
-    @comment_parent = Comment.find_by(id: params[:parent_id])
-    if @comment_parent.nil?
-      @post=Post.find(params[:id])
-      @post.decrement!(:comments_count)
-    else
-      @comment_parent.decrement!(:replies_count)
-    end
-    @comment.destroy
+      @comment.destroy
     respond_to do |format|
       format.html {redirect_back(fallback_location: root_path)}
       format.json { head :no_content }
