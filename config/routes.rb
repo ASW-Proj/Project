@@ -21,10 +21,9 @@ Rails.application.routes.draw do
   put 'posts/:id/edit', to: 'posts#update'
 
 
-
-
-
-
+  get 'posts/save/:id', to: 'posts#save_post'
+  put 'posts/save/:id', to: 'posts#save_post'
+ 
 
   resources :comments
   get 'pages/home'

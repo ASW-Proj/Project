@@ -10,7 +10,7 @@ class Post < ApplicationRecord
     belongs_to :user
     has_many :likes, dependent: :destroy    
 
-    has_many :saved_posts, dependent: :destroy
-  has_many :savers, through: :saved_posts, source: :user
+  has_many :saved_posts, dependent: :destroy
+  #has_many :users, through: :saved_posts
 
 end

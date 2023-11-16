@@ -153,6 +153,28 @@ class PostsController < ApplicationController
     end
   end
 
+  def save_post
+    @post = Post.find(params[:id])
+    @saved_post = SavedPost.where(post_id:@post.id,user_id:current_user.id).first
+    if @saved_post.nil?
+      @saved_post= SavedPost.new
+      @saved_post.post_id=@post.id
+      @saved_post.user_id=current_user
+      @saved_post.save
+      redirect_to post_path(@post), notice: 'Post saved successfully.'
+    else
+      @saved_post.destroy
+      redirect_to root_path, notice: 'Post removed from saved posts.'
+    end
+  end
+
+  #def unsave_post
+
+   #3 @saved_post.destroy!
+   # redirect_to post_path(@post), notice: 'Post saved successfully.'
+ # end
+
+
   private
      #Use callbacks to share common setup or constraints between actions.
     def set_post

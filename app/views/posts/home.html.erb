@@ -4,11 +4,17 @@
 <% sub = false %>
 <h2>Todos los posts</h2>
 <select class="custom-select custom-select-lg mb-3">
-  <option value="1">Local<%  sub = false %></option>
+  <option value="1">Local<ul class="comments-list">
+  <% @comments.each do |comment| %>
+    <%= render partial: 'comments/comment', locals: { comment: comment } %>
+  <% end %>
+</ul></option>
   <option value="2">Suscritos<% sub = true %></option>
 </select>
 
-<% if sub %> elPepe <% end %>
+<% if sub %> 
+  elPepe 
+<% end %>
    <div class="menu-perfil">
    <%= link_to "Ver posts", { filter: 'posts' }, class: "generic-button" %>
 

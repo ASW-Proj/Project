@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_16_112718) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_16_135218) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -62,13 +62,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_16_112718) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "communities_users", id: false, force: :cascade do |t|
-    t.integer "community_id", null: false
-    t.integer "user_id", null: false
-    t.index ["community_id", "user_id"], name: "index_communities_users_on_community_id_and_user_id"
-    t.index ["user_id", "community_id"], name: "index_communities_users_on_user_id_and_community_id"
-  end
-
   create_table "likes", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "comment_id"
@@ -95,16 +88,11 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_16_112718) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "saved_comments", id: false, force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "comment_id", null: false
-    t.index ["comment_id"], name: "index_saved_comments_on_comment_id"
-    t.index ["user_id"], name: "index_saved_comments_on_user_id"
-  end
-
-  create_table "saved_posts", id: false, force: :cascade do |t|
+  create_table "saved_posts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_saved_posts_on_post_id"
     t.index ["user_id"], name: "index_saved_posts_on_user_id"
   end
@@ -147,6 +135,8 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_16_112718) do
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "communities"
   add_foreign_key "posts", "users"
+  add_foreign_key "saved_posts", "posts"
+  add_foreign_key "saved_posts", "users"
   add_foreign_key "subscriptions", "communities"
   add_foreign_key "subscriptions", "users"
 end
