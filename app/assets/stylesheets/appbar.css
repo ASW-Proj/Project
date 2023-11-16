@@ -5,6 +5,7 @@
   padding: 0 8px;
   margin-bottom: 8px;
   justify-content: space-between;
+  background-color: #ffffff;
 }
 
 .appbar > * {
