@@ -8,7 +8,6 @@ class PostsController < ApplicationController
 
   def home
     @posts = Post.all.order(created_at: :desc)
-    #@postsControversial = Post.all.order() // me falta comments y votos
     @users = User.all
     if params[:sort] == 'newest'
       @posts = Post.all.order(created_at: :desc)
@@ -17,20 +16,20 @@ class PostsController < ApplicationController
     elsif params[:sort] == 'top'
       @posts = Post.all.order(points: :desc)
     elsif params[:sort] == 'controversial'
-      @posts = Post.all.order("comments.size ASC") #falta cambiar este
+      @posts = Post.all.order(comments_count: :desc) #falta cambiar este
     end
 
 
     @comments = Comment.all.order(created_at: :desc)
 
     if params[:sort] == 'newest'
-      @comments = Comment.all.order(created_at: :desc)
+      @comments = Comment.all.where(parent_id: nil).order(created_at: :asc)
     elsif params[:sort] == 'oldest'
-      @comments = Comment.all.order(created_at: :asc)
+      @comments = Comment.all.where(parent_id: nil).order(created_at: :desc)
     elsif params[:sort] == 'top'
-      @comments = Comment.all.order(points: :desc)
+      @comments = Comment.all.where(parent_id: nil).order(points: :desc)
     elsif params[:sort] == 'controversial'
-      @comments = Comment.all.order("comments.size ASC") #falta cambiar este
+      @comments = Comment.all.where(parent_id: nil).order(replies_count: :desc) #falta cambiar este
     end
   end
 
@@ -47,6 +46,7 @@ class PostsController < ApplicationController
       @comments = @post.comments.where(parent_id: nil).order(created_at: :asc)
     elsif params[:sort] == 'top'
       @comments = @post.comments.where(parent_id: nil).order(points: :desc)
+
     @post.points
   end
     @post.points

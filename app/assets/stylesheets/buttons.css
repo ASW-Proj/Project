@@ -28,6 +28,8 @@
     outline: none;
 }
 
+
+
 .generic-button:hover {
     background-color: rgb(0, 143, 60);
 }
@@ -110,6 +112,7 @@
     box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
 }
 
+
 .secondary-button {
     color: rgb(241, 100, 30);
     text-decoration: none;
@@ -128,3 +131,4 @@
 .listing-type-select {
     border-radius: 6px;
 }
+

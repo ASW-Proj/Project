@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_15_213421) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_16_112718) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_213421) do
     t.integer "community_id", null: false
     t.integer "parent_id"
     t.integer "points", default: 0
+    t.integer "replies_count"
     t.index ["community_id"], name: "index_comments_on_community_id"
     t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
@@ -89,6 +90,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_15_213421) do
     t.integer "community_id", null: false
     t.integer "user_id", null: false
     t.integer "points", default: 0
+    t.integer "comments_count"
     t.index ["community_id"], name: "index_posts_on_community_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
