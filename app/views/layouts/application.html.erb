@@ -5,60 +5,14 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <%= stylesheet_link_tag "buttons", "forms" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
-
-  <body>
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apock web design</title>
     <link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-</head>
-
-
-
-<%= stylesheet_link_tag "buttons", "forms" %>
-
-
-<body>
-
-  <header class ="header" >
-    <picture><source srcset="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png?format=webp&amp;thumbnail=96" type="image/webp"><source srcset="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png"><source srcset="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png?format=jpg&amp;thumbnail=96" type="image/jpeg"><img class="overflow-hidden pictrs-image object-fit-cover img-icon me-1" src="https://programming.dev/pictrs/image/1e947440-0f0d-4768-ba4b-1480551e7cc9.png" alt="" title="" loading="lazy"></picture>
-
-    <nav>
-      <ul class="nav-links">
-        <li><%= link_to "programming.dev", '/home' %></li>
-        <li><%= link_to "Communities", communities_path %></li>
-        <li><%= link_to "New Post", new_post_path %></li>
-        <li><%= link_to "", search_path, class: 'icono fas fa-search' %></li>
-        <% if current_user %>
-          <%= link_to current_user, class: "avatar-image2" do %>
-            <% if current_user.avatar.present? %>
-              <%= image_tag current_user.avatar, alt: "User Avatar", class: "avatar-image2" %>
-            <% else %>
-              <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default User Avatar" %>
-            <% end %>
-          <% end %>
-
-          <%= form_for(current_user, url: destroy_user_session_path, method: :delete) do |f| %>
-            <button type="submit">Log out</button>
-          <% end %>
-        <% else %>
-          <%= link_to "Login", new_user_session_path %>
-        <% end %>
-      </ul>
-    </nav>
-  </header>
-</body>
-
-
-<hr>
-
-
+    <%= javascript_importmap_tags %>
+  </head>
+  <body>
+    <%= render "layouts/appbar" %>
     <%= yield %>
   </body>
 </html>
