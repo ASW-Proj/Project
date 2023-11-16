@@ -8,12 +8,12 @@ Rails.application.routes.draw do
   post 'comments/dislike/:id', to: 'comments#dislike'
   get 'posts/dislike/:id', to: 'posts#dislike'
   post 'posts/dislike/:id', to: 'posts#dislike'
-  
-  
-  
 
 
- 
+
+
+
+
   resources :comments
   get 'pages/home'
 
@@ -40,7 +40,7 @@ Rails.application.routes.draw do
 
 
   # Resources for posts and comments
-  
+
 
   resources :posts do
     resources :comments, only: [:create, :destroy]

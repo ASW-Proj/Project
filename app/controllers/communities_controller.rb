@@ -10,6 +10,15 @@ class CommunitiesController < ApplicationController
   def show
     @community = Community.find(params[:id])
     @posts = @community.posts.order(created_at: :desc)
+    if params[:sort] == 'newest'
+      @posts = @community.posts.order(created_at: :desc)
+    elsif params[:sort] == 'oldest'
+      @posts = @community.posts.order(created_at: :asc)
+    elsif params[:sort] == 'top'
+      @posts = @community.posts.order(points: :desc)
+    elsif params[:sort] == 'controversial'
+      @posts = Comment.all.order("comments.size ASC") #falta cambiar este
+    end
   end
 
   # GET /communities/new
