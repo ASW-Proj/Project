@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_post, only: [:create]
   before_action :set_comment, only: [:edit, :update]
+  before_action :authenticate_user!, only: [:new, :create]
 
   # GET /comments or /comments.json
   def index
