@@ -25,8 +25,15 @@
   <%= link_to "Newest", { filter: 'comments', sort: 'newest' }, class: "generic-button" %> <!-- Para cada uno que use el sort que hay en el controller-->
   <%= link_to "Oldest", { filter: 'comments', sort: 'oldest' }, class: "generic-button" %>
   <%= link_to "Most voted", { filter: 'comments', sort: 'top' }, class: "generic-button" %>
-  <%= link_to "Controversial", { filter: 'comments', sort: 'controversial' }, class: "generic-button"  %>
-  <center>
+  <%= link_to "Controversial", { filter: 'comments', sort: 'controversial' }, class: "generic-button"  %></center>
+  <% if @comments.empty? then %>
+    <center>there seems to be no comments</center>
+  <% else %>
+    <% @comments.each do |com| %>
+      <%= render com %>
+    <% end %>
+  <% end %>
+
 
   <% end %>
   <% if params[:filter] == 'posts' then %>

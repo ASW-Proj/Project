@@ -57,7 +57,7 @@
       <% @comments.each do |comment| %>
         <% current_user.subscriptions.each do |auxCom| %>
           <% if auxCom.community_id == comment.community_id %>
-            <%= render comment %>
+            <%= render comment <%></%>
           <% end %>
         <% end %>
       <% end %>

@@ -19,6 +19,17 @@ class CommunitiesController < ApplicationController
     elsif params[:sort] == 'controversial'
       @posts = @community.posts.order(comments_count: :desc) #falta cambiar este
     end
+
+    @comments = @community.comments.all.order(created_at: :desc)
+    if params[:sort] == 'newest'
+      @comments = @community.comments.all.order(created_at: :desc)
+    elsif params[:sort] == 'oldest'
+      @comments = @community.comments.all.order(created_at: :asc)
+    elsif params[:sort] == 'top'
+      @comments = @community.comments.all.order(points: :desc)
+    elsif params[:sort] == 'controversial'
+      @comments = @community.comments.all.order(replies_count: :desc)
+    end
   end
 
   # GET /communities/new
