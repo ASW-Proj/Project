@@ -4,7 +4,11 @@
         <%= image_tag("programming_dev.png", class: "appbar-logo") %>
         <%= link_to "programming.dev", '/home', class: "appbar-home-link" %>
         <%= link_to "Communities", communities_path, class: "appbar-button" %>
-        <%= link_to "Create Post", new_post_path, class: "appbar-button" %>
+        <% if current_user %>
+            <%= link_to "Create Post", new_post_path, class: "appbar-button" %>
+        <% else %>
+            <%= link_to "Create Post", new_user_session_path, class: "appbar-button" %>
+        <% end %>
     </div>
 
     <!-- User -->
