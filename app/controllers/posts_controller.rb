@@ -47,8 +47,8 @@ class PostsController < ApplicationController
     elsif params[:sort] == 'top'
       @comments = @post.comments.where(parent_id: nil).order(points: :desc)
 
-    @post.points
-  end
+        #@post.points
+    end
     @post.points
   end
 
@@ -110,6 +110,7 @@ class PostsController < ApplicationController
   def like
     @post = Post.find(params[:id])
     @like = Like.where(post_id: @post.id, user_id: current_user.id, like_type:1).first
+    @like2= Like.where(post_id: @post.id, user_id: current_user.id, like_type:0).first
     if @like.nil?
       @like = Like.new
       @like.post_id = params[:id]
@@ -118,6 +119,11 @@ class PostsController < ApplicationController
       @post.increment!(:points)
       @post.save
       @like.save
+      if !@like2.nil?
+        @like2.destroy
+        @post.increment!(:points)
+        @post.save
+      end
     else
       @like.destroy
       @post.update_column(:points, @post.points - 1)
@@ -133,6 +139,7 @@ class PostsController < ApplicationController
   def dislike
     @post = Post.find(params[:id])
     @like = Like.where(post_id: @post.id, user_id: current_user.id, like_type:0).first
+    @like2 = Like.where(post_id: @post.id, user_id: current_user.id, like_type:1).first
     if @like.nil?
       @like = Like.new
       @like.post_id = params[:id]
@@ -141,6 +148,11 @@ class PostsController < ApplicationController
       @post.update_column(:points, @post.points - 1)
       @post.save
       @like.save
+      if !@like2.nil?
+        @like2.destroy
+        @post.update_column(:points, @post.points-1)
+        @post.save
+      end
     else
       @like.destroy
       @post.increment!(:points)
