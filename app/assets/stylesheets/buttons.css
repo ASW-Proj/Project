@@ -28,6 +28,8 @@
     outline: none;
 }
 
+
+
 .generic-button:hover {
     background-color: rgb(0, 143, 60);
 }
@@ -109,3 +111,5 @@
     background-color: #8e2900; /* Cambia este valor a un tono más oscuro de rojo */
     box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
 }
+
+

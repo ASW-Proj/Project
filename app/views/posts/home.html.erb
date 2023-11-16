@@ -1,7 +1,14 @@
 <div class="view_apage">
 
-  <h2>Todos los posts</h2>
 
+<% sub = false %>
+<h2>Todos los posts</h2>
+<select class="custom-select custom-select-lg mb-3">
+  <option value="1">Local<%  sub = false %></option>
+  <option value="2">Suscritos<% sub = true %></option>
+</select>
+
+<% if sub %> elPepe <% end %>
    <div class="menu-perfil">
    <%= link_to "Ver posts", { filter: 'posts' }, class: "generic-button" %>
 
@@ -13,30 +20,40 @@
 
 
 
+
 <% if params[:filter] == 'comments'%>
+<% if @comments.empty? %>
+    <h2><center>No hay comentarios.</h2></center>
+  <% else %>
 
 
+
+ <!-- Para cada uno que use el sort que hay en el controller-->
+  <center><%= link_to "Newest", { filter: 'comments', sort: 'newest' }, class: "generic-button" %>
+  <%= link_to "Oldest", { filter: 'comments', sort: 'oldest' }, class: "generic-button" %>
+  <%= link_to "Most voted", { filter: 'comments', sort: 'top' }, class: "generic-button" %>
+  <%= link_to "Controversial", { filter: 'comments', sort: 'controversial' }, class: "generic-button"  %></center>
   <% @comments.each do |comment| %>
     <%= render comment %>
   <% end %>
+  <% end %>
 <% else %>
 <% if params[:filter] == 'posts'%>
- <div class="menu-sort">
+
+  <% if @posts.empty? %>
+    <h2><center>No hay posts.</h2></center>
+    <% else %>
+    <div class="menu-sort">
   <center>
   <%= link_to "Newest", { filter: 'posts', sort: 'newest' }, class: "generic-button" %> <!-- Para cada uno que use el sort que hay en el controller-->
   <%= link_to "Oldest", { filter: 'posts', sort: 'oldest' }, class: "generic-button" %>
   <%= link_to "Most voted", { filter: 'posts', sort: 'top' }, class: "generic-button" %>
   <%= link_to "Controversial", { filter: 'posts', sort: 'controversial' }, class: "generic-button"  %>
 
-  <%= link_to "FiltroLocal", { local: 'posts', subs: '' }, class: "generic-button"  %>
-  <%= link_to "FiltroSuscritos", { filter: 'posts', subs: 'true' }, class: "generic-button"  %>
-
   </center>
   </div>
-  <% if @posts.empty? %>
-    No hay posts.
-    <% else %>
-    <% @posts.each do |post| %>
+  <% @posts.each do |post| %>
+
       <div class="post-listing mt-2">
         <div class="d-block d-sm-none">
           <article class="row post-container">
@@ -59,6 +76,7 @@
               <div class="col flex-grow-1">
                 <% if !post.url.nil? %>
                   <p class="post-url"><%= post.url %></p>
+                  <p class="post-url"><%= post.comments_count %></p>
                 <% end %>
 
                 <div class="post-content">
