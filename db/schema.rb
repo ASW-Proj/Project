@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_16_112718) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_16_184153) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -88,17 +88,23 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_16_112718) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
-  create_table "saved_comments", id: false, force: :cascade do |t|
+  create_table "saved_comments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "comment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["comment_id"], name: "index_saved_comments_on_comment_id"
+    t.index ["user_id", "comment_id"], name: "index_saved_comments_on_user_id_and_comment_id", unique: true
     t.index ["user_id"], name: "index_saved_comments_on_user_id"
   end
 
-  create_table "saved_posts", id: false, force: :cascade do |t|
+  create_table "saved_posts", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_saved_posts_on_post_id"
+    t.index ["user_id", "post_id"], name: "index_saved_posts_on_user_id_and_post_id", unique: true
     t.index ["user_id"], name: "index_saved_posts_on_user_id"
   end
 
@@ -140,6 +146,10 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_16_112718) do
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "communities"
   add_foreign_key "posts", "users"
+  add_foreign_key "saved_comments", "comments"
+  add_foreign_key "saved_comments", "users"
+  add_foreign_key "saved_posts", "posts"
+  add_foreign_key "saved_posts", "users"
   add_foreign_key "subscriptions", "communities"
   add_foreign_key "subscriptions", "users"
 end

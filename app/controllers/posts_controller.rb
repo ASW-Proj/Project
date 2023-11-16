@@ -46,8 +46,6 @@ class PostsController < ApplicationController
       @comments = @post.comments.where(parent_id: nil).order(created_at: :asc)
     elsif params[:sort] == 'top'
       @comments = @post.comments.where(parent_id: nil).order(points: :desc)
-
-        #@post.points
     end
     @post.points
   end
