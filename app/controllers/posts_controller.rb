@@ -15,12 +15,23 @@ class PostsController < ApplicationController
     elsif params[:sort] == 'oldest'
       @posts = Post.all.order(created_at: :asc)
     elsif params[:sort] == 'top'
-      @posts = Post.all.order(created_at: :asc) #falta cambiar este
+      @posts = Post.all.order(points: :desc)
     elsif params[:sort] == 'controversial'
-      @posts = Post.all.order(created_at: :asc) #falta cambiar este
+      @posts = Post.all.order("comments.size ASC") #falta cambiar este
     end
 
+
     @comments = Comment.all.order(created_at: :desc)
+
+    if params[:sort] == 'newest'
+      @comments = Comment.all.order(created_at: :desc)
+    elsif params[:sort] == 'oldest'
+      @comments = Comment.all.order(created_at: :asc)
+    elsif params[:sort] == 'top'
+      @comments = Comment.all.order(points: :desc)
+    elsif params[:sort] == 'controversial'
+      @comments = Comment.all.order("comments.size ASC") #falta cambiar este
+    end
   end
 
   def homeNewest
@@ -29,7 +40,15 @@ class PostsController < ApplicationController
   # GET /posts/1 or /posts/1.json
   def show
     @post = Post.find(params[:id])
-    @comments = @post.comments
+    @comments = @post.comments.where(parent_id: nil).order(created_at: :desc)
+    if params[:sort] == 'newest'
+      @comments = @post.comments.where(parent_id: nil).order(created_at: :desc)
+    elsif params[:sort] == 'oldest'
+      @comments = @post.comments.where(parent_id: nil).order(created_at: :asc)
+    elsif params[:sort] == 'top'
+      @comments = @post.comments.where(parent_id: nil).order(points: :desc)
+    @post.points
+  end
     @post.points
   end
 
@@ -110,7 +129,7 @@ class PostsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   def dislike
     @post = Post.find(params[:id])
     @like = Like.where(post_id: @post.id, user_id: current_user.id, like_type:0).first
@@ -133,13 +152,13 @@ class PostsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   private
      #Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
     end
-    
+
 
     # Only allow a list of trusted parameters through.
     def post_params

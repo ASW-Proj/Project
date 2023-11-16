@@ -3,9 +3,9 @@
   <h2>Todos los posts</h2>
 
    <div class="menu-perfil">
-   <%= link_to "Ver posts", { filter: 'posts' }.merge(request.query_parameters), class: "generic-button" %>
+   <%= link_to "Ver posts", { filter: 'posts' }, class: "generic-button" %>
 
-   <%= link_to "Ver comentarios", { filter: 'comments' }.merge(request.query_parameters), class: "generic-button" %>
+   <%= link_to "Ver comentarios", { filter: 'comments' }, class: "generic-button" %>
 
    <br><br>
 
@@ -14,8 +14,11 @@
 
 
 <% if params[:filter] == 'comments'%>
-  Aqui saldiran los comnets
 
+
+  <% @comments.each do |comment| %>
+    <%= render comment %>
+  <% end %>
 <% else %>
 <% if params[:filter] == 'posts'%>
  <div class="menu-sort">
@@ -24,6 +27,10 @@
   <%= link_to "Oldest", { filter: 'posts', sort: 'oldest' }, class: "generic-button" %>
   <%= link_to "Most voted", { filter: 'posts', sort: 'top' }, class: "generic-button" %>
   <%= link_to "Controversial", { filter: 'posts', sort: 'controversial' }, class: "generic-button"  %>
+
+  <%= link_to "FiltroLocal", { local: 'posts', subs: '' }, class: "generic-button"  %>
+  <%= link_to "FiltroSuscritos", { filter: 'posts', subs: 'true' }, class: "generic-button"  %>
+
   </center>
   </div>
   <% if @posts.empty? %>

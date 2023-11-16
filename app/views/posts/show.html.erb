@@ -9,6 +9,7 @@
       <%= link_to 'Delete','/posts/delete/'+ @post.id.to_s, method: :delete%>
       <%= link_to "Edit",edit_post_path(@post), method: :get%>
     <% end %>  
+
   </div>
  
   <div class="post-score">
@@ -24,8 +25,14 @@
 
   <div class="comments-section">
     <h2><%= "Comments" %></h2>
+  <center>
+  <%= link_to "Newest", {  sort: 'newest' }, class: "generic-button" %> <!-- Para cada uno que use el sort que hay en el controller-->
+  <%= link_to "Oldest", {  sort: 'oldest' }, class: "generic-button" %>
+  <%= link_to "Most voted", {  sort: 'top' }, class: "generic-button" %>
+  </center>
+
     <ul class="comments-list">
-      <% @post.comments.where(parent_id: nil).each do |comment| %>
+      <% @comments.each do |comment| %>
         <%= render partial: 'comments/comment', locals: { comment: comment } %>
       <% end %>
     </ul>
@@ -34,7 +41,7 @@
 
   <% if user_signed_in? %>
   <%= render partial: 'comments/form', locals: { post: @post, community: @community } %>
-  
+
   <% else %>
   <p>Debes iniciar sesión para dejar un comentario.</p>
   <% end %>
