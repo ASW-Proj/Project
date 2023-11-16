@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
-  before_action :set_post, only: [:create, :destroy]
+  before_action :set_post, only: [:create]
+  before_action :set_comment, only: [:edit, :update]
 
   # GET /comments or /comments.json
   def index
@@ -21,6 +22,7 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit
   def edit
+    
   end
 
   # POST /comments or /comments.json
@@ -61,7 +63,7 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to show_post_path(@post), notice: "Comment was successfully updated." }
+        format.html { redirect_to post_path(@comment.post), notice: "Comment was successfully updated." }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit, status: :unprocessable_entity }
