@@ -11,20 +11,21 @@
     <div>
         <% if current_user %>
             <!-- Current user profile link -->
-            <%= link_to current_user, class: "avatar-image2" do %>
+            <%= link_to "", search_path, class: 'icono fas fa-search appbar-button' %>
+            <%= link_to current_user, class: "appbar-button appbar-email" do %>
                 <!-- Avatar -->
                 <% if current_user.avatar.present? %>
-                    <%= image_tag current_user.avatar, class: "avatar-image2" %>
+                    <%= image_tag current_user.avatar, class: "appbar-avatar" %>
                 <% else %>
-                    <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default User Avatar" %>
+                    <%= content_tag :i, "", class: "icono fas fa-users appbar-avatar", alt: "Default User Avatar" %>
                 <% end %>
-                <!-- Email -->
+                <!-- Name -->
                 <%= current_user.email %>
             <% end %>
             <!-- Logout -->
-            <!--<%= form_for(current_user, url: destroy_user_session_path, method: :delete) do |f| %>
-                <div type="submit" class="appbar-button">Log out</div>
-            <% end %>-->
+            <%= form_for(current_user, url: destroy_user_session_path, method: :delete) do |f| %>
+                <button type="submit" class="appbar-button appbar-button-no-background">Log out</div>
+            <% end %>
 
         <!-- Login -->
         <% else %>
