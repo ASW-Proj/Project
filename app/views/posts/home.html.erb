@@ -1,8 +1,5 @@
-/div class="view_apage">
-
-
 <% sub = false %>
-<h2>Todos los posts</h2>
+<h2>Welcome to Programming.dev!</h2>
 <select class="custom-select custom-select-lg mb-3">
   <option value="1">Local<%  sub = false %></option>
   <option value="2">Suscritos<% sub = true %></option>
@@ -29,7 +26,6 @@
     <% end %>
   <% end %>
 <% end %>
-<h1>Valor del Filtro: <%= @filtro %></h1>
 
 
 <%= form_with url: root_path, method: :get, local: true, class: 'filter-form' do |form| %>
@@ -45,7 +41,7 @@
 
     <label>
       <%= form.radio_button :filter_type, 'subscribed' %>
-      Subscrito
+      Suscrito
     </label>
 
     <%= form.submit "Filtrar" %>
@@ -53,8 +49,9 @@
 
 
 <% if params[:filter_type] == "local" %>
-    <h2><center>Posts</h2></center>
-<%else%>   <h2><center>No hay comentarios.</h2></center>
+    <h2><center>Ahora estoy en local</h2></center>
+<%elsif params[:filter_type] == "subscribed" %>   <h2><center>Ahora estoy en suscritos</h2></center>
+<%else%> <h2><center>No filter selected!</center></h2>
 <%end%>
 
 
@@ -65,9 +62,9 @@
 
 <% if sub %> elPepe <% end %>
    <div class="menu-perfil">
-   <%= link_to "Ver posts", { filter: 'posts' }, class: "generic-button" %>
+   <%= link_to "Ver posts", { filter: 'posts',  filter_type: params[:filter_type]}, class: "generic-button" %>
 
-   <%= link_to "Ver comentarios", { filter: 'comments' }, class: "generic-button" %>
+   <%= link_to "Ver comentarios", { filter: 'comments', filter_type: params[:filter_type] }, class: "generic-button" %>
 
    <br><br>
 
@@ -84,10 +81,10 @@
 
 
  <!-- Para cada uno que use el sort que hay en el controller-->
-  <center><%= link_to "Newest", { filter: 'comments', sort: 'newest' }, class: "generic-button" %>
-  <%= link_to "Oldest", { filter: 'comments', sort: 'oldest' }, class: "generic-button" %>
-  <%= link_to "Most voted", { filter: 'comments', sort: 'top' }, class: "generic-button" %>
-  <%= link_to "Controversial", { filter: 'comments', sort: 'controversial' }, class: "generic-button"  %></center>
+  <center><%= link_to "Newest", { filter: 'comments', sort: 'newest', filter_type: params[:filter_type] }, class: "generic-button" %>
+  <%= link_to "Oldest", { filter: 'comments', sort: 'oldest', filter_type: params[:filter_type] }, class: "generic-button" %>
+  <%= link_to "Most voted", { filter: 'comments', sort: 'top', filter_type: params[:filter_type] }, class: "generic-button" %>
+  <%= link_to "Controversial", { filter: 'comments', sort: 'controversial', filter_type: params[:filter_type] }, class: "generic-button"  %></center>
   <% @comments.each do |comment| %>
     <%= render comment %>
   <% end %>
@@ -103,16 +100,19 @@
     <% else %>
     <div class="menu-sort">
   <center>
-  <%= link_to "Newest", { filter: 'posts', sort: 'newest' }, class: "generic-button" %> <!-- Para cada uno que use el sort que hay en el controller-->
-  <%= link_to "Oldest", { filter: 'posts', sort: 'oldest' }, class: "generic-button" %>
-  <%= link_to "Most voted", { filter: 'posts', sort: 'top' }, class: "generic-button" %>
-  <%= link_to "Controversial", { filter: 'posts', sort: 'controversial' }, class: "generic-button"  %>
+  <%= link_to "Newest", { filter: 'posts', sort: 'newest', filter_type: params[:filter_type]}, class: "generic-button" %> <!-- Para cada uno que use el sort que hay en el controller-->
+  <%= link_to "Oldest", { filter: 'posts', sort: 'oldest', filter_type: params[:filter_type] }, class: "generic-button" %>
+  <%= link_to "Most voted", { filter: 'posts', sort: 'top', filter_type: params[:filter_type] }, class: "generic-button" %>
+  <%= link_to "Controversial", { filter: 'posts', sort: 'controversial', filter_type: params[:filter_type] }, class: "generic-button"  %>
 
   </center>
   </div>
   <% @posts.each do |post| %>
+    <% if params[:filter_type] == 'subscribed'%>
+      <% current_user.communities.each do |com| %>
+        <% if com.id == post.community_id %>
 
-      <div class="post-listing mt-2">
+<div class="post-listing mt-2">
         <div class="d-block d-sm-none">
           <article class="row post-container">
             <div class="col-12">
@@ -179,6 +179,11 @@
         </article>
         <div class="d-none d-sm-block"></div>
       </div>
+
+
+    <% end %>
+    <% end %>
+    <% end %>
     <% end %>
   <% end %>
   <% end %>
