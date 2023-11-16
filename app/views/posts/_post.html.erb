@@ -1,19 +1,38 @@
-<div id="<%= dom_id post %>">
-  <p>
-    <strong>Title:</strong>
-    <%= post.title %>
-  </p>
+<%= stylesheet_link_tag "buttons", "forms", "application" %>
 
-  <p>
-    <strong>Url:</strong>
-    <%= post.url %>
-  </p>
+<div class="post-container">
+  <h1 class="post-title"><%= post.title %></h1>
+  <p class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></p>
+  <div class="post-meta">
+   <%= link_to "Created by " + post.user.email, user_path(post.user) %>
+  </div>
 
-  <p>
-    <strong>Body:</strong>
-    <%= post.body %>
-  </p>
+  
+  
+  <div class="post-content">
+    <%= @post.body %>
+  </div>
+  <div class="post-score">
+    Total score:  <%= post.points %>
+    <%= link_to '▲','/post/like/'+ post.id.to_s, method: :post%>
+    <%= link_to '▼','/post/dislike/'+ post.id.to_s, method: :post%>
+  </div>
+  <div class="comments-section">
+    <h2><%= "Comments" %></h2>
+    <ul class="comments-list">
+      <% post.comments.where(parent_id: nil).each do |comment| %>
+        <%= render partial: 'comments/comment', locals: { comment: comment } %>
+      <% end %>
+    </ul>
+  </div>
 
 
+  <% if user_signed_in? %>
+  <%= render partial: 'comments/form', locals: { post: @post, community: @community } %>
+  
+  <% else %>
+  <p>Debes iniciar sesión para dejar un comentario.</p>
+  <% end %>
 
 </div>
+

@@ -30,6 +30,7 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @comments = @post.comments
+    @post.points
   end
 
   # GET /posts/new
@@ -87,27 +88,49 @@ class PostsController < ApplicationController
     end
   end
 
-  def vote_up
+  def like
     @post = Post.find(params[:id])
-    @vote = @post.votes.build(vote_type: 1, user_id: current_user.id)
-    if @vote.save
-      update_vote_count
-    redirect_to @post
+    @like = Like.where(post_id: @post.id, user_id: current_user.id, like_type:1).first
+    if @like.nil?
+      @like = Like.new
+      @like.post_id = params[:id]
+      @like.user_id = current_user.id
+      @like.like_type=1
+      @post.increment!(:points)
+      @post.save
+      @like.save
     else
-      render json: { error: 'Error al votar' }, status: :unprocessable_entity
-
+      @like.destroy
+      @post.update_column(:points, @post.points - 1)
+      @post.save
+    end
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: root_path) }
+      format.html { notice 'Contribution was successfully liked' }
+      format.json { head :no_content }
     end
   end
-
-  def vote_down
+  
+  def dislike
     @post = Post.find(params[:id])
-    @vote = @post.votes.build(vote_type: -1, user_id: current_user.id)
-    if @vote.save
-      update_vote_count
-    redirect_to @post
+    @like = Like.where(post_id: @post.id, user_id: current_user.id, like_type:0).first
+    if @like.nil?
+      @like = Like.new
+      @like.post_id = params[:id]
+      @like.user_id = current_user.id
+      @like.like_type=0
+      @post.update_column(:points, @post.points - 1)
+      @post.save
+      @like.save
     else
-      render json: { error: 'Error al votar' }, status: :unprocessable_entity
-
+      @like.destroy
+      @post.increment!(:points)
+      @post.save
+    end
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: root_path) }
+      format.html { notice 'Contribution was successfully disliked' }
+      format.json { head :no_content }
     end
   end
   
@@ -117,9 +140,6 @@ class PostsController < ApplicationController
       @post = Post.find(params[:id])
     end
     
-    def update_vote_count
-      @post.update(votes_count: @post.votes.count)
-    end
 
     # Only allow a list of trusted parameters through.
     def post_params
