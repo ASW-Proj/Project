@@ -65,13 +65,14 @@
             <%= button_tag(type: 'submit', name: 'content_type', value: 'Comments', class: 'generic-button') do %>
               <i class="fas fa-comments"></i> Show Comments
             <% end %>
+            <%if current_user %>
+              <%= button_tag(type: 'submit', name: 'content_type', value: 'SavedPosts', class: 'generic-button') do %>
+                <i class="fas fa-bookmark"></i> Show Saved Posts
+              <% end %>
 
-            <%= button_tag(type: 'submit', name: 'content_type', value: 'SavedPosts', class: 'generic-button') do %>
-              <i class="fas fa-bookmark"></i> Show Saved Posts
-            <% end %>
-
-            <%= button_tag(type: 'submit', name: 'content_type', value: 'SavedComments', class: 'generic-button') do %>
-              <i class="fas fa-bookmark"></i> Show Saved Comments
+              <%= button_tag(type: 'submit', name: 'content_type', value: 'SavedComments', class: 'generic-button') do %>
+                <i class="fas fa-bookmark"></i> Show Saved Comments
+              <% end %>
             <% end %>
           <% end %>
 

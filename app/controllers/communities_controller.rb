@@ -21,15 +21,15 @@ class CommunitiesController < ApplicationController
       @posts = @community.posts.order(comments_count: :desc) #falta cambiar este
     end
 
-    @comments = @community.comments.all.order(created_at: :desc)
+    @comments = @community.comments.all.where(parent_id: nil).order(created_at: :desc)
     if params[:sort] == 'newest'
-      @comments = @community.comments.all.order(created_at: :desc)
+      @comments = @community.comments.all.where(parent_id: nil).order(created_at: :desc)
     elsif params[:sort] == 'oldest'
-      @comments = @community.comments.all.order(created_at: :asc)
+      @comments = @community.comments.all.where(parent_id: nil).order(created_at: :asc)
     elsif params[:sort] == 'top'
-      @comments = @community.comments.all.order(points: :desc)
+      @comments = @community.comments.all.where(parent_id: nil).order(points: :desc)
     elsif params[:sort] == 'controversial'
-      @comments = @community.comments.all.order(replies_count: :desc)
+      @comments = @community.comments.all.where(parent_id: nil).order(replies_count: :desc)
     end
   end
 
