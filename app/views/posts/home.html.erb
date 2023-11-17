@@ -1,5 +1,6 @@
 
 <div class="page">
+
   <%if current_user %>
   <%= form_with url: root_path, method: :get, local: true, class: 'filter-form' do |form| %>
 
@@ -30,26 +31,26 @@
     <% if @comments.empty? %>
       <h2><center>No comments.</h2></center>
     <% else %>
-  <!-- Para cada uno que use el sort que hay en el controller-->
       <center>
       <%= link_to "Newest", { filter: params[:filter], sort: 'newest', filter_type: params[:filter_type] }, class: "generic-button" %>
       <%= link_to "Oldest", { filter: params[:filter], sort: 'oldest', filter_type: params[:filter_type] }, class: "generic-button" %>
       <%= link_to "Most voted", { filter: params[:filter], sort: 'top', filter_type: params[:filter_type] }, class: "generic-button" %>
       <%= link_to "Controversial", { filter: params[:filter], sort: 'controversial', filter_type: params[:filter_type] }, class: "generic-button"  %></center>
 
-      <% if params[:filter_type] == 'local' %>
-        <% @comments.each do |comment| %>
-          <%= render comment %>
-        <% end %>
-      <% else %>
+      <% if params[:filter_type] == 'subscribed' %>
         <% @comments.each do |comment| %>
           <% current_user.subscriptions.each do |auxCom| %>
-            <% if auxCom.community_id == comment.community_id %>
-              <%= render comment %>
+            <% if comment.parent_id.nil? %>
+              <% if auxCom.community_id == comment.community_id %>
+                <%= render comment %>
+              <% end %>
             <% end %>
           <% end %>
         <% end %>
-
+      <% else %>
+        <% @comments.each do |comment| %>
+          <%= render comment %>
+        <% end %>
       <% end %>
     <% end %>
 
@@ -57,7 +58,7 @@
 
   <% else %>
       <% if @posts.empty? %>
-        <h2><center>No posts.</h2></center>
+        <h2><center>No posts.</center></h2>
       <% else %>
         <div class="menu-sort">
         <center>
@@ -76,6 +77,11 @@
             <article class="row post-container">
               <div class="col-12">
                 <h1 class="post-title"><%= link_to post.title, post %></h1>
+                <%if current_user.saved_posts.exists?(post: post) %>
+                  <%= link_to "unsave_post", unsave_post_path(post), method: :delete %>
+                <% else %>
+                  <%= link_to "save_post", save_post_path(post), method: :post %>
+                <% end %>
               </div>
             </article>
           </div>
@@ -100,6 +106,7 @@
                     <div class="avatar-thumbnail">
 
                       <%= link_to user_path(post.user), class: "avatar-thumbnail" do %>
+                      <%= link_to "save_post", save_post_path(post), method: :post %>
                         <% if post.user.avatar.present? %>
                           <%= image_tag post.user.avatar, alt: "User Avatar" %>
                         <% else %>
@@ -108,7 +115,8 @@
                       <% end %>
                     </div>
 
-                    <!--%= link_to post.user.full_name, user_path(post.user) %-->
+
+                    <%= link_to "save_post", save_post_path(post), method: :post %>
 
                     <div class="avatar-thumbnail">
                       <%= link_to community_path(post.community), class: "avatar-thumbnail" do %>
@@ -129,8 +137,8 @@
                     <li><i class="icono fas fa-comments"></i> <%= post.comments.count.to_s + " comments"  %></li>
                   </div>
                   </div class="post-meta"></p>
-                    <%= link_to "Delete this post", post, method: :delete %><br>
-                    <%= link_to "Edit this post", edit_post_path(post) %><br>
+                    <%= link_to 'Delete','/posts/delete/'+ @post.id.to_s, method: :delete%>
+                    <%= link_to "Edit",edit_post_path(@post), method: :get%>
                   </div>
                 </div>
               </div>
@@ -143,11 +151,17 @@
           <% end %>
         <% else %>
         <% @posts.each do |post| %>
+
           <div class="post-listing mt-2">
           <div class="d-block d-sm-none">
             <article class="row post-container">
               <div class="col-12">
                 <h1 class="post-title"><%= link_to post.title, post %></h1>
+                <%if current_user.saved_posts.exists?(post: post) %>
+                  <%= link_to "unsave_post", unsave_post_path(post), method: :delete %>
+                <% else %>
+                  <%= link_to "save_post", save_post_path(post), method: :post %>
+                <% end %>
               </div>
             </article>
           </div>

@@ -11,6 +11,12 @@
       <%= link_to 'Delete', '/posts/delete/' + @post.id.to_s, method: :delete %>
       <%= link_to "Edit", edit_post_path(@post), method: :get %>
     <% end %>
+
+    <%if current_user.saved_posts.exists?(post: @post) %>
+        <%= link_to "unsave_post", unsave_post_path(@post), method: :delete %>
+      <% else %>
+        <%= link_to "save_post", save_post_path(@post), method: :post %>
+      <% end %>
   </div>
 
   <div class="post-score">
@@ -25,19 +31,23 @@
   </div>
 
   <div class="comments-section">
-    <% if @comments.any? %>
-      <h2><%= "Comments" %></h2>
-      <center>
-        <%= link_to "Newest", { sort: 'newest' }, class: "generic-button" %>
-        <%= link_to "Oldest", { sort: 'oldest' }, class: "generic-button" %>
-        <%= link_to "Most voted", { sort: 'top' }, class: "generic-button" %>
-      </center>
 
-      <ul class="comments-list">
-        <% @comments.each do |comment| %>
-          <%= render partial: 'comments/comment', locals: { comment: comment } %>
-        <% end %>
-      </ul>
+
+    <%if @comments.any? %>
+    <h2><%= "Comments" %></h2>
+  <center>
+  <%= link_to "Newest", {  sort: 'newest' }, class: "generic-button" %> <!-- Para cada uno que use el sort que hay en el controller-->
+  <%= link_to "Oldest", {  sort: 'oldest' }, class: "generic-button" %>
+  <%= link_to "Most voted", {  sort: 'top' }, class: "generic-button" %>
+  </center>
+
+
+    <ul class="comments-list">
+      <% @comments.each do |comment| %>
+        <%= render partial: 'comments/comment', locals: { comment: comment } %>
+
+      <% end %>
+    </ul>
     <% end %>
   </div>
 

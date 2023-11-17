@@ -6,6 +6,7 @@
     <%= comment.body %>
   </div>
   <div class="comment-score">
+
     Total score:  <%= comment.points %><br>
     <%= link_to comment.post.title, post_path(comment.post.id) %>, from <%= link_to comment.post.community.name, community_path(comment.post.community.id) %>
     <%= link_to '▲','/comments/like/'+ comment.id.to_s, method: :post%>
@@ -19,7 +20,14 @@
     <% if current_user == comment.user %>
     <%= link_to 'Delete','comments/delete/'+ comment.id.to_s, method: :delete%>
     <%= link_to "Edit",edit_comment_path(comment), method: :get%>
-    <% end %>  </div>
+    <% end %>
+    <% if current_user.saved_comments.exists?(comment: comment) %>
+        <%= link_to "unsave_comment", unsave_comment_path(comment), method: :delete %>
+      <% else %>
+        <%= link_to "save_comment", save_comment_path(comment), method: :post %>
+      <% end %>
+
+    </div>
 
   <% if comment.replies.any? %>
     <div class="comment-separator"></div>
