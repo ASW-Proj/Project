@@ -1,4 +1,6 @@
 class SavedPostsController < ApplicationController
+    before_action :authenticate_user!, only: [:create, :destroy]
+
     def create
         @saved_post = SavedPost.new(post: post, user: current_user)
         

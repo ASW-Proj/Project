@@ -1,4 +1,6 @@
 class SavedCommentsController < ApplicationController
+    before_action :authenticate_user!, only: [:create, :destroy]
+
     def create
         @saved_comment = SavedComment.new(comment: comment, user: current_user)
         

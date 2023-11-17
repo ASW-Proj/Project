@@ -29,8 +29,12 @@
   <div class="subheader-bar">
   <!-- TODO: filter subscrit i local -->
     <% if current_user %>
-      <%= link_to "Create community", new_community_path, class: "generic-button" %>
+      <div class="listing-type-select">
+        <%= link_to "Subscribed" %>
+        <%= link_to "Local" %>
+      </div>
     <% end %>
+    <%= link_to "Create community", new_community_path, class: "generic-button" %>
   </div>
 
 
