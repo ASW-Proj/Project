@@ -1,4 +1,6 @@
+
 <div class="page">
+  <%if current_user %>
   <%= form_with url: root_path, method: :get, local: true, class: 'filter-form' do |form| %>
 
     <%= form.hidden_field :type, value: params[:type] %>
@@ -14,7 +16,8 @@
     </label>
 
     <%= form.submit "Filter" %>
-  <% end %>
+    <% end %>
+  <%end%>
 
   <div class="menu-perfil">
     <%= link_to "View posts", { filter: 'posts',  filter_type: params[:filter_type], sort: params[:sort]}, class: "generic-button" %>
@@ -27,11 +30,9 @@
     <% if @comments.empty? %>
       <h2><center>No comments.</h2></center>
     <% else %>
-
-
-
   <!-- Para cada uno que use el sort que hay en el controller-->
-      <center><%= link_to "Newest", { filter: params[:filter], sort: 'newest', filter_type: params[:filter_type] }, class: "generic-button" %>
+      <center>
+      <%= link_to "Newest", { filter: params[:filter], sort: 'newest', filter_type: params[:filter_type] }, class: "generic-button" %>
       <%= link_to "Oldest", { filter: params[:filter], sort: 'oldest', filter_type: params[:filter_type] }, class: "generic-button" %>
       <%= link_to "Most voted", { filter: params[:filter], sort: 'top', filter_type: params[:filter_type] }, class: "generic-button" %>
       <%= link_to "Controversial", { filter: params[:filter], sort: 'controversial', filter_type: params[:filter_type] }, class: "generic-button"  %></center>
@@ -51,10 +52,10 @@
 
       <% end %>
     <% end %>
-  <% end %>
 
 
-  <% if params[:filter] == 'posts' %>
+
+  <% else %>
       <% if @posts.empty? %>
         <h2><center>No posts.</h2></center>
       <% else %>
