@@ -1,218 +1,216 @@
-<%= form_with url: root_path, method: :get, local: true, class: 'filter-form' do |form| %>
+<div class="page">
+  <%= form_with url: root_path, method: :get, local: true, class: 'filter-form' do |form| %>
 
-  <%= form.hidden_field :type, value: params[:type] %>
+    <%= form.hidden_field :type, value: params[:type] %>
 
-  <label>
-    <%= form.radio_button :filter_type, 'local' %>
-    Local
-  </label>
+    <label>
+      <%= form.radio_button :filter_type, 'local' %>
+      Local
+    </label>
 
-  <label>
-    <%= form.radio_button :filter_type, 'subscribed',  filter: params[:filter], sort: params[:sort] %>
-    Subscribed
-  </label>
+    <label>
+      <%= form.radio_button :filter_type, 'subscribed',  filter: params[:filter], sort: params[:sort] %>
+      Subscribed
+    </label>
 
-  <%= form.submit "Filter" %>
-<% end %>
-
-<div class="menu-perfil">
-  <%= link_to "View posts", { filter: 'posts',  filter_type: params[:filter_type], sort: params[:sort]}, class: "generic-button" %>
-  <%= link_to "View comments", { filter: 'comments', filter_type: params[:filter_type], sort: params[:sort]}, class: "generic-button" %>
-  <br><br>
-</div>
-
-
-
-
-<% if params[:filter] == 'comments'%>
-  <% if @comments.empty? %>
-    <h2><center>No hay comentarios.</h2></center>
-  <% else %>
-
-
-
- <!-- Para cada uno que use el sort que hay en el controller-->
-    <center><%= link_to "Newest", { filter: params[:filter], sort: 'newest', filter_type: params[:filter_type] }, class: "generic-button" %>
-    <%= link_to "Oldest", { filter: params[:filter], sort: 'oldest', filter_type: params[:filter_type] }, class: "generic-button" %>
-    <%= link_to "Most voted", { filter: params[:filter], sort: 'top', filter_type: params[:filter_type] }, class: "generic-button" %>
-    <%= link_to "Controversial", { filter: params[:filter], sort: 'controversial', filter_type: params[:filter_type] }, class: "generic-button"  %></center>
-
-    <% if params[:filter_type] == 'local' %>
-      <% @comments.each do |comment| %>
-        <%= render comment %>
-      <% end %>
-    <% else %>
-      <% @comments.each do |comment| %>
-        <% current_user.subscriptions.each do |auxCom| %>
-          <% if auxCom.community_id == comment.community_id %>
-            <%= render comment %>
-          <% end %>
-        <% end %>
-      <% end %>
-
-    <% end %>
+    <%= form.submit "Filter" %>
   <% end %>
-<% end %>
+
+  <div class="menu-perfil">
+    <%= link_to "View posts", { filter: 'posts',  filter_type: params[:filter_type], sort: params[:sort]}, class: "generic-button" %>
+    <%= link_to "View comments", { filter: 'comments', filter_type: params[:filter_type], sort: params[:sort]}, class: "generic-button" %>
+    <br><br>
+  </div>
 
 
-<% if params[:filter] == 'posts' %>
-    <% if @posts.empty? %>
-      <h2><center>No hay posts.</h2></center>
+  <% if params[:filter] == 'comments'%>
+    <% if @comments.empty? %>
+      <h2><center>No comments.</h2></center>
     <% else %>
-      <div class="menu-sort">
-      <center>
-      <%= link_to "Newest", { filter: params[:filter], sort: 'newest', filter_type: params[:filter_type]}, class: "generic-button" %> <!-- Para cada uno que use el sort que hay en el controller-->
+
+
+
+  <!-- Para cada uno que use el sort que hay en el controller-->
+      <center><%= link_to "Newest", { filter: params[:filter], sort: 'newest', filter_type: params[:filter_type] }, class: "generic-button" %>
       <%= link_to "Oldest", { filter: params[:filter], sort: 'oldest', filter_type: params[:filter_type] }, class: "generic-button" %>
       <%= link_to "Most voted", { filter: params[:filter], sort: 'top', filter_type: params[:filter_type] }, class: "generic-button" %>
-      <%= link_to "Controversial", { filter: params[:filter], sort: 'controversial', filter_type: params[:filter_type] }, class: "generic-button"%>
-      </center>
-      </div>
-      <%if params[:filter_type] == 'subscribed'%>
-        <% @posts.each do |post| %>
+      <%= link_to "Controversial", { filter: params[:filter], sort: 'controversial', filter_type: params[:filter_type] }, class: "generic-button"  %></center>
+
+      <% if params[:filter_type] == 'local' %>
+        <% @comments.each do |comment| %>
+          <%= render comment %>
+        <% end %>
+      <% else %>
+        <% @comments.each do |comment| %>
           <% current_user.subscriptions.each do |auxCom| %>
-            <% if auxCom.community_id == post.community_id %>
-               <div class="post-listing mt-2">
-        <div class="d-block d-sm-none">
-          <article class="row post-container">
-            <div class="col-12">
-              <h1 class="post-title"><%= link_to post.title, post %></h1>
-            </div>
-          </article>
-        </div>
-        <article class="row post-container">
-          <div class="col flex-grow-0">
-            <div class="vote-bar small text-center">
-              <!-- Vote buttons go here -->
-            </div>
-          </div>
-          <div class="col flex-grow-1">
-            <div class="row">
-              <div class="col flex-grow-0 px-0">
-                <!-- External link icon goes here -->
-              </div>
-              <div class="col flex-grow-1">
-                <% if !post.url.nil? %>
-                  <p class="post-url"><%= post.url %></p>
-                  <p class="post-url"><%= post.comments_count %></p>
-                <% end %>
-
-                <div class="post-content">
-                  <div class="avatar-thumbnail">
-
-                    <%= link_to user_path(post.user), class: "avatar-thumbnail" do %>
-                      <% if post.user.avatar.present? %>
-                        <%= image_tag post.user.avatar, alt: "User Avatar" %>
-                      <% else %>
-                        <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default User Avatar" %>
-                      <% end %>
-                    <% end %>
-                  </div>
-
-                  <!--%= link_to post.user.full_name, user_path(post.user) %-->
-
-                  <div class="avatar-thumbnail">
-                    <%= link_to community_path(post.community), class: "avatar-thumbnail" do %>
-                      <% if post.community.avatar.present? %>
-                        <%= image_tag post.community.avatar, alt: "Community Avatar" %>
-                      <% else %>
-                        <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default Community Avatar" %>
-                      <% end %>
-                    <% end %>
-
-                    <%= link_to post.community.name, community_path(post.community) %>
-
-                    <div class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></div>
-
-                    <br>
-                  </div>
-
-                   <li><i class="icono fas fa-comments"></i> <%= post.comments.count.to_s + " comments"  %></li>
-                </div>
-                </div class="post-meta"></p>
-                  <%= link_to "Delete this post", post, method: :delete %><br>
-                  <%= link_to "Edit this post", edit_post_path(post) %><br>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-        <div class="d-none d-sm-block"></div>
-      </div>
+            <% if auxCom.community_id == comment.community_id %>
+              <%= render comment %>
             <% end %>
           <% end %>
         <% end %>
-      <% else %>
-      <% @posts.each do |post| %>
-         <div class="post-listing mt-2">
-        <div class="d-block d-sm-none">
-          <article class="row post-container">
-            <div class="col-12">
-              <h1 class="post-title"><%= link_to post.title, post %></h1>
-            </div>
-          </article>
-        </div>
-        <article class="row post-container">
-          <div class="col flex-grow-0">
-            <div class="vote-bar small text-center">
-              <!-- Vote buttons go here -->
-            </div>
-          </div>
-          <div class="col flex-grow-1">
-            <div class="row">
-              <div class="col flex-grow-0 px-0">
-                <!-- External link icon goes here -->
-              </div>
-              <div class="col flex-grow-1">
-                <% if !post.url.nil? %>
-                  <p class="post-url"><%= post.url %></p>
-                  <p class="post-url"><%= post.comments_count %></p>
-                <% end %>
 
-                <div class="post-content">
-                  <div class="avatar-thumbnail">
-
-                    <%= link_to user_path(post.user), class: "avatar-thumbnail" do %>
-                      <% if post.user.avatar.present? %>
-                        <%= image_tag post.user.avatar, alt: "User Avatar" %>
-                      <% else %>
-                        <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default User Avatar" %>
-                      <% end %>
-                    <% end %>
-                  </div>
-
-                  <!--%= link_to post.user.full_name, user_path(post.user) %-->
-
-                  <div class="avatar-thumbnail">
-                    <%= link_to community_path(post.community), class: "avatar-thumbnail" do %>
-                      <% if post.community.avatar.present? %>
-                        <%= image_tag post.community.avatar, alt: "Community Avatar" %>
-                      <% else %>
-                        <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default Community Avatar" %>
-                      <% end %>
-                    <% end %>
-
-                    <%= link_to post.community.name, community_path(post.community) %>
-
-                    <div class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></div>
-
-                    <br>
-                  </div>
-
-                   <li><i class="icono fas fa-comments"></i> <%= post.comments.count.to_s + " comments"  %></li>
-                </div>
-                </div class="post-meta"></p>
-                  <%= link_to "Delete this post", post, method: :delete %><br>
-                  <%= link_to "Edit this post", edit_post_path(post) %><br>
-                </div>
-              </div>
-            </div>
-          </div>
-        </article>
-        <div class="d-none d-sm-block"></div>
-      </div>
-      <% end %>
       <% end %>
     <% end %>
-<% end %>
+  <% end %>
 
-<!-- current_user -->
+
+  <% if params[:filter] == 'posts' %>
+      <% if @posts.empty? %>
+        <h2><center>No posts.</h2></center>
+      <% else %>
+        <div class="menu-sort">
+        <center>
+        <%= link_to "Newest", { filter: params[:filter], sort: 'newest', filter_type: params[:filter_type]}, class: "generic-button" %> <!-- Para cada uno que use el sort que hay en el controller-->
+        <%= link_to "Oldest", { filter: params[:filter], sort: 'oldest', filter_type: params[:filter_type] }, class: "generic-button" %>
+        <%= link_to "Most voted", { filter: params[:filter], sort: 'top', filter_type: params[:filter_type] }, class: "generic-button" %>
+        <%= link_to "Controversial", { filter: params[:filter], sort: 'controversial', filter_type: params[:filter_type] }, class: "generic-button"%>
+        </center>
+        </div>
+        <%if params[:filter_type] == 'subscribed'%>
+          <% @posts.each do |post| %>
+            <% current_user.subscriptions.each do |auxCom| %>
+              <% if auxCom.community_id == post.community_id %>
+                <div class="post-listing mt-2">
+          <div class="d-block d-sm-none">
+            <article class="row post-container">
+              <div class="col-12">
+                <h1 class="post-title"><%= link_to post.title, post %></h1>
+              </div>
+            </article>
+          </div>
+          <article class="row post-container">
+            <div class="col flex-grow-0">
+              <div class="vote-bar small text-center">
+                <!-- Vote buttons go here -->
+              </div>
+            </div>
+            <div class="col flex-grow-1">
+              <div class="row">
+                <div class="col flex-grow-0 px-0">
+                  <!-- External link icon goes here -->
+                </div>
+                <div class="col flex-grow-1">
+                  <% if !post.url.nil? %>
+                    <p class="post-url"><%= post.url %></p>
+                    <p class="post-url"><%= post.comments_count %></p>
+                  <% end %>
+
+                  <div class="post-content">
+                    <div class="avatar-thumbnail">
+
+                      <%= link_to user_path(post.user), class: "avatar-thumbnail" do %>
+                        <% if post.user.avatar.present? %>
+                          <%= image_tag post.user.avatar, alt: "User Avatar" %>
+                        <% else %>
+                          <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default User Avatar" %>
+                        <% end %>
+                      <% end %>
+                    </div>
+
+                    <!--%= link_to post.user.full_name, user_path(post.user) %-->
+
+                    <div class="avatar-thumbnail">
+                      <%= link_to community_path(post.community), class: "avatar-thumbnail" do %>
+                        <% if post.community.avatar.present? %>
+                          <%= image_tag post.community.avatar, alt: "Community Avatar" %>
+                        <% else %>
+                          <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default Community Avatar" %>
+                        <% end %>
+                      <% end %>
+
+                      <%= link_to post.community.name, community_path(post.community) %>
+
+                      <div class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></div>
+
+                      <br>
+                    </div>
+
+                    <li><i class="icono fas fa-comments"></i> <%= post.comments.count.to_s + " comments"  %></li>
+                  </div>
+                  </div class="post-meta"></p>
+                    <%= link_to "Delete this post", post, method: :delete %><br>
+                    <%= link_to "Edit this post", edit_post_path(post) %><br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <div class="d-none d-sm-block"></div>
+        </div>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% else %>
+        <% @posts.each do |post| %>
+          <div class="post-listing mt-2">
+          <div class="d-block d-sm-none">
+            <article class="row post-container">
+              <div class="col-12">
+                <h1 class="post-title"><%= link_to post.title, post %></h1>
+              </div>
+            </article>
+          </div>
+          <article class="row post-container">
+            <div class="col flex-grow-0">
+              <div class="vote-bar small text-center">
+                <!-- Vote buttons go here -->
+              </div>
+            </div>
+            <div class="col flex-grow-1">
+              <div class="row">
+                <div class="col flex-grow-0 px-0">
+                  <!-- External link icon goes here -->
+                </div>
+                <div class="col flex-grow-1">
+                  <% if !post.url.nil? %>
+                    <p class="post-url"><%= post.url %></p>
+                    <p class="post-url"><%= post.comments_count %></p>
+                  <% end %>
+
+                  <div class="post-content">
+                    <div class="avatar-thumbnail">
+
+                      <%= link_to user_path(post.user), class: "avatar-thumbnail" do %>
+                        <% if post.user.avatar.present? %>
+                          <%= image_tag post.user.avatar, alt: "User Avatar" %>
+                        <% else %>
+                          <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default User Avatar" %>
+                        <% end %>
+                      <% end %>
+                    </div>
+
+                    <!--%= link_to post.user.full_name, user_path(post.user) %-->
+
+                    <div class="avatar-thumbnail">
+                      <%= link_to community_path(post.community), class: "avatar-thumbnail" do %>
+                        <% if post.community.avatar.present? %>
+                          <%= image_tag post.community.avatar, alt: "Community Avatar" %>
+                        <% else %>
+                          <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default Community Avatar" %>
+                        <% end %>
+                      <% end %>
+
+                      <%= link_to post.community.name, community_path(post.community) %>
+
+                      <div class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></div>
+
+                      <br>
+                    </div>
+
+                    <li><i class="icono fas fa-comments"></i> <%= post.comments.count.to_s + " comments"  %></li>
+                  </div>
+                  </div class="post-meta"></p>
+                    <%= link_to "Delete this post", post, method: :delete %><br>
+                    <%= link_to "Edit this post", edit_post_path(post) %><br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <div class="d-none d-sm-block"></div>
+        </div>
+        <% end %>
+        <% end %>
+      <% end %>
+  <% end %>
+</div>
