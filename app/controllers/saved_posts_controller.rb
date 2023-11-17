@@ -16,7 +16,7 @@ class SavedPostsController < ApplicationController
     def destroy
         post.saved_posts.find_by(user: current_user).destroy!      
         respond_to do |format|
-            format.html { redirect_to posts_path, notice: "You have succesfully unsaved the post." }
+            format.html { redirect_to post_path(post), notice: "You have succesfully unsaved the post." }
         end
     end
 

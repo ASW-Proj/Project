@@ -16,7 +16,7 @@ class SavedCommentsController < ApplicationController
     def destroy
         comment.saved_comments.find_by(user: current_user).destroy!      
         respond_to do |format|
-            format.html { redirect_to comments_path, notice: "You have succesfully unsaved the comment." }
+            format.html { redirect_to comment_path(comment), notice: "You have succesfully unsaved the comment." }
         end
     end
 

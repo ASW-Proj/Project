@@ -5,13 +5,13 @@
   <div class="post-meta"><%= "Created at " + @post.created_at.strftime('%d %B, %Y') %>
    <%= link_to "Created by " + @post.user.email, user_path(@post.user) %>
 
-    <% if current_user == @post.user %>
+    <% if current_user && current_user == @post.user %>
       <%= link_to 'Delete','/posts/delete/'+ @post.id.to_s, method: :delete%>
       <%= link_to "Edit",edit_post_path(@post), method: :get%>
     <% end %>
-    <%if current_user.saved_posts.exists?(post: @post) %>
+    <%if current_user && current_user.saved_posts.exists?(post: @post) %>
         <%= link_to "unsave_post", unsave_post_path(@post), method: :delete %>
-      <% else %>
+      <% elsif current_user  %>
         <%= link_to "save_post", save_post_path(@post), method: :post %>
       <% end %>
 
