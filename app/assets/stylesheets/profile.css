@@ -155,12 +155,14 @@
     list-style: none;
     padding: 5px 0;
     width: 100%;
-    background-color: #ccffcc; /* Cambiado a verde más claro */
+    background-color: #ffffff; /* Cambiado a verde más claro */
     border-radius: 12px;
     box-shadow: 0 0 12px rgba(0, 0, 0, .2);
 }
 
 .seccion-perfil-usuario .menu-perfil ul li {
+    margin-top: 1.25rem;
+    margin-left: 1.25rem;
     margin-bottom: 1.25rem;
     text-align: center;
 }
