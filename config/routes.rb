@@ -27,6 +27,8 @@ Rails.application.routes.draw do
 
 
   resources :comments
+  get 'posts/:id/comments', to: 'comments#new'
+  post 'posts/:id/comments', to: 'comments#new'
   get 'pages/home'
 
   devise_for :users, controllers: {
@@ -60,15 +62,6 @@ Rails.application.routes.draw do
 
   # Resources for posts and comments
 
-
-  resources :posts do
-    resources :comments, only: [:create, :destroy]
-
-    member do
-      post 'vote_up'
-      post 'vote_down'
-    end
-  end
   resources :posts do
     resources :comments
   end
@@ -77,7 +70,7 @@ Rails.application.routes.draw do
       post '/reply/:parent_id', to: 'comments#reply', on: :collection, as: :reply
     end
   end
-
+ 
 
   # Search route
   get 'search', to: 'search#index'
