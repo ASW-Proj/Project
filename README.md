@@ -8,4 +8,4 @@ Link al vostre projecte a Taiga
 - https://tree.taiga.io/project/mcampsll-asw-project/timeline
 
 Link a la vostra aplicació desplegada a Fly.io
-- Placeholder
+- https://lively-water-4364-damp-paper-4806.fly.dev/
