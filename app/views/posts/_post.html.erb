@@ -16,6 +16,7 @@
     Total score:  <%= post.points %>
     <%= link_to '▲','/post/like/'+ post.id.to_s, method: :post%>
     <%= link_to '▼','/post/dislike/'+ post.id.to_s, method: :post%>
+
   </div>
   <div class="comments-section">
     <h2><%= "Comments" %></h2>
