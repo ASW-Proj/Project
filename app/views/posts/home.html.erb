@@ -30,7 +30,6 @@
     <% if @comments.empty? %>
       <h2><center>No comments.</h2></center>
     <% else %>
-  <!-- Para cada uno que use el sort que hay en el controller-->
       <center>
       <%= link_to "Newest", { filter: params[:filter], sort: 'newest', filter_type: params[:filter_type] }, class: "generic-button" %>
       <%= link_to "Oldest", { filter: params[:filter], sort: 'oldest', filter_type: params[:filter_type] }, class: "generic-button" %>
@@ -44,8 +43,10 @@
       <% else %>
         <% @comments.each do |comment| %>
           <% current_user.subscriptions.each do |auxCom| %>
-            <% if auxCom.community_id == comment.community_id %>
-              <%= render comment %>
+            <% if comment.parent_id.nil? %>
+              <% if auxCom.community_id == comment.community_id %>
+                <%= render comment %>
+              <% end %>
             <% end %>
           <% end %>
         <% end %>
@@ -129,8 +130,8 @@
                     <li><i class="icono fas fa-comments"></i> <%= post.comments.count.to_s + " comments"  %></li>
                   </div>
                   </div class="post-meta"></p>
-                    <%= link_to "Delete this post", post, method: :delete %><br>
-                    <%= link_to "Edit this post", edit_post_path(post) %><br>
+                    <%= link_to 'Delete','/posts/delete/'+ @post.id.to_s, method: :delete%>
+                    <%= link_to "Edit",edit_post_path(@post), method: :get%>
                   </div>
                 </div>
               </div>

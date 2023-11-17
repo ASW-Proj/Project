@@ -21,7 +21,7 @@ class PostsController < ApplicationController
     end
 
 
-    @comments = Comment.all.order(created_at: :desc)
+    @comments = Comment.all.where(parent_id: nil).order(created_at: :asc)
 
     if params[:sort] == 'newest'
       @comments = Comment.all.where(parent_id: nil).order(created_at: :asc)
