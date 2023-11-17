@@ -21,9 +21,9 @@
     <%= link_to 'Delete','comments/delete/'+ comment.id.to_s, method: :delete%>
     <%= link_to "Edit",edit_comment_path(comment), method: :get%>
     <% end %>
-    <% if current_user.saved_comments.exists?(comment: comment) %>
+    <% if current_user && current_user.saved_comments.exists?(comment: comment) %>
         <%= link_to "unsave_comment", unsave_comment_path(comment), method: :delete %>
-      <% else %>
+      <% else current_user %>
         <%= link_to "save_comment", save_comment_path(comment), method: :post %>
       <% end %>
 

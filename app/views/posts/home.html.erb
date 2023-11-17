@@ -37,7 +37,7 @@
       <%= link_to "Most voted", { filter: params[:filter], sort: 'top', filter_type: params[:filter_type] }, class: "generic-button" %>
       <%= link_to "Controversial", { filter: params[:filter], sort: 'controversial', filter_type: params[:filter_type] }, class: "generic-button"  %></center>
 
-      <% if params[:filter_type] == 'subscribed' %>
+      <% if current_user && params[:filter_type] == 'subscribed' %>
         <% @comments.each do |comment| %>
           <% current_user.subscriptions.each do |auxCom| %>
             <% if comment.parent_id.nil? %>
@@ -68,7 +68,7 @@
         <%= link_to "Controversial", { filter: params[:filter], sort: 'controversial', filter_type: params[:filter_type] }, class: "generic-button"%>
         </center>
         </div>
-        <%if params[:filter_type] == 'subscribed'%>
+        <%if current_user && params[:filter_type] == 'subscribed'%>
           <% @posts.each do |post| %>
             <% current_user.subscriptions.each do |auxCom| %>
               <% if auxCom.community_id == post.community_id %>
@@ -77,9 +77,9 @@
             <article class="row post-container">
               <div class="col-12">
                 <h1 class="post-title"><%= link_to post.title, post %></h1>
-                <%if current_user.saved_posts.exists?(post: post) %>
+                <%if current_user && current_user.saved_posts.exists?(post: post) %>
                   <%= link_to "unsave_post", unsave_post_path(post), method: :delete %>
-                <% else %>
+                <% elsif current_user %>
                   <%= link_to "save_post", save_post_path(post), method: :post %>
                 <% end %>
               </div>
@@ -157,9 +157,9 @@
             <article class="row post-container">
               <div class="col-12">
                 <h1 class="post-title"><%= link_to post.title, post %></h1>
-                <%if current_user.saved_posts.exists?(post: post) %>
+                <%if current_user && current_user.saved_posts.exists?(post: post) %>
                   <%= link_to "unsave_post", unsave_post_path(post), method: :delete %>
-                <% else %>
+                <% elsif current_user %>
                   <%= link_to "save_post", save_post_path(post), method: :post %>
                 <% end %>
               </div>
