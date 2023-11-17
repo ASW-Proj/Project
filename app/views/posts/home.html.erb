@@ -1,37 +1,25 @@
 <%= form_with url: root_path, method: :get, local: true, class: 'filter-form' do |form| %>
 
-    <%= form.hidden_field :type, value: params[:type] %>
+  <%= form.hidden_field :type, value: params[:type] %>
 
-    <label>Seleccionar:</label>
+  <label>
+    <%= form.radio_button :filter_type, 'local' %>
+    Local
+  </label>
 
-    <label>
-      <%= form.radio_button :filter_type, 'local' %>
-      Local
-    </label>
+  <label>
+    <%= form.radio_button :filter_type, 'subscribed',  filter: params[:filter], sort: params[:sort] %>
+    Subscribed
+  </label>
 
-    <label>
-      <%= form.radio_button :filter_type, 'subscribed',  filter: params[:filter], sort: params[:sort] %>
-      Suscrito
-    </label>
+  <%= form.submit "Filter" %>
+<% end %>
 
-    <%= form.submit "Filtrar" %>
-  <% end %>
-
-
-
-
-
-
-
-
-   <div class="menu-perfil">
-   <%= link_to "Ver posts", { filter: 'posts',  filter_type: params[:filter_type], sort: params[:sort]}, class: "generic-button" %>
-
-   <%= link_to "Ver comentarios", { filter: 'comments', filter_type: params[:filter_type], sort: params[:sort]}, class: "generic-button" %>
-
-   <br><br>
-
-  </div>
+<div class="menu-perfil">
+  <%= link_to "View posts", { filter: 'posts',  filter_type: params[:filter_type], sort: params[:sort]}, class: "generic-button" %>
+  <%= link_to "View comments", { filter: 'comments', filter_type: params[:filter_type], sort: params[:sort]}, class: "generic-button" %>
+  <br><br>
+</div>
 
 
 
@@ -57,7 +45,7 @@
       <% @comments.each do |comment| %>
         <% current_user.subscriptions.each do |auxCom| %>
           <% if auxCom.community_id == comment.community_id %>
-            <%= render comment <%></%>
+            <%= render comment %>
           <% end %>
         <% end %>
       <% end %>
