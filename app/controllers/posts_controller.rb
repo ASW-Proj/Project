@@ -50,7 +50,7 @@ class PostsController < ApplicationController
         #@post.points
     end
     @post.points
-  end
+    end
 
   # GET /posts/new
   def new

@@ -1,24 +1,25 @@
 
-<%= stylesheet_link_tag "application" %>
+<%= stylesheet_link_tag "application", "forms" %>
 
 <div class="comment">
   <div class="comment-body<%= comment.parent_id.nil? ? ' parent-comment' : ' child-comment' %>">
     <%= comment.body %>
   </div>
   <div class="comment-score">
-    Total score:  <%= comment.points %><br>
+    
     <%= link_to comment.post.title, post_path(comment.post.id) %>, from <%= link_to comment.post.community.name, community_path(comment.post.community.id) %>
     <%= link_to '▲','/comments/like/'+ comment.id.to_s, method: :post%>
+    <%= comment.points %>
     <%= link_to '▼','/comments/dislike/'+ comment.id.to_s, method: :post%>
   </div>
 
   <div class="post-meta">
-    Created at <%= comment.created_at.strftime('%d %B, %Y') %>
+    <p>Created at <%= comment.created_at.strftime('%d %B, %Y') %>
     Created by <%= link_to comment.user.email, user_path(comment.user) %>
-    <%= link_to "Reply", new_post_comment_path(comment.post, parent_id: comment.id), class: "reply-button" %>
     <% if current_user == comment.user %>
-    <%= link_to 'Delete','comments/delete/'+ comment.id.to_s, method: :delete%>
-    <%= link_to "Edit",edit_comment_path(comment), method: :get%>
+      <%= link_to 'Delete','comments/delete/'+ comment.id.to_s, method: :delete%>
+      <%= link_to "Edit",edit_comment_path(comment), method: :get%></p>
+      <%= render partial: 'comments/form', locals: { post: @post, community: @community } %>
     <% end %>  </div>
 
   <% if comment.replies.any? %>

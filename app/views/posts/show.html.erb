@@ -1,43 +1,51 @@
-<%= stylesheet_link_tag "buttons", "forms", "application" %>
-
-<div class="post-container">
-  <h1 class="post-title"><%= @post.title %></h1>
-  <div class="post-meta"><%= "Created at " + @post.created_at.strftime('%d %B, %Y') %>
-   <%= link_to "Created by " + @post.user.email, user_path(@post.user) %>
-
-    <% if current_user == @post.user %>
-      <%= link_to 'Delete','/posts/delete/'+ @post.id.to_s, method: :delete%>
-      <%= link_to "Edit",edit_post_path(@post), method: :get%>
-    <% end %>  
-
-  </div>
- 
-  <div class="post-score">
-    Total score:    <%= @post.points %>
-    <%= link_to '▲','/posts/like/'+ @post.id.to_s, method: :post%>
-    <%= link_to '▼','/posts/dislike/'+ @post.id.to_s, method: :post%>
-  </div>
-  
-  <div class="post-body">
-  <p></p>
-    <h4><%= @post.body %> </h4>
-  </div>
-
-  <div class="comments-section">
-    <h2><%= "Comments" %></h2>
-  <center>
+<%= stylesheet_link_tag "buttons", "forms", "application","show_post" %>
+<center>
   <%= link_to "Newest", {  sort: 'newest' }, class: "generic-button" %> <!-- Para cada uno que use el sort que hay en el controller-->
   <%= link_to "Oldest", {  sort: 'oldest' }, class: "generic-button" %>
   <%= link_to "Most voted", {  sort: 'top' }, class: "generic-button" %>
-  </center>
+</center>
+<div class="post-container">
+  <div class="post-ini">
 
+    <div class="post-score">
+      <p><%= link_to '', '/posts/like/' + @post.id.to_s, method: :post, class: 'vote-btn upvote-btn fas fa-arrow-up' %></p>
+      <p><%= @post.points %></p>
+      <p><%= link_to '', '/posts/dislike/' + @post.id.to_s, method: :post, class: 'vote-btn downvote-btn fas fa-arrow-down' %></p>
+    </div>
+    <div class="post-head">
+      <h1 class="post-title"><%= @post.title %></h1>
+      <div class="post-meta">
+        <%= link_to "Created by " + @post.user.email, user_path(@post.user) +"en" %>
+        <%= link_to community_path(@post.community), class: "avatar-thumbnail" do %>
+          <% if @post.community.avatar.present? %>
+            <%= image_tag @post.community.avatar, alt: "Community Avatar" %>
+          <% else %>
+            <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default Community Avatar" %>
+          <% end %>
+        <% end %>
+        <%= " a " + @post.created_at.strftime('%d %B, %Y') %>
+      </div>
+      
+      <div class="post-config">
+          <% if current_user == @post.user %>
+            <%= link_to 'Delete','/posts/delete/'+ @post.id.to_s, method: :delete%>
+            <%= link_to "Edit",edit_post_path(@post), method: :get%>
+          <% end %>  
+      </div>
+    </div>
+  </div>
+  <div class="post-body">
+    <p><%= @post.body %> </p> 
+  </div>     
+</div>
+
+  <div class="comments-section">
     <ul class="comments-list">
       <% @comments.each do |comment| %>
         <%= render partial: 'comments/comment', locals: { comment: comment } %>
       <% end %>
     </ul>
   </div>
-
 
   <% if user_signed_in? %>
   <%= render partial: 'comments/form', locals: { post: @post, community: @community } %>
@@ -46,4 +54,4 @@
   <p>Debes iniciar sesión para dejar un comentario.</p>
   <% end %>
 
-</div>
+

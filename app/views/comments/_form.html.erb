@@ -1,4 +1,3 @@
-<h2><%= "Add a comment" %></h2>
 <%= form_with(model: [@post, Comment.new], local: true, html: { class: "comment-form" } ) do |form| %>
   <div class="field">
     <%= form.text_area :body, placeholder: "Write your comment here", class: "form-text-input__inner" %>
