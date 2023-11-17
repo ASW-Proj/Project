@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for lively-water-4364 on 2023-11-15T16:27:31Z
+# fly.toml app configuration file generated for lively-water-4364-damp-paper-4806 on 2023-11-17T01:51:39Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "lively-water-4364"
+app = "lively-water-4364-damp-paper-4806"
 primary_region = "iad"
 console_command = "/rails/bin/rails console"
 
