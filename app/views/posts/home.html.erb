@@ -36,11 +36,7 @@
       <%= link_to "Most voted", { filter: params[:filter], sort: 'top', filter_type: params[:filter_type] }, class: "generic-button" %>
       <%= link_to "Controversial", { filter: params[:filter], sort: 'controversial', filter_type: params[:filter_type] }, class: "generic-button"  %></center>
 
-      <% if params[:filter_type] == 'local' %>
-        <% @comments.each do |comment| %>
-          <%= render comment %>
-        <% end %>
-      <% else %>
+      <% if params[:filter_type] == 'subscribed' %>
         <% @comments.each do |comment| %>
           <% current_user.subscriptions.each do |auxCom| %>
             <% if comment.parent_id.nil? %>
@@ -50,7 +46,10 @@
             <% end %>
           <% end %>
         <% end %>
-
+      <% else %>
+        <% @comments.each do |comment| %>
+          <%= render comment %>
+        <% end %>
       <% end %>
     <% end %>
 
