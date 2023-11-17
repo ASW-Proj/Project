@@ -1,11 +1,41 @@
-<div id="<%= dom_id community %>">
-  <div class="banner-container">
-    <%= image_tag community.banner, class: "banner-image" rescue "No banner" %>
-  </div>
-  <div class="avatar-container">
-    <%= image_tag community.avatar, class: "avatar-image" rescue "No avatar" %>
-  </div>
-  <h1><%= community.name %></h1>
-  <span><%= community.identifier %></span>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apock web design</title>
+    <link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+</head>
 
-</div>
+<section class="seccion-perfil-usuario">
+        <div class="perfil-usuario-header">
+          <div class="perfil-usuario-portada">
+            <div class="perfil-usuario-avatar">
+                <% if @community.avatar.present? %>
+                  <%= image_tag @community.avatar, alt: "img-avatar", class: "avatar-image" %>
+                <% else %>
+                  <%= image_tag "community_avatar_default.png", alt: "img-avatar", class: "avatar-image" %>
+                <% end %>
+                <% if current_user == @community %>
+                  <%= link_to edit_user_path(@community), class: "boton-avatar" do %>
+                    <i class="fas fa-pen"></i>
+                  <% end %>
+                <% end %>
+
+            </div>
+            <% if @community.banner.present?%>
+              <%= image_tag @community.banner, alt: "img-portada", class: "banner-image" %>
+            <% else %>
+               <%= image_tag "community_banner.png", alt: "img-portada", class: "banner-image" %>
+            <% end %>
+        </div>
+
+
+          <div class="perfil-usuario-body">
+
+            <div class="perfil-usuario-bio">
+                <h3 class="titulo"><%= @community.name %></h3>
+                <h4 class="titulo2"><%= @community.identifier %></h4>
+            </div>
+          </div>
+
+

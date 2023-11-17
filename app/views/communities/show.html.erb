@@ -1,65 +1,65 @@
 <div class="profile-page">
   <%= render @community %>
 
-  <div>
-    <%= link_to "Edit this community", edit_community_path(@community), class: "generic-button" %>
+ <div class="menu-perfil">
 
-    <%= link_to "Back to communities", communities_path, class: "generic-button" %>
 
-    <%= button_to "Destroy this community", @community, method: :delete, class: "cancel-button" %>
-  </div>
-
+<center>
 
   <%= link_to "Ver posts", { filter: 'posts' }, class: "generic-button" %>
 
    <%= link_to "Ver comentarios", { filter: 'comments' }, class: "generic-button" %>
 
+<center>
 
+  <br>
   <% if params[:filter] == 'comments' %>
     <center>
-  <%= link_to "Newest", { filter: 'comments', sort: 'newest' }, class: "generic-button" %> <!-- Para cada uno que use el sort que hay en el controller-->
-  <%= link_to "Oldest", { filter: 'comments', sort: 'oldest' }, class: "generic-button" %>
-  <%= link_to "Most voted", { filter: 'comments', sort: 'top' }, class: "generic-button" %>
-  <%= link_to "Controversial", { filter: 'comments', sort: 'controversial' }, class: "generic-button"  %></center>
-  <% if @comments.empty? then %>
-    <center>there seems to be no comments</center>
-  <% else %>
-    <% @comments.each do |com| %>
-      <%= render com %>
+      <%= link_to "Newest", { filter: 'comments', sort: 'newest' }, class: "generic-button" %>
+      <%= link_to "Oldest", { filter: 'comments', sort: 'oldest' }, class: "generic-button" %>
+      <%= link_to "Most voted", { filter: 'comments', sort: 'top' }, class: "generic-button" %>
+      <%= link_to "Controversial", { filter: 'comments', sort: 'controversial' }, class: "generic-button" %>
+    </center>
+
+    <br>
+
+    <% if @comments.empty? %>
+      <center>There seems to be no comments</center>
+    <% else %>
+      <% @comments.each do |com| %>
+        <%= render com %>
+      <% end %>
     <% end %>
   <% end %>
 
-
-  <% end %>
-  <% if params[:filter] == 'posts' then %>
-      <center>
-  <%= link_to "Newest", { filter: 'posts', sort: 'newest' }, class: "generic-button" %> <!-- Para cada uno que use el sort que hay en el controller-->
-  <%= link_to "Oldest", { filter: 'posts', sort: 'oldest' }, class: "generic-button" %>
-  <%= link_to "Most voted", { filter: 'posts', sort: 'top' }, class: "generic-button" %>
-  <%= link_to "Controversial", { filter: 'posts', sort: 'controversial' }, class: "generic-button"  %>
-  <center>
-    <% if @posts.empty? then %>
-        there seems to be no posts
+  <% if params[:filter] == 'posts' %>
+    <center>
+      <%= link_to "Newest", { filter: 'posts', sort: 'newest' }, class: "generic-button" %>
+      <%= link_to "Oldest", { filter: 'posts', sort: 'oldest' }, class: "generic-button" %>
+      <%= link_to "Most voted", { filter: 'posts', sort: 'top' }, class: "generic-button" %>
+      <%= link_to "Controversial", { filter: 'posts', sort: 'controversial' }, class: "generic-button" %>
+    </center>
+<br>
+    <% if @posts.empty? %>
+      <center>There seems to be no posts</center>
     <% else %>
       <% @posts.each do |post| %>
-
         <div class="post-container">
-        <h1 class="post-title"><%= link_to post.title, post %>
-        <div class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></div></h1>
-        <p class="post-url"><%= post.url %></p>
-        <div class="post-content">
-          <%= post.body %>
-        </div>
-        <p class="post-meta"></p>
-        <!--% if current_user.email.eql?(post.user.email) then %-->
-          <%= link_to "Delete this post", +post.id.to_s+"/destroy" %> <br> <!--falta el link-->
-          <%= link_to "Edit this post", +post.id.to_s+"/edit" %> <br><!--falta el link-->
-          <!--% end %-->
-         <%= link_to "Created by " + post.user.email, user_path(post.user) %>
+          <h1 class="post-title"><%= link_to post.title, post %></h1>
+          <div class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></div>
+          <p class="post-url"><%= post.url %></p>
+          <div class="post-content">
+            <%= post.body %>
+          </div>
+          <!-- Add links for delete and edit here -->
+          <%= link_to "Created by " + post.user.email, user_path(post.user) %>
         </div>
       <% end %>
     <% end %>
-  <%end%>
-    </div>
+  <% end %>
+</div>
 
+<section>
+  <hr/>
+</section>
 </div>
