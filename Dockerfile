@@ -18,9 +18,6 @@ ENV RAILS_ENV="production" \
 RUN gem update --system --no-document && \
     gem install -N bundler
 
-ARG BUNDLER_VERSION=2.4.22
-RUN gem install bundler -v $BUNDLER_VERSION
-
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -47,6 +44,7 @@ RUN chmod +x bin/* && \
 
 # Precompiling assets for production without requiring secret RAILS_MASTER_KEY
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+
 
 # Final stage for app image
 FROM base
