@@ -52,14 +52,6 @@
 }
 
 
-.generic-button button:nth-child(1) {
-  background-color: #3498db; /* Color para el primer botón */
-}
-
-/* Estilo específico para el segundo botón */
-.select-form button:nth-child(2) {
-  background-color: #e74c3c; /* Color para el segundo botón */
-}
 
 
 

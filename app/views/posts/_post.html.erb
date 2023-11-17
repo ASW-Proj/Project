@@ -2,21 +2,24 @@
 
 <div class="post-container">
   <h1 class="post-title"><%= post.title %></h1>
-  <p class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></p>
+  <p class="post-meta">
+    <%= "Created at " + post.created_at.strftime('%d %B, %Y') %>
+  </p>
   <div class="post-meta">
-   <%= link_to "Created by " + post.user.email, user_path(post.user) %>
+    <%= link_to "Created by " + post.user.email, user_path(post.user) %>
   </div>
-
-
 
   <div class="post-content">
     <%= @post.body %>
   </div>
+
   <div class="post-score">
-    Total score:  <%= post.points %>
-    <%= link_to '▲','/post/like/'+ post.id.to_s, method: :post%>
-    <%= link_to '▼','/post/dislike/'+ post.id.to_s, method: :post%>
+    <p>Total score: <%= post.points %></p>
+
+    <%= link_to '', like_post_path(post),class: 'icono fas fa-search appbar-button' %>
+    <%= link_to '▼', dislike_post_path(post), method: :post %>
   </div>
+
   <div class="comments-section">
     <h2><%= "Comments" %></h2>
     <ul class="comments-list">
@@ -26,13 +29,11 @@
     </ul>
   </div>
 
-
   <% if user_signed_in? %>
-  <%= render partial: 'comments/form', locals: { post: @post, community: @community } %>
-
+    <%= render partial: 'comments/form', locals: { post: @post, community: @community } %>
   <% else %>
-  <p>Debes iniciar sesión para dejar un comentario.</p>
+    <p class="login-message">Debes iniciar sesión para dejar un comentario.</p>
   <% end %>
-
 </div>
+
 
