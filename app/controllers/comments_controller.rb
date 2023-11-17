@@ -80,7 +80,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @comment_parent = Comment.find_by(id: params[:parent_id])
     if @comment_parent.nil?
-      @post=Post.find(params[:id])
+      @post=Post.find(params[:post_id])
       @post.decrement!(:comments_count)
     else
       @comment_parent.decrement!(:replies_count)

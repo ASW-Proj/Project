@@ -98,9 +98,12 @@ h1 {
 }
 
 .comment {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 15px;
+  max-width: 800px;
+   margin: 0 auto;
+   padding: 20px;
+   background-color: #fff;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   border-radius: 5px;
 }
 
 .comment-body {
@@ -130,9 +133,6 @@ h1 {
   margin-left: 10px;
 }
 
-.nested-comments {
-  margin-top: 10px;
-}
 
 .comment-separator {
   border-top: 1px solid #ccc;

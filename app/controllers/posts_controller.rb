@@ -49,7 +49,7 @@ class PostsController < ApplicationController
       @comments = @post.comments.where(parent_id: nil).order(points: :desc)
     end
     @post.points
-  end
+    end
 
   # GET /posts/new
   def new
