@@ -1,16 +1,18 @@
 <%= form_with(model: [@post, Comment.new], local: true, html: { class: "comment-form" } ) do |form| %>
   <div class="field">
-    <%= form.text_area :body, placeholder: "Write your comment here", class: "form-text-input__inner" %>
+    <%= form.text_area :body, placeholder: "Write your comment here", class: "form-text-area-input" %>
   </div>
-  <%= form.hidden_field :post_id, value: @post.id %>
-  <%= form.hidden_field :user_id, value: current_user.id %>
-  <%= form.hidden_field :community_id, value: @post.community_id %>
+  <%= form.hidden_field :post_id, value: :post_id %>
+  <% if current_user %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+  <% end %>
+  <%= form.hidden_field :community_id, value: :community_id %>
   
   <% if params[:parent_id].present? %>
     <%= form.hidden_field :parent_id, value: params[:parent_id] %>
   <% end %>
-  
+  <br>
   <div class="actions">
-    <%= form.submit "Comenta", class: "generic-button" %>
+    <%= form.submit "Comment", class: "generic-button" %>
   </div>
 <% end %>

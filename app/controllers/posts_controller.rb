@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: [:new, :create, :like, :dislike]
 
   # GET /posts or /posts.json
   def index
@@ -20,7 +21,7 @@ class PostsController < ApplicationController
     end
 
 
-    @comments = Comment.all.order(created_at: :desc)
+    @comments = Comment.all.where(parent_id: nil).order(created_at: :asc)
 
     if params[:sort] == 'newest'
       @comments = Comment.all.where(parent_id: nil).order(created_at: :asc)
@@ -46,8 +47,6 @@ class PostsController < ApplicationController
       @comments = @post.comments.where(parent_id: nil).order(created_at: :asc)
     elsif params[:sort] == 'top'
       @comments = @post.comments.where(parent_id: nil).order(points: :desc)
-
-        #@post.points
     end
     @post.points
     end

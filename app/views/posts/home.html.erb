@@ -1,42 +1,10 @@
-/div class="view_apage">
 
+<div class="page">
 
-<% sub = false %>
-<h2>Todos los posts</h2>
-<select class="custom-select custom-select-lg mb-3">
-  <option value="1">Local<%  sub = false %></option>
-  <option value="2">Suscritos<% sub = true %></option>
-</select>
-
-<% if @filtro == "Posts" %>
-
-  <%= form_tag(show_content_params_path, method: :get, class: "select-form") do %>
-    <%= form.hidden_field :type, value: params[:type] %>
-    <%= button_tag(type: 'submit', value: 'Local', class: 'reverse-button', onclick: "document.getElementById('content_type').value='Local';") do %>
-      <i class="fas fa-location-dot"></i> Local
-    <% end %>
-    <%= button_tag(type: 'submit', value: 'Subscribed', class: 'generic-button', onclick: "document.getElementById('content_type').value='Subscribed';") do %>
-      <i class="fas fa-location-dot"></i> Subscribed
-    <% end %>
-  <% end %>
-<% else %>
-  <%= form_tag(root_path, method: :get, class: "select-form") do %>
-    <%= button_tag(type: 'submit', value: 'Local', class: 'generic-button', onclick: "document.getElementById('content_type').value='Local';") do %>
-      <i class="fas fa-location-dot"></i> Local
-    <% end %>
-    <%= button_tag(type: 'submit', value: 'Subscribed', class: 'reverse-button', onclick: "document.getElementById('content_type').value='Subscribed';") do %>
-      <i class="fas fa-location-dot"></i> Subscribed
-    <% end %>
-  <% end %>
-<% end %>
-<h1>Valor del Filtro: <%= @filtro %></h1>
-
-
-<%= form_with url: root_path, method: :get, local: true, class: 'filter-form' do |form| %>
+  <%if current_user %>
+  <%= form_with url: root_path, method: :get, local: true, class: 'filter-form' do |form| %>
 
     <%= form.hidden_field :type, value: params[:type] %>
-
-    <label>Seleccionar:</label>
 
     <label>
       <%= form.radio_button :filter_type, 'local' %>
@@ -44,156 +12,220 @@
     </label>
 
     <label>
-      <%= form.radio_button :filter_type, 'subscribed' %>
-      Subscrito
+      <%= form.radio_button :filter_type, 'subscribed',  filter: params[:filter], sort: params[:sort] %>
+      Subscribed
     </label>
 
-    <%= form.submit "Filtrar" %>
-  <% end %>
+    <%= form.submit "Filter" %>
+    <% end %>
+  <%end%>
 
-
-<% if params[:filter_type] == "local" %>
-    <h2><center>Posts</h2></center>
-<%else%>   <h2><center>No hay comentarios.</h2></center>
-<%end%>
-
-
-
-
-
-
-
-<% if sub %> elPepe <% end %>
-   <div class="menu-perfil">
-   <%= link_to "Ver posts", { filter: 'posts' }, class: "generic-button" %>
-
-   <%= link_to "Ver comentarios", { filter: 'comments' }, class: "generic-button" %>
-
-   <br><br>
-
+  <div class="menu-perfil">
+    <%= link_to "View posts", { filter: 'posts',  filter_type: params[:filter_type], sort: params[:sort]}, class: "generic-button" %>
+    <%= link_to "View comments", { filter: 'comments', filter_type: params[:filter_type], sort: params[:sort]}, class: "generic-button" %>
+    <br><br>
   </div>
 
 
-
-
-<% if params[:filter] == 'comments'%>
-<% if @comments.empty? %>
-    <h2><center>No hay comentarios.</h2></center>
-  <% else %>
-
-
-
- <!-- Para cada uno que use el sort que hay en el controller-->
-  <center><%= link_to "Newest", { filter: 'comments', sort: 'newest' }, class: "generic-button" %>
-  <%= link_to "Oldest", { filter: 'comments', sort: 'oldest' }, class: "generic-button" %>
-  <%= link_to "Most voted", { filter: 'comments', sort: 'top' }, class: "generic-button" %>
-  <%= link_to "Controversial", { filter: 'comments', sort: 'controversial' }, class: "generic-button"  %></center>
-  <% @comments.each do |comment| %>
-    <%= render comment %>
-  <% end %>
-  <% end %>
-<% else %>
-
-
-
-<% if params[:filter] == 'posts'%>
-
-  <% if @posts.empty? %>
-    <h2><center>No hay posts.</h2></center>
+  <% if params[:filter] == 'comments'%>
+    <% if @comments.empty? %>
+      <h2><center>No comments.</h2></center>
     <% else %>
-    <div class="menu-sort">
-  <center>
-  <%= link_to "Newest", { filter: 'posts', sort: 'newest' }, class: "generic-button" %> <!-- Para cada uno que use el sort que hay en el controller-->
-  <%= link_to "Oldest", { filter: 'posts', sort: 'oldest' }, class: "generic-button" %>
-  <%= link_to "Most voted", { filter: 'posts', sort: 'top' }, class: "generic-button" %>
-  <%= link_to "Controversial", { filter: 'posts', sort: 'controversial' }, class: "generic-button"  %>
+      <center>
+      <%= link_to "Newest", { filter: params[:filter], sort: 'newest', filter_type: params[:filter_type] }, class: "generic-button" %>
+      <%= link_to "Oldest", { filter: params[:filter], sort: 'oldest', filter_type: params[:filter_type] }, class: "generic-button" %>
+      <%= link_to "Most voted", { filter: params[:filter], sort: 'top', filter_type: params[:filter_type] }, class: "generic-button" %>
+      <%= link_to "Controversial", { filter: params[:filter], sort: 'controversial', filter_type: params[:filter_type] }, class: "generic-button"  %></center>
 
-  </center>
-  </div>
-  <% @posts.each do |post| %>
+      <% if current_user && params[:filter_type] == 'subscribed' %>
+        <% @comments.each do |comment| %>
+          <% current_user.subscriptions.each do |auxCom| %>
+            <% if comment.parent_id.nil? %>
+              <% if auxCom.community_id == comment.community_id %>
+                <%= render comment %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <% @comments.each do |comment| %>
+          <%= render comment %>
+        <% end %>
+      <% end %>
+    <% end %>
 
-      <div class="post-listing mt-2">
-        <div class="d-block d-sm-none">
+
+
+  <% else %>
+      <% if @posts.empty? %>
+        <h2><center>No posts.</center></h2>
+      <% else %>
+        <div class="menu-sort">
+        <center>
+        <%= link_to "Newest", { filter: params[:filter], sort: 'newest', filter_type: params[:filter_type]}, class: "generic-button" %> <!-- Para cada uno que use el sort que hay en el controller-->
+        <%= link_to "Oldest", { filter: params[:filter], sort: 'oldest', filter_type: params[:filter_type] }, class: "generic-button" %>
+        <%= link_to "Most voted", { filter: params[:filter], sort: 'top', filter_type: params[:filter_type] }, class: "generic-button" %>
+        <%= link_to "Controversial", { filter: params[:filter], sort: 'controversial', filter_type: params[:filter_type] }, class: "generic-button"%>
+        </center>
+        </div>
+        <%if current_user && params[:filter_type] == 'subscribed'%>
+          <% @posts.each do |post| %>
+            <% current_user.subscriptions.each do |auxCom| %>
+              <% if auxCom.community_id == post.community_id %>
+                <div class="post-listing mt-2">
+          <div class="d-block d-sm-none">
+            <article class="row post-container">
+              <div class="col-12">
+                <h1 class="post-title"><%= link_to post.title, post %></h1>
+                <%if current_user && current_user.saved_posts.exists?(post: post) %>
+                  <%= link_to "unsave_post", unsave_post_path(post), method: :delete %>
+                <% elsif current_user %>
+                  <%= link_to "save_post", save_post_path(post), method: :post %>
+                <% end %>
+              </div>
+            </article>
+          </div>
           <article class="row post-container">
-            <div class="col-12">
-              <h1 class="post-title"><%= link_to post.title, post %></h1>
+            <div class="col flex-grow-0">
+              <div class="vote-bar small text-center">
+                <!-- Vote buttons go here -->
+              </div>
+            </div>
+            <div class="col flex-grow-1">
+              <div class="row">
+                <div class="col flex-grow-0 px-0">
+                  <!-- External link icon goes here -->
+                </div>
+                <div class="col flex-grow-1">
+                  <% if !post.url.nil? %>
+                    <p class="post-url"><%= post.url %></p>
+                    <p class="post-url"><%= post.comments_count %></p>
+                  <% end %>
+
+                  <div class="post-content">
+                    <div class="avatar-thumbnail">
+
+                      <%= link_to user_path(post.user), class: "avatar-thumbnail" do %>
+                      <%= link_to "save_post", save_post_path(post), method: :post %>
+                        <% if post.user.avatar.present? %>
+                          <%= image_tag post.user.avatar, alt: "User Avatar" %>
+                        <% else %>
+                          <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default User Avatar" %>
+                        <% end %>
+                      <% end %>
+                    </div>
+
+
+                    <%= link_to "save_post", save_post_path(post), method: :post %>
+
+                    <div class="avatar-thumbnail">
+                      <%= link_to community_path(post.community), class: "avatar-thumbnail" do %>
+                        <% if post.community.avatar.present? %>
+                          <%= image_tag post.community.avatar, alt: "Community Avatar" %>
+                        <% else %>
+                          <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default Community Avatar" %>
+                        <% end %>
+                      <% end %>
+
+                      <%= link_to post.community.name, community_path(post.community) %>
+
+                      <div class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></div>
+
+                      <br>
+                    </div>
+
+                    <li><i class="icono fas fa-comments"></i> <%= post.comments.count.to_s + " comments"  %></li>
+                  </div>
+                  </div class="post-meta"></p>
+                    <%= link_to 'Delete','/posts/delete/'+ @post.id.to_s, method: :delete%>
+                    <%= link_to "Edit",edit_post_path(@post), method: :get%>
+                  </div>
+                </div>
+              </div>
             </div>
           </article>
+          <div class="d-none d-sm-block"></div>
         </div>
-        <article class="row post-container">
-          <div class="col flex-grow-0">
-            <div class="vote-bar small text-center">
-              <!-- Vote buttons go here -->
-            </div>
-          </div>
-          <div class="col flex-grow-1">
-            <div class="row">
-              <div class="col flex-grow-0 px-0">
-                <!-- External link icon goes here -->
-              </div>
-              <div class="col flex-grow-1">
-                <% if !post.url.nil? %>
-                  <p class="post-url"><%= post.url %></p>
-                  <p class="post-url"><%= post.comments_count %></p>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% else %>
+        <% @posts.each do |post| %>
+
+          <div class="post-listing mt-2">
+          <div class="d-block d-sm-none">
+            <article class="row post-container">
+              <div class="col-12">
+                <h1 class="post-title"><%= link_to post.title, post %></h1>
+                <%if current_user && current_user.saved_posts.exists?(post: post) %>
+                  <%= link_to "unsave_post", unsave_post_path(post), method: :delete %>
+                <% elsif current_user %>
+                  <%= link_to "save_post", save_post_path(post), method: :post %>
                 <% end %>
-
-                <div class="post-content">
-                  <div class="avatar-thumbnail">
-
-                    <%= link_to user_path(post.user), class: "avatar-thumbnail" do %>
-                      <% if post.user.avatar.present? %>
-                        <%= image_tag post.user.avatar, alt: "User Avatar" %>
-                      <% else %>
-                        <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default User Avatar" %>
-                      <% end %>
-                    <% end %>
-                  </div>
-
-                  <!--%= link_to post.user.full_name, user_path(post.user) %-->
-
-                  <div class="avatar-thumbnail">
-                    <%= link_to community_path(post.community), class: "avatar-thumbnail" do %>
-                      <% if post.community.avatar.present? %>
-                        <%= image_tag post.community.avatar, alt: "Community Avatar" %>
-                      <% else %>
-                        <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default Community Avatar" %>
-                      <% end %>
-                    <% end %>
-
-                    <%= link_to post.community.name, community_path(post.community) %>
-
-                    <div class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></div>
-
-                    <br>
-                  </div>
-
-                   <li><i class="icono fas fa-comments"></i> <%= post.comments.count.to_s + " comments"  %></li>
+              </div>
+            </article>
+          </div>
+          <article class="row post-container">
+            <div class="col flex-grow-0">
+              <div class="vote-bar small text-center">
+                <!-- Vote buttons go here -->
+              </div>
+            </div>
+            <div class="col flex-grow-1">
+              <div class="row">
+                <div class="col flex-grow-0 px-0">
+                  <!-- External link icon goes here -->
                 </div>
-                </div class="post-meta"></p>
-                  <%= link_to "Delete this post", post, method: :delete %><br>
-                  <%= link_to "Edit this post", edit_post_path(post) %><br>
+                <div class="col flex-grow-1">
+                  <% if !post.url.nil? %>
+                    <p class="post-url"><%= post.url %></p>
+                    <p class="post-url"><%= post.comments_count %></p>
+                  <% end %>
+
+                  <div class="post-content">
+                    <div class="avatar-thumbnail">
+
+                      <%= link_to user_path(post.user), class: "avatar-thumbnail" do %>
+                        <% if post.user.avatar.present? %>
+                          <%= image_tag post.user.avatar, alt: "User Avatar" %>
+                        <% else %>
+                          <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default User Avatar" %>
+                        <% end %>
+                      <% end %>
+                    </div>
+
+                    <!--%= link_to post.user.full_name, user_path(post.user) %-->
+
+                    <div class="avatar-thumbnail">
+                      <%= link_to community_path(post.community), class: "avatar-thumbnail" do %>
+                        <% if post.community.avatar.present? %>
+                          <%= image_tag post.community.avatar, alt: "Community Avatar" %>
+                        <% else %>
+                          <%= content_tag :i, "", class: "icono fas fa-users", alt: "Default Community Avatar" %>
+                        <% end %>
+                      <% end %>
+
+                      <%= link_to post.community.name, community_path(post.community) %>
+
+                      <div class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></div>
+
+                      <br>
+                    </div>
+
+                    <li><i class="icono fas fa-comments"></i> <%= post.comments.count.to_s + " comments"  %></li>
+                  </div>
+                  </div class="post-meta"></p>
+                    <%= link_to "Delete this post", post, method: :delete %><br>
+                    <%= link_to "Edit this post", edit_post_path(post) %><br>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </article>
-        <div class="d-none d-sm-block"></div>
-      </div>
-    <% end %>
+          </article>
+          <div class="d-none d-sm-block"></div>
+        </div>
+        <% end %>
+        <% end %>
+      <% end %>
   <% end %>
-  <% end %>
-<% end %>
 </div>
-
-<% if current_user %>
-  <h2><%= current_user.email %></h2>
-  <%= link_to "Edit Account", edit_user_registration_path %>
-  <%= link_to "View profile", current_user %>
-  <%= form_for(current_user, url: destroy_user_session_path, method: :delete) do |f| %>
-    <button type="submit" style="color: #333; text-decoration: none; display: block; padding: 12px 16px;">Log out</button>
-  <% end %>
-
-<% else %>
-  <%= link_to "Login", new_user_session_path %>
-  <%= link_to "Create Account", new_user_registration_path %>
-<% end %>

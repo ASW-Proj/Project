@@ -65,13 +65,14 @@
             <%= button_tag(type: 'submit', name: 'content_type', value: 'Comments', class: 'generic-button') do %>
               <i class="fas fa-comments"></i> Show Comments
             <% end %>
+            <%if current_user %>
+              <%= button_tag(type: 'submit', name: 'content_type', value: 'SavedPosts', class: 'generic-button') do %>
+                <i class="fas fa-bookmark"></i> Show Saved Posts
+              <% end %>
 
-            <%= button_tag(type: 'submit', name: 'content_type', value: 'SavedPosts', class: 'generic-button') do %>
-              <i class="fas fa-bookmark"></i> Show Saved Posts
-            <% end %>
-
-            <%= button_tag(type: 'submit', name: 'content_type', value: 'SavedComments', class: 'generic-button') do %>
-              <i class="fas fa-bookmark"></i> Show Saved Comments
+              <%= button_tag(type: 'submit', name: 'content_type', value: 'SavedComments', class: 'generic-button') do %>
+                <i class="fas fa-bookmark"></i> Show Saved Comments
+              <% end %>
             <% end %>
           <% end %>
 
@@ -82,7 +83,18 @@
               <ul>
                 <% @user.posts.each do |post| %>
                   <li>
-                    <%= link_to post.title, post_path(post) %><br>
+
+
+                    <div class="post-container">
+                      <h1 class="post-title"><%= link_to post.title, post %></h1>
+                      <div class="post-meta"><%= "Created at " + post.created_at.strftime('%d %B, %Y') %></div>
+                        <p class="post-url"><%= post.url %></p>
+                          <div class="post-content">
+                            <%= post.body %>
+                          </div>
+                    <!-- Add links for delete and edit here -->
+                        <%= link_to "Created by " + post.user.email, user_path(post.user) %>
+                      </div>
                     <!-- Agrega cualquier información adicional del post que desees mostrar -->
                   </li>
                 <% end %>
@@ -90,6 +102,11 @@
             <% else %>
               <p>There are no posts.</p>
             <% end %>
+
+
+
+
+
           <% elsif params[:content_type] == "Comments" %>
             <!-- Lista de comentarios del usuario -->
             <h2>User's Comments</h2>

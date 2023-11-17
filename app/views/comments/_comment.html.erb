@@ -6,7 +6,7 @@
     <%= comment.body %>
   </div>
   <div class="comment-score">
-    
+
     <%= link_to comment.post.title, post_path(comment.post.id) %>, from <%= link_to comment.post.community.name, community_path(comment.post.community.id) %>
     <%= link_to '▲','/comments/like/'+ comment.id.to_s, method: :post%>
     <%= comment.points %>
@@ -14,13 +14,20 @@
   </div>
 
   <div class="post-meta">
-    <p>Created at <%= comment.created_at.strftime('%d %B, %Y') %>
+    Created at <%= comment.created_at.strftime('%d %B, %Y') %>
     Created by <%= link_to comment.user.email, user_path(comment.user) %>
     <% if current_user == comment.user %>
-      <%= link_to 'Delete','comments/delete/'+ comment.id.to_s, method: :delete%>
-      <%= link_to "Edit",edit_comment_path(comment), method: :get%></p>
+    <%= link_to 'Delete','comments/delete/'+ comment.id.to_s, method: :delete%>
+    <%= link_to "Edit",edit_comment_path(comment), method: :get%>
+    <% end %>
+    <% if current_user && current_user.saved_comments.exists?(comment: comment) %>
+        <%= link_to "unsave_comment", unsave_comment_path(comment), method: :delete %>
+      <% else current_user %>
+        <%= link_to "save_comment", save_comment_path(comment), method: :post %>
+      <% end %>
       <%= render partial: 'comments/form', locals: { post: @post, community: @community } %>
-    <% end %>  </div>
+    </div>
+
 
   <% if comment.replies.any? %>
     <div class="comment-separator"></div>

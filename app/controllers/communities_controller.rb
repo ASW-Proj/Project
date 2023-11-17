@@ -1,5 +1,6 @@
 class CommunitiesController < ApplicationController
   before_action :set_community, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: [:new, :create]
 
   # GET /communities or /communities.json
   def index
@@ -17,7 +18,18 @@ class CommunitiesController < ApplicationController
     elsif params[:sort] == 'top'
       @posts = @community.posts.order(points: :desc)
     elsif params[:sort] == 'controversial'
-      @posts = Comment.all.order("comments.size ASC") #falta cambiar este
+      @posts = @community.posts.order(comments_count: :desc) #falta cambiar este
+    end
+
+    @comments = @community.comments.all.where(parent_id: nil).order(created_at: :desc)
+    if params[:sort] == 'newest'
+      @comments = @community.comments.all.where(parent_id: nil).order(created_at: :desc)
+    elsif params[:sort] == 'oldest'
+      @comments = @community.comments.all.where(parent_id: nil).order(created_at: :asc)
+    elsif params[:sort] == 'top'
+      @comments = @community.comments.all.where(parent_id: nil).order(points: :desc)
+    elsif params[:sort] == 'controversial'
+      @comments = @community.comments.all.where(parent_id: nil).order(replies_count: :desc)
     end
   end
 

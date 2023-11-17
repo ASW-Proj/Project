@@ -1,4 +1,6 @@
 class SubscriptionsController < ApplicationController
+    before_action :authenticate_user!, only: [:create, :destroy]
+
     def create
         @subscription = Subscription.new(community: community, user: current_user)
         

@@ -41,9 +41,16 @@ Rails.application.routes.draw do
   end
 
   # Resources for subscriptions
-  # resources :subscriptions, only: :create
   get "/subscribe/:community_id", to: "subscriptions#create", as: "subscribe"
   get "/unsubscribe/:community_id", to: "subscriptions#destroy", as: "unsubscribe"
+
+  # Resources for saved posts
+  get "/save_post/:post_id", to: "saved_posts#create", as: "save_post"
+  get "/unsave_post/:post_id", to: "saved_posts#destroy", as: "unsave_post"
+
+  # Resources for saved comments
+  get "/save_comment/:comment_id", to: "saved_comments#create", as: "save_comment"
+  get "/unsave_comment/:comment_id", to: "saved_comments#destroy", as: "unsave_comment"
 
   # Resources for communities
   resources :communities
@@ -90,9 +97,7 @@ resources :users
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
 
-  post '/save_post/:post_id', to: 'saved_items#save_post', as: 'save_post'
-  post '/save_comment/:comment_id', to: 'saved_items#save_comment', as: 'save_comment'
-  get '/list_saved_items', to: 'saved_items#list_saved_items', as: 'list_saved_items'
+  #get '/list_saved_items', to: 'saved_items#list_saved_items', as: 'list_saved_items'
   get '/home', to: 'posts#home', as: 'frontpage'
   # Root route
   root 'posts#home'
